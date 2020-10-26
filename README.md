@@ -3,7 +3,7 @@
 
 ![ERD](./databaseSchema/databasewithbookmarks.png)
 
-## MVP (Minimum Viable Product
+## MVP (Minimum Viable Product)
 
     Dashboard + Portfolio
     Asset/Stock Detail
@@ -47,9 +47,10 @@
     - DELETE /api/bookmarks/:id (delete bookmarked asset)
     
     
-## Hopeful Bonus features:
+## Hopeful Bonus Features:
 
     Market News
     Unusual Market Activity
-    
+    News Sharing 
+
 
