@@ -3,20 +3,20 @@
 
 ![ERD](./databaseSchema/databasewithbookmarks.png)
 
-MVP
+## MVP (Minimum Viable Product
 
     Dashboard + Portfolio
     Asset/Stock Detail
     Watchlist
     Asset/Stock Search
 
-User authentication
+## User authentication
 
     Sign Up
     Login / Logout
     Demo User Login
 
-Front-end Technologies:
+## Front-end Technologies:
 
     React
     Redux
@@ -24,12 +24,12 @@ Front-end Technologies:
     Polygon API (newsfeed)
     Alphavantage API (stock tickers)
     
-Backend Technologies:
+## Backend Technologies:
 
     Express
     Sequelize
     
-Backend Routes:
+## Backend Routes:
     
     Users (user account management)
     - POST /api/users
@@ -47,15 +47,9 @@ Backend Routes:
     - DELETE /api/bookmarks/:id (delete bookmarked asset)
     
     
-Hopeful Bonus features:
+## Hopeful Bonus features:
 
     Market News
     Unusual Market Activity
     
-* [Feature List](/documentation/featureList.md)
-* [MVP](/documentation/MVP.md)
-* [Front End Routes](/documentation/frontEndRoutes.md)
-* [Back End Routes](/documentation/backEndRoutes.md)
-* [Schema](/documentation/schema.md)
-* [Schema Image](/documentation/schema-diagram.png)
-* [Templates List](/documentation/templatesList.md)
+
