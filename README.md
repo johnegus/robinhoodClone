@@ -2,6 +2,7 @@
 ## Database Diagram
 
 ![ERD](./databaseSchema/databasewithbookmarks.png)
+
 MVP
 
     Dashboard + Portfolio
