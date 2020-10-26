@@ -13,18 +13,21 @@ User authentication
     Login / Logout
     Demo User Login
 
-Front-end:
+Front-end Technologies:
 
     React
     Redux
-    Hooks are optional (but encouraged)
-
-Backend:
+    Alpaca API  
+    Polygon API (newsfeed)
+    Alphavantage API (stock tickers)
+    
+Backend Technologies:
 
     Express
     Sequelize
     
 Backend Routes:
+    
     Users (user account management)
     - POST /api/users
     - POST /api/users/token
