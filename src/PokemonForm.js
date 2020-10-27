@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createPokemon } from "./store/actions/pokemon";
-import { getPokemonTypes } from "./store/actions/pokemon-types";
 import { hideForm } from "./store/actions/ui";
 
-const PokemonForm = ({ types, getPokemonTypes, createPokemon, hideForm }) => {
-  const [attack, setAttack] = useState("");
-  const [defense, setDefense] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [move1, setMove1] = useState("");
-  const [move2, setMove2] = useState("");
+const PokemonForm = ({createPokemon, hideForm }) => {
+  const [stockSymbol, setstockSymbol] = useState("");
+  const [stockName, setstockName] = useState("");
+  const [currentPrice, setcurrentPrice] = useState("");
+  const [buyPrice, setbuyPrice] = useState("");
+  const [shares, setshares] = useState("");
+  const [userId, setUserId] = useState("");
+ 
 
-  useEffect(() => {
-    getPokemonTypes();
-  }, []);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
-      moves: [move1, move2],
-      attack,
-      defense,
-      imageUrl,
-      name,
-      type,
+      stockSymbol,
+      stockName,
+      currentPrice,
+      buyPrice,
+      shares,
+      userId
     };
     createPokemon(payload);
   };
@@ -39,52 +36,45 @@ const PokemonForm = ({ types, getPokemonTypes, createPokemon, hideForm }) => {
       <form onSubmit={handleSubmit}>
         <input
           type="number"
-          placeholder="Attack"
-          min="0"
-          max="100"
+          placeholder="Current Price"
           required
-          value={attack}
-          onChange={updateProperty(setAttack)}
+          value={currentPrice}
+          onChange={updateProperty(setcurrentPrice)}
         />
         <input
           type="number"
-          placeholder="Defense"
-          min="0"
-          max="100"
+          placeholder="Buy Price"
           required
-          value={defense}
-          onChange={updateProperty(setDefense)}
+          value={buyPrice}
+          onChange={updateProperty(setbuyPrice)}
+        />
+         <input
+          type="number"
+          placeholder="userId"
+          required
+          value={userId}
+          onChange={updateProperty(setUserId)}
+        />
+        <input
+          type="number"
+          placeholder="Shares"
+          required
+          value={shares}
+          onChange={updateProperty(setshares)}
         />
         <input
           type="text"
-          placeholder="Image URL"
-          value={imageUrl}
-          onChange={updateProperty(setImageUrl)}
+          placeholder="Stock Symbol"
+          value={stockSymbol}
+          onChange={updateProperty(setstockSymbol)}
         />
         <input
           type="text"
-          placeholder="Name"
-          value={name}
-          onChange={updateProperty(setName)}
+          placeholder="Stock Name"
+          value={stockName}
+          onChange={updateProperty(setstockName)}
         />
-        <input
-          type="text"
-          placeholder="Move 1"
-          value={move1}
-          onChange={updateProperty(setMove1)}
-        />
-        <input
-          type="text"
-          placeholder="Move 2"
-          value={move2}
-          onChange={updateProperty(setMove2)}
-        />
-        <select onChange={updateProperty(setType)}>
-          {types.map((type) => (
-            <option key={type}>{type}</option>
-          ))}
-        </select>
-        <button type="submit">Create new Pokemon</button>
+        <button type="submit">Buy Shares!</button>
         <button type="button" onClick={() => hideForm()}>
           Cancel
         </button>
@@ -94,14 +84,12 @@ const PokemonForm = ({ types, getPokemonTypes, createPokemon, hideForm }) => {
 };
 
 const PokemonFormContainer = () => {
-  const types = useSelector((state) => state.pokemonTypes);
+  
   const dispatch = useDispatch();
 
   return (
     <PokemonForm
-      types={types}
-      getPokemonTypes={() => dispatch(getPokemonTypes())}
-      createPokemon={(pokemon) => dispatch(createPokemon(pokemon))}
+      createPokemon={(positions) => dispatch(createPokemon(positions))}
       hideForm={() => dispatch(hideForm())}
     />
   );

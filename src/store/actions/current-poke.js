@@ -1,6 +1,6 @@
 import { baseUrl } from "../../config";
 
-export const SET_CURRENT = "pokedex/currentPokemon/SET_CURRENT";
+export const SET_CURRENT = "SET_CURRENT";
 
 export const setCurrent = (current) => ({ type: SET_CURRENT, current });
 
@@ -8,7 +8,7 @@ export const getOnePokemon = (id) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
-  const response = await fetch(`${baseUrl}/pokemon/${id}`, {
+  const response = await fetch(`${baseUrl}/positions/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

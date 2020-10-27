@@ -9,8 +9,10 @@ const LogoutButton = () => {
   };
 
   return (
+    <div id='topnav'>
     <div id="logout-button-holder">
       <button onClick={handleClick}>Logout</button>
+    </div>
     </div>
   );
 };

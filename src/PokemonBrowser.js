@@ -28,7 +28,7 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
         <Fab hidden={formVisible} onClick={showForm} />
         {pokemon.map((pokemon) => {
           return (
-            <NavLink key={pokemon.name} to={`/pokemon/${pokemon.id}`}>
+            <NavLink key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
               <div
                 className={
                   pokemonId === pokemon.id
@@ -37,15 +37,11 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
                 }
               >
                 <div
-                  className="nav-entry-image"
-                  style={{
-                    backgroundImage: `url('${imageUrl}${pokemon.imageUrl}')`,
-                  }}
-                ></div>
+                  className="nav-entry-image">+35%</div>
                 <div>
-                  <div className="primary-text">{pokemon.name}</div>
+                  <div className="primary-text">{pokemon.stockName}</div>
                   <div className="secondary-text">
-                    Born {new Date(pokemon.updatedAt).toDateString()}
+                  ${pokemon.currentPrice}
                   </div>
                 </div>
               </div>
