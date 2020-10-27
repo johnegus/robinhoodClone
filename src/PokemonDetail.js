@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { imageUrl } from "./config";
+
 import { getOnePokemon } from "./store/actions/current-poke";
 
 const PokemonDetail = ({ pokemon, getOnePokemon }) => {
@@ -17,37 +17,28 @@ const PokemonDetail = ({ pokemon, getOnePokemon }) => {
     <div className="pokemon-detail">
       <div
         className={`pokemon-detail-image-background`}
-        style={{
-          backgroundImage: `url('${imageUrl}/images/${pokemon.type}.jpg')`,
-        }}
+        
       >
         <div
           className="pokemon-detail-image"
-          style={{ backgroundImage: `url('${imageUrl}${pokemon.imageUrl}')` }}
+          
         ></div>
-        <h1 className="bigger">{pokemon.name}</h1>
+        <h1 className="bigger">{pokemon.stockName}</h1>
       </div>
       <div className="pokemon-detail-lists">
         <div>
           <h2>Information</h2>
           <ul>
             <li>
-              <b>Type</b> {pokemon.type}
+              <b>Type</b> {pokemon.stockSymbol}
             </li>
             <li>
-              <b>Attack</b> {pokemon.attack}
+              <b>Attack</b> {pokemon.stockName}
             </li>
             <li>
-              <b>Defense</b> {pokemon.defense}
+              <b>Defense</b> {pokemon.currentPrice}
             </li>
-            <li>
-              <b>Moves</b>
-              <ul>
-                {pokemon.moves.map((move) => (
-                  <li key={move}>{move}</li>
-                ))}
-              </ul>
-            </li>
+            
           </ul>
         </div>
         <div>
@@ -61,22 +52,7 @@ const PokemonDetail = ({ pokemon, getOnePokemon }) => {
                 <th>Price</th>
               </tr>
             </thead>
-            <tbody>
-              {pokemon.items.map((item) => (
-                <tr key={item.price * item.happiness}>
-                  <td>
-                    <img
-                      className="item-image"
-                      alt={item.imageUrl}
-                      src={`${imageUrl}${item.imageUrl}`}
-                    />
-                  </td>
-                  <td>{item.name}</td>
-                  <td className="centered">{item.happiness}</td>
-                  <td className="centered">${item.price}</td>
-                </tr>
-              ))}
-            </tbody>
+            
           </table>
         </div>
       </div>
@@ -85,7 +61,7 @@ const PokemonDetail = ({ pokemon, getOnePokemon }) => {
 };
 
 const PokemonDetailContainer = () => {
-  const pokemon = useSelector((state) => state.pokemon2[state.currentPokemon]);
+  const pokemon = useSelector((state) => state.pokemon2);
   const dispatch = useDispatch();
 
   return (

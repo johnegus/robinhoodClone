@@ -186,6 +186,7 @@ td.centered {
   background-size: contain;
   height: 400px;
   transition: height 0.5s;
+  background-color: red;
 }
 
 .pokemon-detail-lists {
