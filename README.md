@@ -1,7 +1,7 @@
 # robinhoodClone
 ## Database Diagram
 
-![ERD](./databaseSchema/databasewithbookmarks.png)
+![ERD](./databaseSchema/database3.png)
 
 ## MVP (Minimum Viable Product)
 
