@@ -4,7 +4,7 @@ export const SET_CURRENT = "SET_CURRENT";
 
 export const setCurrent = (current) => ({ type: SET_CURRENT, current });
 
-export const getOnePokemon = (id) => async (dispatch, getState) => {
+export const getOnePosition = (id) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();

@@ -5,7 +5,7 @@ import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { loadToken } from "./store/actions/authentication";
 import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import LoginPanel from "./LoginPanel";
-import PokemonBrowser from "./PokemonBrowser";
+import PositionSidebar from "./PositionSidebar";
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
@@ -30,7 +30,7 @@ const App = ({ needLogin, loadToken }) => {
         <PrivateRoute
           path="/"
           needLogin={needLogin}
-          component={PokemonBrowser}
+          component={PositionSidebar}
         />
         <Redirect to="/" />
       </Switch>

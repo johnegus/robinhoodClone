@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createPokemon } from "./store/actions/pokemon";
+import { createPosition } from "./store/actions/positions";
 import { hideForm } from "./store/actions/ui";
 
-const PokemonForm = ({createPokemon, hideForm }) => {
+const PositionForm = ({createPosition, hideForm }) => {
   const [stockSymbol, setstockSymbol] = useState("");
   const [stockName, setstockName] = useState("");
   const [currentPrice, setcurrentPrice] = useState("");
@@ -24,7 +24,7 @@ const PokemonForm = ({createPokemon, hideForm }) => {
       shares,
       userId
     };
-    createPokemon(payload);
+    createPosition(payload);
   };
 
   const updateProperty = (callback) => (e) => {
@@ -83,16 +83,16 @@ const PokemonForm = ({createPokemon, hideForm }) => {
   );
 };
 
-const PokemonFormContainer = () => {
+const PositionFormContainer = () => {
   
   const dispatch = useDispatch();
 
   return (
-    <PokemonForm
-      createPokemon={(positions) => dispatch(createPokemon(positions))}
+    <PositionForm
+      createPosition={(positions) => dispatch(createPosition(positions))}
       hideForm={() => dispatch(hideForm())}
     />
   );
 };
 
-export default PokemonFormContainer;
+export default PositionFormContainer;

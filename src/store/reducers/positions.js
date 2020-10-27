@@ -1,14 +1,14 @@
 import merge from "lodash/merge";
-import { LOAD } from "../actions/pokemon";
-import { SET_CURRENT } from "../actions/current-poke";
+import { LOAD } from "../actions/positions";
+import { SET_CURRENT } from "../actions/current-position";
 
 export default function reducer(state = {}, action) {
   Object.freeze(state);
 
   switch (action.type) {
     case LOAD: {
-      const pokemon = action.list.map((poke) => ({ [poke.id]: poke }));
-      return merge({}, state, ...pokemon);
+      const positions = action.list.map((position) => ({ [position.id]: position }));
+      return merge({}, state, ...positions);
     }
     case SET_CURRENT: {
       return {

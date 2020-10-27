@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { getOnePokemon } from "./store/actions/current-poke";
+import { getOnePosition } from "./store/actions/current-position";
 
-const PokemonDetail = ({ pokemon, getOnePokemon }) => {
+const PositionDetail = ({ positions, getOnePosition }) => {
   const { id } = useParams();
   useEffect(() => {
-    getOnePokemon(id);
+    getOnePosition(id);
   }, [id]);
 
-  if (!pokemon || !pokemon.moves) {
+  if (!positions) {
     return null;
   }
   return (
@@ -23,20 +23,20 @@ const PokemonDetail = ({ pokemon, getOnePokemon }) => {
           className="pokemon-detail-image"
           
         ></div>
-        <h1 className="bigger">{pokemon.stockName}</h1>
+        <h1 className="bigger">{positions.stockName}</h1>
       </div>
       <div className="pokemon-detail-lists">
         <div>
           <h2>Information</h2>
           <ul>
             <li>
-              <b>Type</b> {pokemon.stockSymbol}
+              <b>Type</b> {positions.stockSymbol}
             </li>
             <li>
-              <b>Attack</b> {pokemon.stockName}
+              <b>Attack</b> {positions.stockName}
             </li>
             <li>
-              <b>Defense</b> {pokemon.currentPrice}
+              <b>Defense</b> {positions.currentPrice}
             </li>
             
           </ul>
@@ -60,16 +60,16 @@ const PokemonDetail = ({ pokemon, getOnePokemon }) => {
   );
 };
 
-const PokemonDetailContainer = () => {
-  const pokemon = useSelector((state) => state.pokemon2);
+const PositionDetailContainer = () => {
+  const positions = useSelector((state) => state.positions);
   const dispatch = useDispatch();
 
   return (
-    <PokemonDetail
-      pokemon={pokemon}
-      getOnePokemon={(id) => dispatch(getOnePokemon(id))}
+    <PositionDetail
+    positions={positions}
+      getOnePosition={(id) => dispatch(getOnePosition(id))}
     />
   );
 };
 
-export default PokemonDetailContainer;
+export default PositionDetailContainer;

@@ -2,23 +2,22 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
 
-import { imageUrl } from "./config";
 import LogoutButton from "./LogoutButton";
-import PokemonDetail from "./PokemonDetail";
-import PokemonForm from "./PokemonForm";
+import PositionDetail from "./PositionDetail";
+import PositionForm from "./PositionForm";
 import Fab from "./Fab";
 import { showForm } from "./store/actions/ui";
-import { getPokemon } from "./store/actions/pokemon";
+import { getPositions } from "./store/actions/positions";
 
-const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
+const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => {
   useEffect(() => {
-    getPokemon();
+    getPositions();
   }, []);
 
   const { id } = useParams();
-  const pokemonId = Number.parseInt(id);
+  const positionId = Number.parseInt(id);
 
-  if (!pokemon) {
+  if (!positions) {
     return null;
   }
   return (
@@ -26,12 +25,12 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
       <LogoutButton />
       <nav>
         <Fab hidden={formVisible} onClick={showForm} />
-        {pokemon.map((pokemon) => {
+        {positions.map((position) => {
           return (
-            <NavLink key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
+            <NavLink key={position.id} to={`/position/${position.id}`}>
               <div
                 className={
-                  pokemonId === pokemon.id
+                  positionId === position.id
                     ? "nav-entry is-selected"
                     : "nav-entry"
                 }
@@ -39,9 +38,9 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
                 <div
                   className="nav-entry-image">+35%</div>
                 <div>
-                  <div className="primary-text">{pokemon.stockName}</div>
+                  <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">
-                  ${pokemon.currentPrice}
+                  ${position.currentPrice}
                   </div>
                 </div>
               </div>
@@ -50,13 +49,13 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
         })}
       </nav>
       {formVisible ? (
-        <PokemonForm />
+        <PositionForm />
       ) : (
         <Switch>
           <Route
             exact={true}
-            path="/pokemon/:id"
-            render={(props) => <PokemonDetail {...props} />}
+            path="/position/:id"
+            render={(props) => <PositionDetail {...props} />}
           />
           <Redirect to="/" />
         </Switch>
@@ -65,18 +64,18 @@ const PokemonBrowser = ({ pokemon, getPokemon, formVisible, showForm }) => {
   );
 };
 
-const PokemonBrowserContainer = () => {
+const PositionSidebarContainer = () => {
   const formVisible = useSelector((state) => state.ui.formVisible);
-  const pokemon = useSelector((state) => Object.values(state.pokemon2));
+  const positions = useSelector((state) => Object.values(state.positions));
   const dispatch = useDispatch();
   return (
-    <PokemonBrowser
-      pokemon={pokemon}
+    <PositionSidebar
+      positions={positions}
       formVisible={formVisible}
-      getPokemon={() => dispatch(getPokemon())}
+      getPositions={() => dispatch(getPositions())}
       showForm={() => dispatch(showForm())}
     />
   );
 };
 
-export default PokemonBrowserContainer;
+export default PositionSidebarContainer;

@@ -1,4 +1,4 @@
-import { SET_CURRENT } from "../actions/current-poke";
+import { SET_CURRENT } from "../actions/current-position";
 
 export default function reducer(state = null, action) {
   switch (action.type) {

@@ -5,7 +5,7 @@ export const LOAD = "LOAD";
 
 export const load = (list) => ({ type: LOAD, list });
 
-export const createPokemon = (data) => async (dispatch, getState) => {
+export const createPosition = (data) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
@@ -20,11 +20,11 @@ export const createPokemon = (data) => async (dispatch, getState) => {
 
   if (response.ok) {
     dispatch(hideForm());
-    dispatch(getPokemon());
+    dispatch(getPositions());
   }
 };
 
-export const getPokemon = () => async (dispatch, getState) => {
+export const getPositions = () => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
