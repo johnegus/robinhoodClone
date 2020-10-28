@@ -24,6 +24,7 @@ export const createPosition = (data) => async (dispatch, getState) => {
   }
 };
 
+
 export const getPositions = () => async (dispatch, getState) => {
   const {
     authentication: { token },
@@ -37,5 +38,21 @@ export const getPositions = () => async (dispatch, getState) => {
   if (response.ok) {
     const list = await response.json();
     dispatch(load(list));
+  }
+};
+
+export const exitPosition = (id) => async (dispatch, getState) => {
+  const {
+    authentication: { token },
+  } = getState();
+  const response = await fetch(`${baseUrl}/positions/${id}`, {
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.ok) {
+    dispatch(getPositions());
   }
 };

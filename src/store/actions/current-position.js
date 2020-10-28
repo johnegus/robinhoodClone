@@ -19,3 +19,5 @@ export const getOnePosition = (id) => async (dispatch, getState) => {
     dispatch(setCurrent(current));
   }
 };
+
+

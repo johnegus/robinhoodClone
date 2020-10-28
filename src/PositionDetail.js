@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
+import { exitPosition } from "./store/actions/positions";
 
 
 import { getOnePosition } from "./store/actions/current-position";
@@ -20,7 +21,7 @@ const PositionDetail = ({ positions, getOnePosition }) => {
   if (!positions) {
     return null;
   }
-
+ 
   // const polygon = polygonApi()
   // polygon.getQuote(positions.stockSymbol).then((response) => {
   //   console.log('fetch data from polygon')
@@ -83,24 +84,9 @@ const PositionDetail = ({ positions, getOnePosition }) => {
                 <b>Cost:</b> ${positions.buyPrice}
               </li>
             </ul>
-         
+            <button onClick={exitPosition(positions.id)}>Exit Position</button>
         </div>
       </div>
-      {/* <div className='newsFeed'>
-          {symbols.map(symbol => {
-              return (
-                <div className='newsContainer' key={symbol.timestamp}>
-                    <div className='newsTitle'>
-                      {symbol.title}
-                    </div>
-                    <div className='newsSummary'>
-                    {symbol.summary}
-                    </div>
-                     <img height='100%' width='100%' src={symbol.image}></img>
-                 </div>
-              )
-            })}
-          </div> */}
     </div>
   );
 };
@@ -114,6 +100,7 @@ const PositionDetailContainer = () => {
     <PositionDetail
     positions={positions}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
+      exitPosition={(id) => dispatch(exitPosition(id))}
     />
   
   );
