@@ -8,11 +8,12 @@ import { exitPosition } from "./store/actions/positions";
 import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition }) => {
+  const dispatch = useDispatch();
   const { id } = useParams();
 
-  // useEffect(() => {
-  //   getOnePosition(positions.stockSymbol);
-  // }, [positions.stockSymbol]);
+  useEffect(() => {
+    exitPosition(id);
+  }, [id]);
 
   useEffect(() => {
     getOnePosition(id);
@@ -84,7 +85,7 @@ const PositionDetail = ({ positions, getOnePosition }) => {
                 <b>Cost:</b> ${positions.buyPrice}
               </li>
             </ul>
-            <button onClick={exitPosition(positions.id)}>Exit Position</button>
+            <button onClick={()=> dispatch(exitPosition(positions.id))}>Exit Position</button>
         </div>
       </div>
     </div>

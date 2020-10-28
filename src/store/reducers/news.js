@@ -1,6 +1,6 @@
 import { RECEIVE_NEWS } from '../actions/news_actions';
 
-const newsReducer = (state = [], action) => {
+const reducer = (state = [], action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_NEWS:
@@ -10,4 +10,4 @@ const newsReducer = (state = [], action) => {
   }
 };
 
-export default newsReducer;
+export default reducer;

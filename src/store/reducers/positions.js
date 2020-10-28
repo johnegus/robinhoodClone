@@ -1,6 +1,7 @@
 import merge from "lodash/merge";
-import { LOAD } from "../actions/positions";
+import { LOAD, EXIT } from "../actions/positions";
 import { SET_CURRENT } from "../actions/current-position";
+
 
 export default function reducer(state = {}, action) {
   Object.freeze(state);
@@ -16,7 +17,13 @@ export default function reducer(state = {}, action) {
         [action.current.id]: action.current,
       };
     }
-
+    case EXIT: {
+      let newState = {...state }
+      delete newState[action.current.id]
+      return{
+      ...newState,
+      }
+    }
     default:
       return state;
   }

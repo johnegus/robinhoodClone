@@ -2,8 +2,11 @@ import { baseUrl } from "../../config";
 import { hideForm } from "./ui";
 
 export const LOAD = "LOAD";
+export const EXIT = 'EXIT';
 
 export const load = (list) => ({ type: LOAD, list });
+
+
 
 export const createPosition = (data) => async (dispatch, getState) => {
   const {
@@ -23,6 +26,8 @@ export const createPosition = (data) => async (dispatch, getState) => {
     dispatch(getPositions());
   }
 };
+
+
 
 
 export const getPositions = () => async (dispatch, getState) => {

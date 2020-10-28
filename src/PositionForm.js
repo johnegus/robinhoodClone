@@ -48,13 +48,6 @@ const PositionForm = ({createPosition, hideForm }) => {
           value={buyPrice}
           onChange={updateProperty(setbuyPrice)}
         />
-         <input
-          type="number"
-          placeholder="userId"
-          required
-          value={userId}
-          onChange={updateProperty(setUserId)}
-        />
         <input
           type="number"
           placeholder="Shares"
