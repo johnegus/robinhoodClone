@@ -6,6 +6,7 @@ import { loadToken } from "./store/actions/authentication";
 import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import LoginPanel from "./LoginPanel";
 import PositionSidebar from "./PositionSidebar";
+import NewsApi from './NewsApi'
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);

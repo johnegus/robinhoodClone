@@ -36,7 +36,7 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
                 }
               >
                 <div
-                  className="nav-entry-image">+35%</div>
+                  className="nav-entry-image">{((position.currentPrice/position.buyPrice)*100-100).toFixed(0)}%</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">

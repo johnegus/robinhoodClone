@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import polygonApi from './util/polygon';
+
 
 import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition }) => {
   const { id } = useParams();
+
+  // useEffect(() => {
+  //   getOnePosition(positions.stockSymbol);
+  // }, [positions.stockSymbol]);
+
   useEffect(() => {
     getOnePosition(id);
   }, [id]);
@@ -13,6 +20,28 @@ const PositionDetail = ({ positions, getOnePosition }) => {
   if (!positions) {
     return null;
   }
+
+  // const polygon = polygonApi()
+  // polygon.getQuote(positions.stockSymbol).then((response) => {
+  //   console.log('fetch data from polygon')
+  //   console.log(response)
+  //   if(response.ok){
+  //     this.setState({
+  //       symbols: response.data
+  //       // image: response.data.image,
+  //       // title: response.data.title,
+  //       // summary: response.data.summary,
+  //       // url: response.data.url
+  //     })
+  //   }
+  // });
+
+
+
+
+
+
+
   return (
     <div className="pokemon-detail">
       <div
@@ -57,6 +86,21 @@ const PositionDetail = ({ positions, getOnePosition }) => {
          
         </div>
       </div>
+      {/* <div className='newsFeed'>
+          {symbols.map(symbol => {
+              return (
+                <div className='newsContainer' key={symbol.timestamp}>
+                    <div className='newsTitle'>
+                      {symbol.title}
+                    </div>
+                    <div className='newsSummary'>
+                    {symbol.summary}
+                    </div>
+                     <img height='100%' width='100%' src={symbol.image}></img>
+                 </div>
+              )
+            })}
+          </div> */}
     </div>
   );
 };
@@ -66,10 +110,12 @@ const PositionDetailContainer = () => {
   const dispatch = useDispatch();
 
   return (
+
     <PositionDetail
     positions={positions}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
     />
+  
   );
 };
 

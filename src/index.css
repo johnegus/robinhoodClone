@@ -54,7 +54,6 @@ input:focus {
 nav {
   flex: 0 0 300px;
   overflow-y: auto;
-  border: 2px solid red;
   position:relative;
 
 }
@@ -92,16 +91,16 @@ td.centered {
 
 .fab {
   align-items: center;
-  background-color: orange;
+  background-color: greenyellow;
   border-radius: 50px;
-  bottom: 30px;
+  top: 10px;
   box-shadow: 0 4px 6px rgb(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
   justify-content: center;
   overflow: hidden;
   position: fixed;
-  left: 200px;
+  right: 150px;
   height: 50px;
   width: 50px;
   transition: box-shadow 0.5s, transform 0.25s;
@@ -173,7 +172,7 @@ td.centered {
 }
 
 .pokemon-detail-image-background {
-  background: linear-gradient(315deg, #d43316, #ff0);
+  background: linear-gradient(315deg, #16d416, rgb(15, 15, 15));
   background-size: cover;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   padding: 30px;
@@ -185,7 +184,7 @@ td.centered {
   background-size: contain;
   height: 400px;
   transition: height 0.5s;
-  background-color: red;
+  background-color: rgb(14, 12, 12);
 }
 
 .pokemon-detail-lists {
