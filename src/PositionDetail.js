@@ -30,30 +30,31 @@ const PositionDetail = ({ positions, getOnePosition }) => {
           <h2>Information</h2>
           <ul>
             <li>
-              <b>Type</b> {positions.stockSymbol}
+              <b>Symbol</b> {positions.stockSymbol}
             </li>
             <li>
-              <b>Attack</b> {positions.stockName}
+              <b>Stock Name</b> {positions.stockName}
             </li>
             <li>
-              <b>Defense</b> {positions.currentPrice}
+              <b>Current Price</b> ${positions.currentPrice}
             </li>
             
           </ul>
         </div>
         <div>
-          <h2>Items</h2>
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Happiness</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            
-          </table>
+          <h2>Your Position</h2>
+            <ul>
+              <li>
+                <b>Shares:</b> {positions.shares}
+              </li>
+              <li>
+                <b>Equity:</b> ${positions.shares*positions.currentPrice}
+              </li>
+              <li>
+                <b>Cost:</b> ${positions.buyPrice}
+              </li>
+            </ul>
+         
         </div>
       </div>
     </div>
@@ -61,7 +62,7 @@ const PositionDetail = ({ positions, getOnePosition }) => {
 };
 
 const PositionDetailContainer = () => {
-  const positions = useSelector((state) => state.positions);
+  const positions = useSelector((state) => state.positions[state.currentPosition]);
   const dispatch = useDispatch();
 
   return (

@@ -56,7 +56,6 @@ nav {
   overflow-y: auto;
   border: 2px solid red;
   position:relative;
-  top: 50px;
 
 }
 
@@ -192,6 +191,7 @@ td.centered {
 .pokemon-detail-lists {
   padding-left: 25px;
   margin-bottom: 1em;
+  z-index: 5;
 }
 
 .primary-text {
@@ -199,8 +199,8 @@ td.centered {
 }
 
 .active .nav-entry {
-  border-right-color: orange;
-  background-color: #FFF3E0;
+  border-right-color:lightgreen;
+  background-color: lightgreen;
 }
 
 .secondary-text {
@@ -208,11 +208,7 @@ td.centered {
   color: #999;
 }
 
-#topnav{
-  width: 100%;
-  border: 2px solid red;
-  height: 50px;
-}
+
 
 @media screen and (min-width: 1000px) {
   .pokemon-detail-lists {
