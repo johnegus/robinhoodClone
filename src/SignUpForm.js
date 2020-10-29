@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from './store/actions/authentication';
 import {Link} from 'react-router-dom'; 
+import leaf from './leaf-clipart-12-transparent.png';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
@@ -32,6 +33,7 @@ const SignUpForm = () => {
 
   return (
     <main className="centered middled">
+      <img src={leaf} alt="img" />
       <form onSubmit={handleSubmit}>
         <input
           type='text'

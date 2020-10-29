@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./store/actions/authentication";
 import {Link} from 'react-router-dom'; 
-
+import leaf from './leaf-clipart-12-transparent.png';
 
 
 const LoginPanel = (props) => {
@@ -25,6 +25,7 @@ const LoginPanel = (props) => {
 
   return (
     <main className="centered middled">
+      <img src={leaf} alt="img" />
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, setState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
+// import alpacaApi from './util/alpaca';
 import { exitPosition } from "./store/actions/positions";
 
 
 import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition }) => {
-  // const [symbols, setSymbols] = useState([]);
+  const [stories, setStories] = useState([]);
+  const [livePositions, setLivePositions] = useState([])
+  const [isLoading, setIsLoading] = useState(true); 
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -22,40 +25,44 @@ const PositionDetail = ({ positions, getOnePosition }) => {
     getOnePosition(id);
   }, [id]);
 
-  // useEffect(() => {
-  //   const fetchPositionNews = async () =>{
-  //     const polygon = polygonApi()
-  //     polygon.getQuote('SPY').then((response) => {
-  //       console.log('fetch data from polygon')
-  //       console.log(response)
-  //       if(response.ok){
-  //         setSymbols({
-  //           symbols: response.data.title
-  //           // image: response.data.image,
-  //           // title: response.data.title,
-  //           // summary: response.data.summary,
-  //           // url: response.data.url
-  //         })
-  //       }
-  //     });
-  //   }
-  //   fetchPositionNews();
-  // }, []);
+  //polygon news fetch -------------------------------------------------------------
+  useEffect(() => {
+    if (!positions) {
+      return;
+    }
+    const fetchPositionNews = async () =>{
+      const polygon = polygonApi()
+      polygon.getQuote(positions.stockSymbol).then((response) => {
+        console.log('fetch data from polygon')
+        console.log(response)
+        if(response.ok){
+          setStories(response.data)
+        }
+      });
+    }
+    fetchPositionNews();  
+    //setinterval would go here return the clear interval
+    //return ()=> clearInterval
+  }, [positions]);
+ //alpaca account fetch -------------------------------------------------------------
+//  useEffect(() => {
+//   const fetchLivePositions = async () =>{
+   
+//     fetchLivePositions();
+//   }
+
+// }, []);
+
+
+
+
 
 
   if (!positions) {
     return null;
   }
  
-
-
-
-
-
-
-
-
-  return (
+return (
     <div className="pokemon-detail">
       <div
         className={`pokemon-detail-image-background`}
@@ -99,6 +106,21 @@ const PositionDetail = ({ positions, getOnePosition }) => {
             <button onClick={()=> dispatch(exitPosition(positions.id))}>Exit Position</button>
         </div>
       </div>
+      <div className='newsFeed'>
+          {stories.map(story => {
+              return (
+                <div className='newsContainer' key={story.timestamp}>
+                    <div className='newsTitle'>
+                      {story.title}
+                    </div>
+                    <div className='newsSummary'>
+                    {story.summary}
+                    </div>
+                     <img height='100%' width='100%' src={story.image}></img>
+                 </div>
+              )
+            })}
+          </div>
     </div>
   );
 };
