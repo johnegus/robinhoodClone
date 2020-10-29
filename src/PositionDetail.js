@@ -8,6 +8,7 @@ import { exitPosition } from "./store/actions/positions";
 import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition }) => {
+  // const [symbols, setSymbols] = useState([]);
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -15,28 +16,38 @@ const PositionDetail = ({ positions, getOnePosition }) => {
     exitPosition(id);
   }, [id]);
 
+  
+
   useEffect(() => {
     getOnePosition(id);
   }, [id]);
+
+  // useEffect(() => {
+  //   const fetchPositionNews = async () =>{
+  //     const polygon = polygonApi()
+  //     polygon.getQuote('SPY').then((response) => {
+  //       console.log('fetch data from polygon')
+  //       console.log(response)
+  //       if(response.ok){
+  //         setSymbols({
+  //           symbols: response.data.title
+  //           // image: response.data.image,
+  //           // title: response.data.title,
+  //           // summary: response.data.summary,
+  //           // url: response.data.url
+  //         })
+  //       }
+  //     });
+  //   }
+  //   fetchPositionNews();
+  // }, []);
+
 
   if (!positions) {
     return null;
   }
  
-  // const polygon = polygonApi()
-  // polygon.getQuote(positions.stockSymbol).then((response) => {
-  //   console.log('fetch data from polygon')
-  //   console.log(response)
-  //   if(response.ok){
-  //     this.setState({
-  //       symbols: response.data
-  //       // image: response.data.image,
-  //       // title: response.data.title,
-  //       // summary: response.data.summary,
-  //       // url: response.data.url
-  //     })
-  //   }
-  // });
+
 
 
 

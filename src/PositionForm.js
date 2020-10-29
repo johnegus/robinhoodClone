@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { createPosition } from "./store/actions/positions";
 import { hideForm } from "./store/actions/ui";
 
@@ -9,7 +9,6 @@ const PositionForm = ({createPosition, hideForm }) => {
   const [currentPrice, setcurrentPrice] = useState("");
   const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
-  const [userId, setUserId] = useState("");
  
 
   
@@ -22,7 +21,7 @@ const PositionForm = ({createPosition, hideForm }) => {
       currentPrice,
       buyPrice,
       shares,
-      userId
+      
     };
     createPosition(payload);
   };

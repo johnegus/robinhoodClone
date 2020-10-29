@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./store/actions/authentication";
+import {Link} from 'react-router-dom'; 
+
+
 
 const LoginPanel = (props) => {
   const [email, setEmail] = useState("demo@example.com");
@@ -36,6 +39,11 @@ const LoginPanel = (props) => {
           onChange={updatePassword}
         />
         <button type="submit">Login</button>
+        <Link to="/signup">
+     <button type="button">
+     Sign Up
+     </button>
+      </Link>
       </form>
     </main>
   );

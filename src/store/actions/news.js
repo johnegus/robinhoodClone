@@ -9,5 +9,5 @@ const receiveNews = news => ({
 
 export const fetchNews = () => dispatch => (
     polygonApi.fetchNews()
-    .then(news => dispatch(receiveNews(news.articles)))
+    .then(symbol => dispatch(receiveNews(symbol.title)))
 );

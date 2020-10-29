@@ -6,7 +6,7 @@ import { loadToken } from "./store/actions/authentication";
 import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import LoginPanel from "./LoginPanel";
 import PositionSidebar from "./PositionSidebar";
-import NewsApi from './NewsApi'
+import SignUpForm from './SignUpForm';
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
@@ -27,6 +27,12 @@ const App = ({ needLogin, loadToken }) => {
           exact={true}
           needLogin={needLogin}
           component={LoginPanel}
+        />
+        <ProtectedRoute
+          path="/signup"
+          exact={true}
+          needLogin={needLogin}
+          component={SignUpForm}
         />
         <PrivateRoute
           path="/"

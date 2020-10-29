@@ -44,3 +44,16 @@ export const logout = () => async (dispatch, getState) => {
     dispatch(removeToken());
   }
 };
+
+export const signUp = (user) => async (dispatch) => {
+  const response = await fetch(`${baseUrl}/users`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(user),
+  });
+  if (response.ok) {
+    const { token } = await response.json();
+    window.localStorage.setItem(TOKEN_KEY, token);
+    dispatch(setToken(token));
+  }
+};
