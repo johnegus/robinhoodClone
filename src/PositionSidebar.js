@@ -25,6 +25,7 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
       <LogoutButton />
       <nav>
         <Fab hidden={formVisible} onClick={showForm} />
+        <div>Stocks</div>
         {positions.map((position) => {
           return (
             <NavLink key={position.id} to={`/position/${position.id}`}>
