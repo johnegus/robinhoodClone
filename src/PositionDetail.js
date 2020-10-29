@@ -2,7 +2,7 @@ import React, { useEffect, useState, setState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
-// import alpacaApi from './util/alpaca';
+import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 
 
@@ -12,6 +12,9 @@ const PositionDetail = ({ positions, getOnePosition }) => {
   const [stories, setStories] = useState([]);
   const [livePositions, setLivePositions] = useState([])
   const [isLoading, setIsLoading] = useState(true); 
+  const [stockChartXValues, setstockChartXValues] = useState([]);
+  const [stockChartYValues, setstockChartYValues] = useState([]);
+
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -44,22 +47,77 @@ const PositionDetail = ({ positions, getOnePosition }) => {
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
   }, [positions]);
- //alpaca account fetch -------------------------------------------------------------
-//  useEffect(() => {
-//   const fetchLivePositions = async () =>{
-   
-//     fetchLivePositions();
-//   }
+ //alphavantage stock fetch -------------------------------------------------------------
+ useEffect(() => {
+  if (!positions) {
+    return;
+  }
+  const fetchLivePositions = async () =>{
+    
+      const API_Key = '06N03QCM2TDKP6QS';
+      let stockSymbol = positions.stockSymbol
+      let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${API_Key}`;
+      let stockChartXValuesFunction = [];
+      let stockChartYValuesFunction = [];
+    
+    
+      fetch(API_CALL)
+      .then(
+          function(response){
+              return response.json()
+          }
+      )
+      .then(
+          function(data){
+            console.log('fetch ticker data from alphavantage')
+              console.log(data);
+              for(let key in data['Time Series (5min)']){
+                  stockChartXValuesFunction.push(key);
+                  stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
+              }
+              console.log(stockChartXValuesFunction);
+              console.log(stockChartYValuesFunction);
+              setstockChartXValues(stockChartXValuesFunction)
+              setstockChartYValues(stockChartYValuesFunction)
+              setIsLoading(false);
+          }
+      )
+        }
+    fetchLivePositions();
+  
 
-// }, []);
-
-
-
-
-
+}, [positions]);
 
   if (!positions) {
     return null;
+  }
+
+  if (isLoading) {
+    return <h1>Fetching stock data...</h1>;
+  }
+  const lineChartData = {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgba(255, 99, 132, 0.2)',
+      },
+    ],
+  }
+  
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   }
  
 return (
@@ -68,10 +126,9 @@ return (
         className={`pokemon-detail-image-background`}
         
       >
-        <div
-          className="pokemon-detail-image"
-          
-        ></div>
+        <div className="pokemon-detail-image">
+        <Line data={lineChartData} options={options} />
+        </div>
         <h1 className="bigger">{positions.stockName}</h1>
       </div>
       <div className="pokemon-detail-lists">
@@ -85,7 +142,7 @@ return (
               <b>Stock Name</b> {positions.stockName}
             </li>
             <li>
-              <b>Current Price</b> ${positions.currentPrice}
+              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
             </li>
             
           </ul>
@@ -111,7 +168,8 @@ return (
               return (
                 <div className='newsContainer' key={story.timestamp}>
                     <div className='newsTitle'>
-                      {story.title}
+                      
+                      <a className='newsLink' target="_blank" href={story.url}>{story.title}</a>
                     </div>
                     <div className='newsSummary'>
                     {story.summary}
