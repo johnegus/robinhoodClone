@@ -41,8 +41,9 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">
-                  ${position.currentPrice}
+                  {position.shares} share{ position.shares===1 ? '' : 's'} at ${position.currentPrice}     
                   </div>
+
                 </div>
               </div>
             </NavLink>

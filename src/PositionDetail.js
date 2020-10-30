@@ -96,27 +96,39 @@ const PositionDetail = ({ positions, getOnePosition }) => {
     return <h1>Fetching stock data...</h1>;
   }
   const lineChartData = {
-    labels: ['1', '2', '3', '4', '5', '6'],
+    labels: stockChartXValues,
     datasets: [
       {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: positions.stockSymbol,
+        data: stockChartYValues,
         fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor:stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red',
+        // borderColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red'
       },
     ],
   }
   
   const options = {
+    elements: {
+      point:{
+          radius: 0
+      }
+  },
     scales: {
       yAxes: [
         {
           ticks: {
-            beginAtZero: true,
+            beginAtZero: false,
           },
         },
       ],
+      xAxes: [{
+        display: false,
+        ticks: {
+          reverse: true,
+        }
+    }]
     },
   }
  
@@ -129,11 +141,15 @@ return (
         <div className="pokemon-detail-image">
         <Line data={lineChartData} options={options} />
         </div>
+        <div>
+        <h1 className="bigger">{positions.stockSymbol}</h1>
         <h1 className="bigger">{positions.stockName}</h1>
+        <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
+        </div>
       </div>
       <div className="pokemon-detail-lists">
         <div>
-          <h2>Information</h2>
+          <h2>Stock Information</h2>
           <ul>
             <li>
               <b>Symbol</b> {positions.stockSymbol}
@@ -154,10 +170,16 @@ return (
                 <b>Shares:</b> {positions.shares}
               </li>
               <li>
-                <b>Equity:</b> ${positions.shares*positions.currentPrice}
+                <b>Average Cost:</b> ${positions.buyPrice}
               </li>
               <li>
-                <b>Cost:</b> ${positions.buyPrice}
+                <b>Date Purchased:</b> {positions.createdAt}
+              </li>
+              <li>
+                <b>Market Value:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)}
+              </li>
+              <li>
+                <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
               </li>
             </ul>
             <button onClick={()=> dispatch(exitPosition(positions.id))}>Exit Position</button>

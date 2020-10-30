@@ -87,8 +87,9 @@ td.centered {
 }
 
 .bigger {
-  font-size: 4em;
+  font-size: 2em;
   margin-top: 0;
+  margin-left: 0;
 }
 
 .centered {
@@ -233,7 +234,8 @@ td.centered {
 
   .pokemon-detail-image-background {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    
   }
 
   .pokemon-detail h1 {
@@ -263,13 +265,13 @@ td.centered {
 }
 
 .stocks{
-  border: 2px solid red;
+  /* border: 2px solid red; */
   height: 100px;
   width: 300px;
 }
 
 .newsContainer{
-  border: 2px solid red;
+  /* border: 2px solid red; */
 
   padding: 6px;
   border-radius: 10px;
@@ -282,21 +284,21 @@ td.centered {
 }
 
 .newsTitle{
-  border: 2px solid red;
+  /* border: 2px solid red; */
   font-weight: bold;
   grid-column: 2/3;
   grid-row: 1/2;
 }
 
 .newsSummary{
-  border: 2px solid red;
+  /* border: 2px solid red; */
 
   grid-column: 1/3;
   grid-row: 2/3;
 }
 
 .newsImg{
-  border: 2px solid red;
+  /* border: 2px solid red; */
   height: 50px;
   width:  50px;
   grid-column: 1/2;
