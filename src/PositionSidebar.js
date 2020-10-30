@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
 
@@ -8,8 +8,13 @@ import PositionForm from "./PositionForm";
 import Fab from "./Fab";
 import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
+import UserDetail from './UserDetail';
+
+
+import SearchContainer from "./search/SearchContainer";
 
 const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => {
+
   useEffect(() => {
     getPositions();
   }, []);
@@ -23,7 +28,13 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
   return (
     <main>
       <LogoutButton />
+      
+          
       <nav>
+        <Switch>
+      <SearchContainer />
+          <Redirect to="/" />
+          </Switch>
         <Fab hidden={formVisible} onClick={showForm} />
         <div>Stocks</div>
         {positions.map((position) => {
@@ -59,7 +70,9 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}
           />
-          <Redirect to="/" />
+           <Route path="/" component={UserDetail} />
+          
+          
         </Switch>
       )}
     </main>

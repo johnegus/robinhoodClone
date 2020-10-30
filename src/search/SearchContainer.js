@@ -3,7 +3,7 @@ import { SearchContext } from './SearchContext';
 import SearchResults from './SearchResults';
 import SearchApp from './SearchApp';
 
-const App = () => {
+const SearchContainer = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -14,4 +14,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default SearchContainer;
