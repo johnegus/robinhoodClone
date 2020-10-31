@@ -41,7 +41,7 @@ export const getWatchedStocks = () => async (dispatch, getState) => {
   if (response.ok) {
     const list = await response.json();
     dispatch(loadWatched(list));
-  }
+  } 
 };
 
 export const exitWatchedStock = (id) => async (dispatch, getState) => {

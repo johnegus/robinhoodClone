@@ -99,13 +99,13 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
         <PositionForm />
       ) : (
         <Switch>
-          
+         
           <Route
             exact={true}
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}
           />
-           {/* <Route path="/" component={UserDetail} /> */}
+           <Route path="/" component={UserDetail} />
           
           
         </Switch>

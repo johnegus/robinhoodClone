@@ -57,7 +57,34 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   }, [id]);
 
   //financial modeling prep fetch---------------------------------------------------
-  
+  useEffect(() => {
+    if (!positions) {
+      return;
+    }
+    const fetchCompanyInfo = async () =>{
+      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      let stockSymbol = positions.stockSymbol
+      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
+     
+    
+      fetch(API_CALL)
+      .then(
+          function(response){
+              return response.json()
+          }
+      )
+      .then(
+          function({data}){
+            console.log('fetch ticker data from FMP')
+            console.log(data);
+              
+          }
+      )
+    }
+    fetchCompanyInfo();  
+    //setinterval would go here return the clear interval
+    //return ()=> clearInterval
+  }, [positions]);
   //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
     if (!positions) {
