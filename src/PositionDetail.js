@@ -4,16 +4,43 @@ import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
+import { createPosition } from "./store/actions/positions";
+
 
 
 import { getOnePosition } from "./store/actions/current-position";
 
-const PositionDetail = ({ positions, getOnePosition }) => {
+const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   const [stories, setStories] = useState([]);
   const [livePositions, setLivePositions] = useState([])
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
+  const [stockSymbol, setstockSymbol] = useState("");
+  const [stockName, setstockName] = useState("");
+  const [currentPrice, setcurrentPrice] = useState("");
+  const [buyPrice, setbuyPrice] = useState("");
+  const [shares, setshares] = useState("");
+ 
+
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      stockSymbol,
+      stockName,
+      currentPrice,
+      buyPrice,
+      shares,
+      
+    };
+    createPosition(payload);
+  };
+
+  const updateProperty = (callback) => (e) => {
+    callback(e.target.value);
+  };
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -182,6 +209,43 @@ return (
                 <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
               </li>
             </ul>
+            <form onSubmit={handleSubmit}>
+        <input
+          
+          placeholder="Current Price"
+          required
+          value={parseInt(stockChartYValues[0]).toFixed(2)}
+          onChange={updateProperty(setcurrentPrice)}
+        />
+        <input
+          
+          placeholder="Buy Price"
+          required
+          value={parseInt(stockChartYValues[0]).toFixed(2)}
+          onChange={updateProperty(setbuyPrice)}
+        />
+        <input
+          type="number"
+          placeholder="Shares"
+          required
+          value={shares}
+          onChange={updateProperty(setshares)}
+        />
+        <input
+          type="text"
+          placeholder="Stock Symbol"
+          value={stockSymbol}
+          onChange={updateProperty(setstockSymbol)}
+        />
+        <input
+          type="text"
+          placeholder="Stock Name"
+          value={stockName}
+          onChange={updateProperty(setstockName)}
+        />
+        <button type="submit">Buy Shares!</button>
+        
+      </form>
             <button onClick={()=> dispatch(exitPosition(positions.id))}>Exit Position</button>
         </div>
       </div>
@@ -215,6 +279,7 @@ const PositionDetailContainer = () => {
     positions={positions}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
+      createPosition={(positions) => dispatch(createPosition(positions))}
     />
   
   );
