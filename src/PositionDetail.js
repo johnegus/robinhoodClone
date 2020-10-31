@@ -197,9 +197,7 @@ return (
         className={`pokemon-detail-image-background`}
         
       >
-        <div className="pokemon-detail-image">
-        <Line data={lineChartData} options={options} />
-        </div>
+        
         <div>
         <h1 className="bigger">{positions.stockSymbol}</h1>
         <h1 className="bigger">{positions.stockName}</h1>
@@ -207,7 +205,9 @@ return (
         </div>
       </div>
       <div className="pokemon-detail-lists">
+      
         <div>
+        <Line data={lineChartData} options={options} />
           <h2>Stock Information</h2>
           <ul>
             <li>

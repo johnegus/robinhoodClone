@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getOneUser } from "./store/actions/current-user";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-
+import Chart from './dashboard/Chart'
+import Orders from './dashboard/Orders'
+import Deposits from './dashboard/Deposits'
 
 
 const UserDetail = (currentUser, getOneUser) => {
@@ -18,13 +20,39 @@ const UserDetail = (currentUser, getOneUser) => {
 
 //   if (!currentUser) {
 //     return null;
+
+
 //   }
-  return (
-  <div>
-    <h3 className="UserDetail">Welcome to Algo</h3>
+
+return (
+  <div className="pokemon-detail">
+    <div
+      className={`pokemon-detail-image-background`}
+      
+    >
+      <div>
+      <h1 className="bigger">Welcome to Algo</h1>
+      </div>
+      
+    </div>
+    <Deposits />
+    <Chart />
+    
+    <div className="pokemon-detail-lists">
+      
+    
+      <div>
+      
+      <Orders />
+      
+      
+      </div>
+      
+    </div>
     
   </div>
-  )
+);
+ 
   };
 
   // const UserDetailContainer = () => {
