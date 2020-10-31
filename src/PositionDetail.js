@@ -12,8 +12,9 @@ import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   const [stories, setStories] = useState([]);
-  const [livePositions, setLivePositions] = useState([])
+  const [liveSymbol, setLiveSymbol] = useState('')
   const [isLoading, setIsLoading] = useState(true); 
+  const [volume, setVolume] = useState('');
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
   const [stockSymbol, setstockSymbol] = useState("");
@@ -55,6 +56,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
     getOnePosition(id);
   }, [id]);
 
+  //financial modeling prep fetch---------------------------------------------------
+  
   //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
     if (!positions) {
@@ -97,7 +100,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
       .then(
           function(data){
             console.log('fetch ticker data from alphavantage')
-              console.log(data);
+            console.log(data);
+              // setVolume(data['Time Series (5min)'][0]["5. volume"]);
+              setLiveSymbol(data["Meta Data"]["2. Symbol"]);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
@@ -179,13 +184,16 @@ return (
           <h2>Stock Information</h2>
           <ul>
             <li>
-              <b>Symbol</b> {positions.stockSymbol}
+              <b>Symbol</b> {liveSymbol}
             </li>
             <li>
               <b>Stock Name</b> {positions.stockName}
             </li>
             <li>
               <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+            </li>
+            <li>
+              <b>Volume</b> {volume}
             </li>
             
           </ul>
@@ -209,6 +217,7 @@ return (
                 <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
               </li>
             </ul>
+            <h2>Buy</h2>
             <form onSubmit={handleSubmit}>
         <input
           
@@ -234,7 +243,7 @@ return (
         <input
           type="text"
           placeholder="Stock Symbol"
-          value={stockSymbol}
+          value={liveSymbol}
           onChange={updateProperty(setstockSymbol)}
         />
         <input

@@ -8,21 +8,31 @@ import PositionForm from "./PositionForm";
 import Fab from "./Fab";
 import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
+import {getWatchedStocks} from './store/actions/watched-stocks'
 import UserDetail from './UserDetail';
+
 
 
 import SearchContainer from "./search/SearchContainer";
 
-const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => {
+const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisible, showForm, watchedStocks }) => {
 
   useEffect(() => {
     getPositions();
+  }, []);
+
+  useEffect(() => {
+    getWatchedStocks();
   }, []);
 
   const { id } = useParams();
   const positionId = Number.parseInt(id);
 
   if (!positions) {
+    return null;
+  }
+
+  if (!watchedStocks) {
     return null;
   }
   return (
@@ -60,6 +70,30 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
             </NavLink>
           );
         })}
+        <div>Watchlist</div>
+        {watchedStocks.map((watchedStock) => {
+          return (
+            <NavLink key={watchedStock.id} to={`/watchlist/${watchedStock.id}`}>
+              <div
+                className={
+                  positionId === watchedStock.id
+                    ? "nav-entry is-selected"
+                    : "nav-entry"
+                }
+              >
+                <div
+                  className="nav-entry-image">{watchedStock.currentPrice}</div>
+                <div>
+                  <div className="primary-text">{watchedStock.stockName}</div>
+                  <div className="secondary-text">
+                  
+                  </div>
+
+                </div>
+              </div>
+            </NavLink>
+          );
+        })}
       </nav>
       {formVisible ? (
         <PositionForm />
@@ -83,11 +117,14 @@ const PositionSidebar = ({ positions, getPositions, formVisible, showForm }) => 
 const PositionSidebarContainer = () => {
   const formVisible = useSelector((state) => state.ui.formVisible);
   const positions = useSelector((state) => Object.values(state.positions));
+  const watchedStocks = useSelector((state) => Object.values(state.watchedStocks));
   const dispatch = useDispatch();
   return (
     <PositionSidebar
       positions={positions}
+      watchedStocks={watchedStocks}
       formVisible={formVisible}
+      getWatchedStocks={() => dispatch(getWatchedStocks())}
       getPositions={() => dispatch(getPositions())}
       showForm={() => dispatch(showForm())}
     />
