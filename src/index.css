@@ -76,7 +76,7 @@ td.centered {
   background-color: greenyellow;
   border: 1px solid greenyellow;
   position: absolute;
-  top: 10px;
+  top: 50px;
   right: 10px;
 }
 
@@ -100,14 +100,14 @@ td.centered {
   align-items: center;
   background-color: greenyellow;
   border-radius: 50px;
-  top: 10px;
+  top: 100px;
   box-shadow: 0 4px 6px rgb(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
   justify-content: center;
   overflow: hidden;
   position: fixed;
-  right: 150px;
+  right: 10px;
   height: 50px;
   width: 50px;
   transition: box-shadow 0.5s, transform 0.25s;

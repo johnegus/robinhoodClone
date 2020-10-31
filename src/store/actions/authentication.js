@@ -1,5 +1,5 @@
 import { baseUrl } from "../../config";
-
+import {setCurrentUser} from './current-user'
 export const TOKEN_KEY = "TOKEN_KEY";
 export const SET_TOKEN = "SET_TOKEN";
 export const REMOVE_TOKEN = "REMOVE_TOKEN";
@@ -23,10 +23,11 @@ export const login = (email, password) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const { token } = await response.json();
+    const { token, user: {id}} = await response.json();
     
     window.localStorage.setItem(TOKEN_KEY, token);
     dispatch(setToken(token));
+    dispatch(setCurrentUser(id));
   }
 };
 

@@ -3,8 +3,9 @@ import { getOneUser } from "./store/actions/current-user";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const UserDetail = ({users, getOneUser}) => {
-  const { id } = useParams();
+
+const UserDetail = ({currentUser, getOneUser}) => {
+const { id } = {currentUser};
 
 
 
@@ -12,6 +13,10 @@ const UserDetail = ({users, getOneUser}) => {
   useEffect(() => {
     getOneUser(id);
   }, [id]);
+
+  if (!currentUser) {
+    return null;
+  }
   return (
   <div>
     <h3 className="UserDetail">Welcome to Algo</h3>
@@ -21,13 +26,13 @@ const UserDetail = ({users, getOneUser}) => {
   };
 
   const UserDetailContainer = () => {
-    const users = useSelector((state) => state.users[state.currentUser]);
+    const user = useSelector((state) => state.currentUser);
     const dispatch = useDispatch();
   
     return (
   
       <UserDetail
-      users={users}
+      user={user}
         getOneUser={(id) => dispatch(getOneUser(id))}
         
       />

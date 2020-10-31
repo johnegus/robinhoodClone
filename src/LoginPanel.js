@@ -23,6 +23,7 @@ const LoginPanel = (props) => {
     setPassword(e.target.value);
   };
 
+
   return (
     <main className="centered middled">
       <img src={leaf} alt="img" />

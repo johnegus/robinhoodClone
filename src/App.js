@@ -7,6 +7,7 @@ import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import LoginPanel from "./LoginPanel";
 import PositionSidebar from "./PositionSidebar";
 import SignUpForm from './SignUpForm';
+import SearchDetailContainer from './search/SearchResults'
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
@@ -38,6 +39,11 @@ const App = ({ needLogin, loadToken }) => {
           path="/"
           needLogin={needLogin}
           component={PositionSidebar}
+        />
+        <PrivateRoute
+          path="/search"
+          needLogin={needLogin}
+          component={SearchDetailContainer}
         />
         <Redirect to="/" />
       </Switch>
