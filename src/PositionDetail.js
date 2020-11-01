@@ -6,6 +6,7 @@ import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
 import { createInstance } from "./store/actions/history";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
@@ -13,7 +14,6 @@ import { getOnePosition } from "./store/actions/current-position";
 
 const PositionDetail = ({ positions, getOnePosition, createPosition, createInstance }) => {
   const [stories, setStories] = useState([]);
-  const [liveSymbol, setLiveSymbol] = useState('')
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
@@ -23,9 +23,14 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
   const [profitLoss, setProfitLoss] = useState('');
- 
+  const [livedescription, setCompanyDescription] = useState('');
+  const [liveimage, setImage] = useState('');
+  const [liveexchange, setExchange] = useState('');
 
-  
+  // setstockName(data[0][companyName])
+  //           setCompanyDescription(data[0][description])
+  //           setExchange(data[0][exchangeShortName])
+  //           setImage(data[0][image])
 
   
 
@@ -43,34 +48,38 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   }, [id]);
 
   //financial modeling prep fetch---------------------------------------------------
-  // useEffect(() => {
-  //   if (!positions) {
-  //     return;
-  //   }
-  //   const fetchCompanyInfo = async () =>{
-  //     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-  //     let stockSymbol = positions.stockSymbol
-  //     let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
+  useEffect(() => {
+    if (!positions) {
+      return;
+    }
+    const fetchCompanyInfo = async () =>{
+      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      let stockSymbol = positions.stockSymbol
+      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
      
     
-  //     fetch(API_CALL)
-  //     .then(
-  //         function(response){
-  //             return response.json()
-  //         }
-  //     )
-  //     .then(
-  //         function({data}){
-  //           console.log('fetch ticker data from FMP')
-  //           console.log(data);
+      fetch(API_CALL)
+      .then(
+          function(response){
+              return response.json()
+          }
+      )
+      .then(
+          function(data){
+            console.log('fetch ticker data from FMP')
+            console.log(data);
+            setstockName(data[0]['companyName'])
+            setCompanyDescription(data[0]['description'])
+            setExchange(data[0]['exchangeShortName'])
+            setImage(data[0]['image'])
               
-  //         }
-  //     )
-  //   }
-  //   fetchCompanyInfo();  
-  //   //setinterval would go here return the clear interval
-  //   //return ()=> clearInterval
-  // }, [positions]);
+          }
+      )
+    }
+    fetchCompanyInfo();  
+    //setinterval would go here return the clear interval
+    //return ()=> clearInterval
+  }, [positions]);
   //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
     if (!positions) {
@@ -115,7 +124,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
             console.log('fetch ticker data from alphavantage')
             console.log(data);
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
-              setLiveSymbol(data["Meta Data"]["2. Symbol"]);
+              setstockSymbol(data["Meta Data"]["2. Symbol"]);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
@@ -124,6 +133,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               console.log(stockChartYValuesFunction);
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
+              setcurrentPrice(parseInt(stockChartYValues[0]))
+              setbuyPrice(parseInt(stockChartYValues[0]))
+              setProfitLoss(positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice)
               setIsLoading(false);
           }
       )
@@ -138,7 +150,15 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   }
 
   if (isLoading) {
-    return <h1>Fetching stock data...</h1>;
+    return (
+    <>
+    
+    <main className="centered middled">
+      <b>Fetching market data...</b>
+      <CircularProgress />
+      </main>
+    </>
+    )
   }
   const lineChartData = {
     labels: stockChartXValues,
@@ -182,8 +202,12 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    createInstance(profitLoss);
 
+    console.log(stockSymbol)
+    console.log(stockName)
+    console.log(currentPrice)
+    console.log(buyPrice)
+    console.log(shares)
     const payload = {
       stockSymbol,
       stockName,
@@ -206,8 +230,9 @@ return (
       >
         
         <div>
+        <img src={liveimage} alt="Logo" />
         <h1 className="bigger">{positions.stockSymbol}</h1>
-        <h1 className="bigger">{positions.stockName}</h1>
+        <h1 className="bigger">{stockName}</h1>
         <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
         </div>
       </div>
@@ -218,13 +243,19 @@ return (
           <h2>Stock Information</h2>
           <ul>
             <li>
-              <b>Symbol</b> {liveSymbol}
+              <b>Symbol</b> {stockSymbol}
             </li>
             <li>
-              <b>Stock Name</b> {positions.stockName}
+              <b>Stock Name</b> {stockName}
             </li>
             <li>
               <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+            </li>
+            <li>
+              <b>Exchange</b> {liveexchange}
+            </li>
+            <li>
+              <b>Company Description</b> {livedescription}
             </li>
             
             
@@ -252,49 +283,18 @@ return (
             <h2>Buy More</h2>
             <form onSubmit={handleSubmit}>
         <input
-          
-          placeholder="Current Price"
-          required
-          value={parseInt(stockChartYValues[0]).toFixed(2)}
-          onChange={updateProperty(setcurrentPrice)}
-        />
-        <input
-          
-          placeholder="Buy Price"
-          required
-          value={parseInt(stockChartYValues[0]).toFixed(2)}
-          onChange={updateProperty(setbuyPrice)}
-        />
-        <input
           type="number"
           placeholder="Shares"
           required
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        <input
-          type="text"
-          placeholder="Stock Symbol"
-          value={liveSymbol}
-          onChange={updateProperty(setstockSymbol)}
-        />
-        <input
-          type="text"
-          placeholder="Stock Name"
-          value={stockName}
-          onChange={updateProperty(setstockName)}
-        />
         <button type="submit">Buy Shares!</button>
         
       </form>
-      <form>
-      <input
-          placeholder="Profit or Loss"
-          value={positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
-          onChange={updateProperty(setProfitLoss)}
-        />
-            <button onClick={()=> dispatch(exitPosition(positions.id).createInstance(profitLoss))}>Exit Position</button>
-      </form>
+  
+            <button onClick={()=> dispatch(exitPosition(positions.id))} >Exit Position</button>
+    
         </div>
       </div>
       <div className='newsFeed'>
@@ -328,7 +328,7 @@ const PositionDetailContainer = () => {
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
-      createInstance={(instance) => dispatch(createInstance(instance))}
+      createInstance={(profitLoss) => dispatch(createInstance(profitLoss))}
     />
   
   );

@@ -3,7 +3,7 @@ import { baseUrl } from "../../config";
 export const LOAD_WATCHED = "LOAD_WATCHED";
 export const EXIT_WATCHED = 'EXIT_WATCHED';
 
-export const loadWatched = (list) => ({ type: LOAD_WATCHED, list });
+export const load = (watchedList) => ({ type: LOAD_WATCHED, watchedList });
 
 
 
@@ -40,7 +40,7 @@ export const getWatchedStocks = () => async (dispatch, getState) => {
 
   if (response.ok) {
     const list = await response.json();
-    dispatch(loadWatched(list));
+    dispatch(load(list));
   } 
 };
 

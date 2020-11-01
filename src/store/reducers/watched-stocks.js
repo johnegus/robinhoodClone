@@ -4,13 +4,14 @@ import {SET_CURRENT_WATCHED_STOCK} from '../actions/current-watched-stock';
 
 
 export default function reducer(state = {}, action) {
-  Object.freeze(state);
 
   switch (action.type) {
     case LOAD_WATCHED: {
-      const watchedStocks = action.list.map((watchedStock) => ({ [watchedStock.id]: watchedStock }));
-      return merge({}, state, ...watchedStocks);
-    }
+      return  {
+        ...state,
+        watchedList: action.watchedList
+    };
+  }
     case SET_CURRENT_WATCHED_STOCK: {
       return {
         ...state,

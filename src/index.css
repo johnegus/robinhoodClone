@@ -15,7 +15,7 @@ button {
 }
 
 button:hover {
-  background-color: greenyellow;
+  background-color: green;
   color: black;
 }
 
@@ -73,10 +73,10 @@ td.centered {
 }
 
 #logout-button-holder {
-  background-color: greenyellow;
-  border: 1px solid greenyellow;
+  background-color: green;
+  border: 1px solid green;
   position: absolute;
-  top: 50px;
+  top: 0px;
   right: 10px;
 }
 
@@ -98,9 +98,9 @@ td.centered {
 
 .fab {
   align-items: center;
-  background-color: greenyellow;
+  background-color: green;
   border-radius: 50px;
-  top: 100px;
+  top: 50px;
   box-shadow: 0 4px 6px rgb(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
