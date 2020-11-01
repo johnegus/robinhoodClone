@@ -7,7 +7,7 @@ const SearchApp = () => {
   const [inputValue, setInputValue] = useState('');
 
   const updateInputVal = e => {
-    setInputValue(e.target.value);
+    setInputValue(e.target.value.toUpperCase());
   };
 
   const searchForStock = e => {

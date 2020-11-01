@@ -41,6 +41,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     exitPosition(id);
   }, [id]);
 
+  useEffect(() => {
+    createInstance(id);
+  }, [id]);
   
 
   useEffect(() => {
@@ -135,6 +138,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
+              setProfitLoss((parseInt(stockChartYValues[0])) - positions.buyPrice)
               setProfitLoss(positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice)
               setIsLoading(false);
           }
@@ -240,26 +244,7 @@ return (
       
         <div>
         <Line data={lineChartData} options={options} />
-          <h2>Stock Information</h2>
-          <ul>
-            <li>
-              <b>Symbol</b> {stockSymbol}
-            </li>
-            <li>
-              <b>Stock Name</b> {stockName}
-            </li>
-            <li>
-              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
-            </li>
-            <li>
-              <b>Exchange</b> {liveexchange}
-            </li>
-            <li>
-              <b>Company Description</b> {livedescription}
-            </li>
-            
-            
-          </ul>
+          
         </div>
         <div>
           <h2>Your Position</h2>
@@ -298,6 +283,27 @@ return (
         </div>
       </div>
       <div className='newsFeed'>
+      <h2>Stock Information</h2>
+          <ul>
+            <li>
+              <b>Symbol</b> {stockSymbol}
+            </li>
+            <li>
+              <b>Stock Name</b> {stockName}
+            </li>
+            <li>
+              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+            </li>
+            <li>
+              <b>Exchange</b> {liveexchange}
+            </li>
+            <li>
+              <b>Company Description</b> {livedescription}
+            </li>
+            
+            
+          </ul>
+          <h2>News</h2>
           {stories.map(story => {
               return (
                 <div className='newsContainer' key={story.timestamp}>

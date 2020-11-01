@@ -205,16 +205,9 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
         
         
           <Line data={lineChartData} options={options} />
-          
-          <div>
-          <h2>{context.searchQuery}</h2>
-          <h2>{stockName}</h2>
-          <h2>${parseInt(stockChartYValues[0]).toFixed(2)}</h2>
-        
-        </div>
         <div className="pokemon-detail-lists">
           <div>
-            <h2>Stock Information</h2>
+            <h4>Stock Information</h4>
             <ul>
             <li>
               <b>Symbol</b> {stockSymbol}
@@ -228,14 +221,13 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
             <li>
               <b>Exchange</b> {liveexchange}
             </li>
-            <li>
+            {/* <li>
               <b>Company Description</b> {livedescription}
-            </li>
+            </li> */}
             
             
           </ul>
           </div>
-          <h2>Buy </h2>
             <form onSubmit={handleSubmit}>
         <input
           type="number"
@@ -248,7 +240,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
         
       </form>
         </div>
-        <div className='newsFeed'>
+        {/* <div className='newsFeed'>
             {stories.map(story => {
                 return (
                   <div className='newsContainer' key={story.timestamp}>
@@ -263,7 +255,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
                    </div>
                 )
               })}
-            </div>
+            </div> */}
       </div>
     );
   };

@@ -49,7 +49,7 @@ const Orders = ({positions, getPositions}) => {
           {positions.map((position) => (
             <TableRow key={position.id}>
               <TableCell>{position.createdAt}</TableCell>
-              <TableCell>{position.stockSymbol}</TableCell>
+              <TableCell>{position.stockSymbol.toUpperCase()}</TableCell>
               <TableCell>{position.stockName}</TableCell>
               <TableCell>{position.shares}</TableCell>
               <TableCell>${position.buyPrice}</TableCell>
