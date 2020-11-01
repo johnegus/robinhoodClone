@@ -59,7 +59,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
                 }
               >
                 <div
-                  >{((position.currentPrice/position.buyPrice)*100-100).toFixed(0)}%</div>
+                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">

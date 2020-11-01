@@ -124,7 +124,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
             console.log('fetch ticker data from alphavantage')
             console.log(data);
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
-              setstockSymbol(data["Meta Data"]["2. Symbol"]);
+              setstockSymbol(positions.stockSymbol);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);

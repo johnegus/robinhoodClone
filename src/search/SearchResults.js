@@ -7,27 +7,37 @@ import polygonApi from '../util/polygon';
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
 import { hideForm } from "../store/actions/ui";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
 
 const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => {
-    const context = useContext(SearchContext);
-    const [stories, setStories] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); 
-    const [stockChartXValues, setstockChartXValues] = useState([]);
-    const [stockChartYValues, setstockChartYValues] = useState([]);
-    const [stockSymbol, setstockSymbol] = useState("");
-    const [stockName, setstockName] = useState("");
-    const [currentPrice, setcurrentPrice] = useState("");
-    const [buyPrice, setbuyPrice] = useState("");
-    const [shares, setshares] = useState("");
+   const context = useContext(SearchContext);
+   const [stories, setStories] = useState([]);
+   const [isLoading, setIsLoading] = useState(true); 
+   const [stockChartXValues, setstockChartXValues] = useState([]);
+   const [stockChartYValues, setstockChartYValues] = useState([]);
+   const [stockSymbol, setstockSymbol] = useState("");
+   const [stockName, setstockName] = useState("");
+   const [currentPrice, setcurrentPrice] = useState("");
+   const [buyPrice, setbuyPrice] = useState("");
+   const [shares, setshares] = useState("");
+   const [profitLoss, setProfitLoss] = useState('');
+   const [livedescription, setCompanyDescription] = useState('');
+   const [liveimage, setImage] = useState('');
+   const [liveexchange, setExchange] = useState('');
    
     const dispatch = useDispatch();
     const { id } = useParams();
   
     const handleSubmit = (e) => {
       e.preventDefault();
+      console.log(stockSymbol)
+    console.log(stockName)
+    console.log(currentPrice)
+    console.log(buyPrice)
+    console.log(shares)
       const payload = {
         stockSymbol,
         stockName,
@@ -42,6 +52,40 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
     const updateProperty = (callback) => (e) => {
       callback(e.target.value);
     };
+     //financial modeling prep fetch---------------------------------------------------
+  useEffect(() => {
+    if (!context.searchQuery) {
+      return;
+    }
+    const fetchCompanyInfo = async () =>{
+      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      let stockSymbol = context.searchQuery
+      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
+     
+    
+      fetch(API_CALL)
+      .then(
+          function(response){
+              return response.json()
+          }
+      )
+      .then(
+          function(data){
+            console.log('fetch ticker data from FMP')
+            console.log(data);
+            setstockName(data[0]['companyName'])
+            setstockSymbol(stockSymbol)
+            setCompanyDescription(data[0]['description'])
+            setExchange(data[0]['exchangeShortName'])
+            setImage(data[0]['image'])
+              
+          }
+      )
+    }
+    fetchCompanyInfo();  
+    //setinterval would go here return the clear interval
+    //return ()=> clearInterval
+  }, [context.searchQuery]);
     //polygon news fetch -------------------------------------------------------------
     useEffect(() => {
       if (!context.searchQuery) {
@@ -93,6 +137,8 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
                 console.log(stockChartYValuesFunction);
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
+                setcurrentPrice(parseInt(stockChartYValues[0]))
+                setbuyPrice(parseInt(stockChartYValues[0]))
                 setIsLoading(false);
             }
         )
@@ -107,7 +153,15 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
     }
   
     if (isLoading) {
-      return <h1>Fetching stock data...</h1>;
+      return (
+      <>
+      
+      <main className="centered middled">
+        <b>Fetching market data...</b>
+        <CircularProgress />
+        </main>
+      </>
+      )
     }
     const lineChartData = {
       labels: stockChartXValues,
@@ -154,7 +208,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
           
           <div>
           <h2>{context.searchQuery}</h2>
-          
+          <h2>{stockName}</h2>
           <h2>${parseInt(stockChartYValues[0]).toFixed(2)}</h2>
         
         </div>
@@ -162,49 +216,33 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
           <div>
             <h2>Stock Information</h2>
             <ul>
-              <li>
-                <b>Symbol</b> {context.searchQuery}
-              </li>
-              <li>
-                <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
-              </li>
-              
-            </ul>
+            <li>
+              <b>Symbol</b> {stockSymbol}
+            </li>
+            <li>
+              <b>Stock Name</b> {stockName}
+            </li>
+            <li>
+              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+            </li>
+            <li>
+              <b>Exchange</b> {liveexchange}
+            </li>
+            <li>
+              <b>Company Description</b> {livedescription}
+            </li>
+            
+            
+          </ul>
           </div>
-          <h2>Buy More</h2>
+          <h2>Buy </h2>
             <form onSubmit={handleSubmit}>
-        <input
-          
-          placeholder="Current Price"
-          required
-          value={parseInt(stockChartYValues[0]).toFixed(2)}
-          onChange={updateProperty(setcurrentPrice)}
-        />
-        <input
-          
-          placeholder="Buy Price"
-          required
-          value={parseInt(stockChartYValues[0]).toFixed(2)}
-          onChange={updateProperty(setbuyPrice)}
-        />
         <input
           type="number"
           placeholder="Shares"
           required
           value={shares}
           onChange={updateProperty(setshares)}
-        />
-        <input
-          type="text"
-          placeholder="Stock Symbol"
-          value={context.searchQuery}
-          onChange={updateProperty(setstockSymbol)}
-        />
-        <input
-          type="text"
-          placeholder="Stock Name"
-          value={stockName}
-          onChange={updateProperty(setstockName)}
         />
         <button type="submit">Buy Shares!</button>
         
