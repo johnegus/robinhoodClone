@@ -11,7 +11,7 @@ const polygonApi = (baseURL = POLYGON_URL) => {
     const params = {
         apiKey: POLYGON_KEY
     } 
-    const getQuote = symbol => api.get(`https://api.polygon.io/v1/meta/symbols/${symbol}/news?perpage=50&page=1&apiKey=VkrkWBmpkEzcfu554MV9td_zILRqS2w8`);
+    const getQuote = symbol => api.get(`https://api.polygon.io/v1/meta/symbols/${symbol}/news?perpage=10&page=1&apiKey=VkrkWBmpkEzcfu554MV9td_zILRqS2w8`);
 
     return {
         getQuote

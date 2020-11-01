@@ -14,7 +14,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   const [stories, setStories] = useState([]);
   const [liveSymbol, setLiveSymbol] = useState('')
   const [isLoading, setIsLoading] = useState(true); 
-  const [volume, setVolume] = useState('');
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
   const [stockSymbol, setstockSymbol] = useState("");
@@ -26,22 +25,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
 
   
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const payload = {
-      stockSymbol,
-      stockName,
-      currentPrice,
-      buyPrice,
-      shares,
-      
-    };
-    createPosition(payload);
-  };
-
-  const updateProperty = (callback) => (e) => {
-    callback(e.target.value);
-  };
+  
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -57,34 +41,34 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   }, [id]);
 
   //financial modeling prep fetch---------------------------------------------------
-  useEffect(() => {
-    if (!positions) {
-      return;
-    }
-    const fetchCompanyInfo = async () =>{
-      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-      let stockSymbol = positions.stockSymbol
-      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
+  // useEffect(() => {
+  //   if (!positions) {
+  //     return;
+  //   }
+  //   const fetchCompanyInfo = async () =>{
+  //     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+  //     let stockSymbol = positions.stockSymbol
+  //     let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
      
     
-      fetch(API_CALL)
-      .then(
-          function(response){
-              return response.json()
-          }
-      )
-      .then(
-          function({data}){
-            console.log('fetch ticker data from FMP')
-            console.log(data);
+  //     fetch(API_CALL)
+  //     .then(
+  //         function(response){
+  //             return response.json()
+  //         }
+  //     )
+  //     .then(
+  //         function({data}){
+  //           console.log('fetch ticker data from FMP')
+  //           console.log(data);
               
-          }
-      )
-    }
-    fetchCompanyInfo();  
-    //setinterval would go here return the clear interval
-    //return ()=> clearInterval
-  }, [positions]);
+  //         }
+  //     )
+  //   }
+  //   fetchCompanyInfo();  
+  //   //setinterval would go here return the clear interval
+  //   //return ()=> clearInterval
+  // }, [positions]);
   //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
     if (!positions) {
@@ -191,6 +175,22 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
     },
   }
  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      stockSymbol,
+      stockName,
+      currentPrice,
+      buyPrice,
+      shares,
+      
+    };
+    createPosition(payload);
+  };
+
+  const updateProperty = (callback) => (e) => {
+    callback(e.target.value);
+  };
 return (
     <div className="pokemon-detail">
       <div
@@ -219,9 +219,7 @@ return (
             <li>
               <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
             </li>
-            <li>
-              <b>Volume</b> {volume}
-            </li>
+            
             
           </ul>
         </div>
@@ -244,7 +242,7 @@ return (
                 <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
               </li>
             </ul>
-            <h2>Buy</h2>
+            <h2>Buy More</h2>
             <form onSubmit={handleSubmit}>
         <input
           

@@ -55,19 +55,5 @@ return (
  
   };
 
-  // const UserDetailContainer = () => {
-  //   const user = useSelector((state) => state.currentUser);
-  //   const dispatch = useDispatch();
-  
-  //   return (
-  
-  //     <UserDetail
-  //     user={user}
-  //       getOneUser={(id) => dispatch(getOneUser(id))}
-        
-  //     />
-    
-  //   );
-  // };
   
   export default UserDetail;

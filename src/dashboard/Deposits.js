@@ -16,6 +16,9 @@ const useStyles = makeStyles({
 
 export default function Deposits() {
   const classes = useStyles();
+  const year = new Date().getFullYear();
+  const month =new Date().getMonth();
+  const date = new Date().getDate()
   return (
     <React.Fragment>
       <Title>Portfolio Value</Title>
@@ -23,7 +26,7 @@ export default function Deposits() {
         $10,024.00
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+        on {month + '/' + date + '/' + year}
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>

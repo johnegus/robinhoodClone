@@ -10,7 +10,6 @@ import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
 import UserDetail from './UserDetail';
-import Dashboard from './dashboard/Dashboard'
 
 
 
@@ -107,8 +106,6 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}
           />
-           
-           {/* <Route path="/" component={Dashboard} /> */}
            <Route path="/" component={UserDetail} />
         </Switch>
       )}

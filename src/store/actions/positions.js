@@ -22,7 +22,7 @@ export const createPosition = (data) => async (dispatch, getState) => {
   });
 
   if (response.ok) {
-    dispatch(hideForm());
+    // dispatch(hideForm());
     dispatch(getPositions());
   }
 };

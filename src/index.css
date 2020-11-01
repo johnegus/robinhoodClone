@@ -52,7 +52,7 @@ input:focus {
 }
 
 nav {
-  flex: 0 0 300px;
+  flex: 0 0 400px;
   overflow-y: auto;
   position:relative;
 
@@ -279,7 +279,6 @@ td.centered {
   grid-template-columns:  30% 70% ;
   grid-template-rows: 30% 70%;
   grid-gap: 5px;
-  width: 750px;
   position: relative;
 }
 

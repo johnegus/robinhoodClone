@@ -5,20 +5,43 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from '../util/polygon';
 import { Line } from 'react-chartjs-2';
+import { createPosition } from "../store/actions/positions";
+import { hideForm } from "../store/actions/ui";
 
 
 
-const SearchDetail = () => {
+
+const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => {
     const context = useContext(SearchContext);
     const [stories, setStories] = useState([]);
-    const [livePositions, setLivePositions] = useState([])
     const [isLoading, setIsLoading] = useState(true); 
     const [stockChartXValues, setstockChartXValues] = useState([]);
     const [stockChartYValues, setstockChartYValues] = useState([]);
-  
+    const [stockSymbol, setstockSymbol] = useState("");
+    const [stockName, setstockName] = useState("");
+    const [currentPrice, setcurrentPrice] = useState("");
+    const [buyPrice, setbuyPrice] = useState("");
+    const [shares, setshares] = useState("");
+   
     const dispatch = useDispatch();
     const { id } = useParams();
   
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const payload = {
+        stockSymbol,
+        stockName,
+        currentPrice,
+        buyPrice,
+        shares,
+        
+      };
+      createPosition(payload);
+    };
+    
+    const updateProperty = (callback) => (e) => {
+      callback(e.target.value);
+    };
     //polygon news fetch -------------------------------------------------------------
     useEffect(() => {
       if (!context.searchQuery) {
@@ -125,18 +148,15 @@ const SearchDetail = () => {
    
   return (
       <div className="pokemon-detail">
-        <div
-          className={`pokemon-detail-image-background`}
-          
-        >
-          <div className="pokemon-detail-image">
+        
+        
           <Line data={lineChartData} options={options} />
-          </div>
-          <div>
-          <h1 className="bigger">{context.searchQuery}</h1>
           
-          <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
-          </div>
+          <div>
+          <h2>{context.searchQuery}</h2>
+          
+          <h2>${parseInt(stockChartYValues[0]).toFixed(2)}</h2>
+        
         </div>
         <div className="pokemon-detail-lists">
           <div>
@@ -151,27 +171,44 @@ const SearchDetail = () => {
               
             </ul>
           </div>
-          {/* <div>
-            <h2>Your Position</h2>
-              <ul>
-                <li>
-                  <b>Shares:</b> {positions.shares}
-                </li>
-                <li>
-                  <b>Average Cost:</b> ${positions.buyPrice}
-                </li>
-                <li>
-                  <b>Date Purchased:</b> {positions.createdAt}
-                </li>
-                <li>
-                  <b>Market Value:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)}
-                </li>
-                <li>
-                  <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
-                </li>
-              </ul>
-              
-          </div> */}
+          <h2>Buy More</h2>
+            <form onSubmit={handleSubmit}>
+        <input
+          
+          placeholder="Current Price"
+          required
+          value={parseInt(stockChartYValues[0]).toFixed(2)}
+          onChange={updateProperty(setcurrentPrice)}
+        />
+        <input
+          
+          placeholder="Buy Price"
+          required
+          value={parseInt(stockChartYValues[0]).toFixed(2)}
+          onChange={updateProperty(setbuyPrice)}
+        />
+        <input
+          type="number"
+          placeholder="Shares"
+          required
+          value={shares}
+          onChange={updateProperty(setshares)}
+        />
+        <input
+          type="text"
+          placeholder="Stock Symbol"
+          value={context.searchQuery}
+          onChange={updateProperty(setstockSymbol)}
+        />
+        <input
+          type="text"
+          placeholder="Stock Name"
+          value={stockName}
+          onChange={updateProperty(setstockName)}
+        />
+        <button type="submit">Buy Shares!</button>
+        
+      </form>
         </div>
         <div className='newsFeed'>
             {stories.map(story => {
@@ -200,7 +237,8 @@ const SearchDetail = () => {
     return (
   
       <SearchDetail
-    
+      createPosition={(positions) => dispatch(createPosition(positions))}
+      hideForm={() => dispatch(hideForm())}
       />
     
     );
