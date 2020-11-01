@@ -5,24 +5,11 @@ import { useParams } from "react-router-dom";
 import Chart from './dashboard/Chart'
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
+import { baseUrl } from "./config";
 
 
 const UserDetail = (currentUser, getOneUser) => {
-// const { id } = {currentUser};
 
-
-
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     getOneUser(id);
-//   }, [id]);
-
-//   if (!currentUser) {
-//     return null;
-
-
-//   }
 
 return (
   <div className="pokemon-detail">

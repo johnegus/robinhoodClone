@@ -5,12 +5,13 @@ import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
+import { createInstance } from "./store/actions/history";
 
 
 
 import { getOnePosition } from "./store/actions/current-position";
 
-const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
+const PositionDetail = ({ positions, getOnePosition, createPosition, createInstance }) => {
   const [stories, setStories] = useState([]);
   const [liveSymbol, setLiveSymbol] = useState('')
   const [isLoading, setIsLoading] = useState(true); 
@@ -21,6 +22,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   const [currentPrice, setcurrentPrice] = useState("");
   const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
+  const [profitLoss, setProfitLoss] = useState('');
  
 
   
@@ -153,6 +155,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
   }
   
   const options = {
+    legend: {
+      display: true,
+    },
     elements: {
       point:{
           radius: 0
@@ -177,6 +182,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition }) => {
  
   const handleSubmit = (e) => {
     e.preventDefault();
+    createInstance(profitLoss);
+
     const payload = {
       stockSymbol,
       stockName,
@@ -280,7 +287,14 @@ return (
         <button type="submit">Buy Shares!</button>
         
       </form>
-            <button onClick={()=> dispatch(exitPosition(positions.id))}>Exit Position</button>
+      <form>
+      <input
+          placeholder="Profit or Loss"
+          value={positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
+          onChange={updateProperty(setProfitLoss)}
+        />
+            <button onClick={()=> dispatch(exitPosition(positions.id).createInstance(profitLoss))}>Exit Position</button>
+      </form>
         </div>
       </div>
       <div className='newsFeed'>
@@ -314,6 +328,7 @@ const PositionDetailContainer = () => {
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
+      createInstance={(instance) => dispatch(createInstance(instance))}
     />
   
   );
