@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
-import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
-import { createInstance } from "./store/actions/history";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { getWatchedStocks } from './store/actions/watched-stocks';
+import { getOneWatchedStock} from "./store/actions/current-watched-stock";
+import { createInstance } from "./store/actions/history";
 
 
 
-import { getOnePosition } from "./store/actions/current-position";
 
-const PositionDetail = ({ positions, getOnePosition, createPosition, createInstance }) => {
+const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -37,9 +38,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  useEffect(() => {
-    exitPosition(id);
-  }, [id]);
 
   useEffect(() => {
     createInstance(id);
@@ -47,17 +45,17 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   
 
   useEffect(() => {
-    getOnePosition(id);
+    getOneWatchedStock(id);
   }, [id]);
 
   //financial modeling prep fetch---------------------------------------------------
   useEffect(() => {
-    if (!positions) {
+    if (!watchedStocks) {
       return;
     }
     const fetchCompanyInfo = async () =>{
       const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-      let stockSymbol = positions.stockSymbol
+      let stockSymbol = watchedStocks.stockSymbol
       let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
      
     
@@ -82,15 +80,15 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     fetchCompanyInfo();  
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
-  }, [positions]);
+  }, [watchedStocks]);
   //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
-    if (!positions) {
+    if (!watchedStocks) {
       return;
     }
     const fetchPositionNews = async () =>{
       const polygon = polygonApi()
-      polygon.getQuote(positions.stockSymbol).then((response) => {
+      polygon.getQuote(watchedStocks.stockSymbol).then((response) => {
         console.log('fetch data from polygon')
         console.log(response)
         if(response.ok){
@@ -101,16 +99,16 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     fetchPositionNews();  
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
-  }, [positions]);
+  }, [watchedStocks]);
  //alphavantage stock fetch -------------------------------------------------------------
  useEffect(() => {
-  if (!positions) {
+  if (!watchedStocks) {
     return;
   }
   const fetchLivePositions = async () =>{
     
       const API_Key = '06N03QCM2TDKP6QS';
-      let stockSymbol = positions.stockSymbol
+      let stockSymbol = watchedStocks.stockSymbol
       let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
@@ -127,7 +125,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
             console.log('fetch ticker data from alphavantage')
             console.log(data);
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
-              setstockSymbol(positions.stockSymbol);
+              setstockSymbol(watchedStocks.stockSymbol);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
@@ -138,9 +136,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
-              setProfitLoss(parseInt(positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice))
-              console.log(profitLoss);
-              createInstance(profitLoss);
+            
               setIsLoading(false);
           }
       )
@@ -148,9 +144,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     fetchLivePositions();
   
 
-}, [positions]);
+}, [watchedStocks]);
 
-  if (!positions) {
+  if (!watchedStocks) {
     return null;
   }
 
@@ -169,7 +165,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     labels: stockChartXValues,
     datasets: [
       {
-        label: positions.stockSymbol,
+        label: watchedStocks.stockSymbol,
         data: stockChartYValues,
         fill: false,
         backgroundColor:stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red',
@@ -239,7 +235,7 @@ return (
         <img src={liveimage} alt="Company Logo" />
         </div>
         <div className='company-titles'>
-        <h1 className="bigger">{positions.stockSymbol}</h1>
+        <h1 className="bigger">{watchedStocks.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
         <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
         </div>
@@ -252,25 +248,8 @@ return (
           
         </div>
         <div>
-          <h2>Your Position</h2>
-            <ul>
-              <li>
-                <b>Shares:</b> {positions.shares}
-              </li>
-              <li>
-                <b>Average Cost:</b> ${positions.buyPrice}
-              </li>
-              <li>
-                <b>Date Purchased:</b> {positions.createdAt}
-              </li>
-              <li>
-                <b>Market Value:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)}
-              </li>
-              <li>
-                <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
-              </li>
-            </ul>
-            <h2>Buy More</h2>
+          
+            <h2>Buy</h2>
             <form onSubmit={handleSubmit}>
         <input
           type="number"
@@ -282,9 +261,7 @@ return (
         <button type="submit">Buy Shares!</button>
         
       </form>
-  
-            <button onClick={async ()=> await dispatch(exitPosition(positions.id))} >Exit Position</button>
-            
+              
     
         </div>
       </div>
@@ -328,22 +305,22 @@ return (
     </div>
   );
 };
-
-const PositionDetailContainer = () => {
-  const positions = useSelector((state) => state.positions[state.currentPosition]);
-  const dispatch = useDispatch();
-
-  return (
-
-    <PositionDetail
-    positions={positions}
-      getOnePosition={(id) => dispatch(getOnePosition(id))}
-      exitPosition={(id) => dispatch(exitPosition(id))}
-      createPosition={(positions) => dispatch(createPosition(positions))}
-      createInstance={(profitLoss) => dispatch(createInstance(profitLoss))}
-    />
   
-  );
-};
-
-export default PositionDetailContainer;
+  const WatchedStockDetailContainer = () => {
+    const positions = useSelector((state) => state.positions[state.currentPosition]);
+    const dispatch = useDispatch();
+    const watchedStocks = useSelector((state) => state.watchedStocks[state.currentWatchedStock]);
+  
+    return (
+  
+      <WatchListDetail
+      watchedStocks ={watchedStocks}
+      positions = {positions}
+      getOneWatchedStock={(id) => dispatch(getOneWatchedStock(id))}
+      createPosition={(positions) => dispatch(createPosition(positions))}
+      />
+    
+    );
+  };
+  
+  export default WatchedStockDetailContainer;

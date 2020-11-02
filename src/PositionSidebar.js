@@ -10,6 +10,7 @@ import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
 import UserDetail from './UserDetail';
+import WatchListDetail from './WatchListDetail';
 
 
 
@@ -47,7 +48,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
       
           </Switch>
         <Fab hidden={formVisible} onClick={showForm} />
-        <div>Stocks</div>
+        <div className='sidebar-label'>Stocks</div>
         {positions.map((position) => {
           return (
             <NavLink key={position.id} to={`/position/${position.id}`}>
@@ -58,7 +59,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
                     : "nav-entry"
                 }
               >
-                <div
+                <div className='randomizer'
                   >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
@@ -71,7 +72,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
             </NavLink>
           );
         })}
-        <div>Watchlist</div>
+        <div className='sidebar-label'>Watchlist</div>
         {watchedStocks.map((watchedStock) => {
           return (
             <NavLink key={watchedStock.id} to={`/watchlist/${watchedStock.id}`}>
@@ -82,8 +83,8 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
                     : "nav-entry"
                 }
               >
-                <div
-                  className="nav-entry-image">{watchedStock.currentPrice}</div>
+                <div className='randomizer'
+                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
                 <div>
                   <div className="primary-text">{watchedStock.stockName}</div>
                   <div className="secondary-text">
@@ -100,7 +101,11 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
         <PositionForm />
       ) : (
         <Switch>
-         
+          <Route
+            exact={true}
+            path="/watchlist/:id"
+            render={(props) => <WatchListDetail {...props} />}
+          />
           <Route
             exact={true}
             path="/position/:id"

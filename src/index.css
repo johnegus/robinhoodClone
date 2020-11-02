@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-html, body, input, textarea, button, select, a {
+html, body, input, textarea, button, select, a  {
   font-family: 'Open Sans';
   font-size: 16px;
+  
 }
 
 button {
@@ -305,4 +306,14 @@ td.centered {
 
 .newsLink{
   color: green;
+}
+
+.randomizer {
+  margin: 20px;
+}
+
+.sidebar-label{
+  font-weight: 700;
+padding: .5em 1em;
+text-transform: uppercase;
 }
