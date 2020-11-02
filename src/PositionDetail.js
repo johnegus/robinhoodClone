@@ -224,6 +224,22 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     createPosition(payload);
   };
 
+  const handleClick = (e) => {
+
+    const payload ={
+    stockSymbol,
+    stockName,
+    currentPrice,
+    buyPrice,
+    };
+
+    createInstance(payload)
+    dispatch(exitPosition(positions.id));
+    
+    
+    
+  }
+
   const updateProperty = (callback) => (e) => {
     callback(e.target.value);
   };
@@ -283,7 +299,7 @@ return (
         
       </form>
   
-            <button onClick={async ()=> await dispatch(exitPosition(positions.id))} >Exit Position</button>
+            <button onClick={handleClick} >Exit Position</button>
             
     
         </div>
