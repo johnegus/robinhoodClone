@@ -131,6 +131,17 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
     if (!context.searchQuery) {
       return null;
     }
+    if (isLoading) {
+      return (
+      <>
+      
+      <main >
+       
+        <CircularProgress />
+        </main>
+      </>
+      )
+    }
   
     const lineChartData = {
       labels: stockChartXValues,

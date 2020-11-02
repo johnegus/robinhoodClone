@@ -317,3 +317,18 @@ td.centered {
 padding: .5em 1em;
 text-transform: uppercase;
 }
+
+.header-element{
+  display: grid;
+  grid-template-columns:  30% 70% ;
+  
+}
+.company-logo{
+  grid-column: 1/2;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.company-titles{
+  grid-column: 2/3;
+  padding: 25px;
+}
