@@ -23,7 +23,7 @@ export default function Deposits() {
     <React.Fragment>
       <Title>Portfolio Value</Title>
       <Typography component="p" variant="h4">
-        $10,024.00
+        $30,024.00
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on {month + '/' + date + '/' + year}

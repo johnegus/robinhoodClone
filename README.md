@@ -3,6 +3,8 @@
 
 ![ERD](./databaseSchema/database3.png)
 
+[robinHoodClone Backend](https://github.com/johnegus/robinhoodCloneBackend)
+
 ## MVP (Minimum Viable Product)
 
     Dashboard + Portfolio

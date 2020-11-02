@@ -12,8 +12,8 @@ const data = {
       label: 'Portfolio',
       data: ["265.3000", "265.3500", "265.3000", "265.5000", "265.6800", "265.5000", "265.5100", "265.5400", "265.5100", "265.7800"],
       fill: false,
-      backgroundColor: 'red',
-      borderColor: 'red',
+      backgroundColor: 'green',
+      borderColor: 'green',
     },
   ],
 }
@@ -39,7 +39,7 @@ const options = {
     xAxes: [{
       display: false,
       ticks: {
-        reverse: true,
+        reverse: false,
       }
   }]
   },

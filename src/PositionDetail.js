@@ -42,9 +42,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     exitPosition(id);
   }, [id]);
 
-  useEffect(() => {
-    createInstance(id);
-  }, [id]);
+  // useEffect(() => {
+  //   createInstance(id);
+  // }, [id]);
   
 
   useEffect(() => {
@@ -135,8 +135,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
-              setSoldPrice(parseInt(stockChartYValues[0]))
-              setBoughtPrice(positions.buyPrice)
               setIsLoading(false);
           }
       )

@@ -329,6 +329,6 @@ text-transform: uppercase;
   padding-bottom: 25px;
 }
 .company-titles{
-  grid-column: 2/3;
-  padding: 25px;
+  grid-column: 2/2;
+  
 }
