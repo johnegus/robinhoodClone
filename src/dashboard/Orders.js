@@ -1,5 +1,4 @@
 import React, { useEffect }  from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
-
+import {getHistoricalData} from '../store/actions/history';
 
 
 function preventDefault(event) {
@@ -22,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Orders = ({positions, getPositions}) => {
+const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
   useEffect(() => {
     getPositions();
   }, []);
+
+  // useEffect(() => {
+  //   getHistoricalData();
+  // }, []);
   
   
   
@@ -59,11 +62,34 @@ const Orders = ({positions, getPositions}) => {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
-        </Link>
-      </div>
+      {/* <Title>Portfolio History</Title>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Purchase Date</TableCell>
+            <TableCell>Symbol</TableCell>
+            <TableCell>Company Name</TableCell>
+            <TableCell>Shares</TableCell>
+            <TableCell>Purchase Price</TableCell>
+            <TableCell>Current Price $</TableCell>
+            <TableCell align="right">Percent Change %</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {instances.map((instance) => (
+            <TableRow key={instance.id}>
+              <TableCell>{instance.createdAt}</TableCell>
+              <TableCell>{instance.stockSymbol.toUpperCase()}</TableCell>
+              <TableCell>{instance.stockName}</TableCell>
+              <TableCell>{instance.shares}</TableCell>
+              <TableCell>${instance.buyPrice}</TableCell>
+              <TableCell >{`$${instance.currentPrice}`}</TableCell>
+              <TableCell align="right">{((instance.currentPrice/instance.buyPrice)*100-100).toFixed(0)}%</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table> */}
+  
     </React.Fragment>
   );
 }
@@ -71,11 +97,14 @@ const Orders = ({positions, getPositions}) => {
 
 const OrdersContainer = () => {
   const positions = useSelector((state) => Object.values(state.positions));
+  // const instances = useSelector((state) => Object.values(state.instances));
   const dispatch = useDispatch();
   return (
     <Orders
       positions={positions}
+      // instances={instances}
       getPositions={() => dispatch(getPositions())}
+      // getHistoricalData={() => dispatch(getHistoricalData())}
       
     />
   );

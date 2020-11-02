@@ -5,7 +5,7 @@ import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import PositionDetail from "./PositionDetail";
 import PositionForm from "./PositionForm";
-import Fab from "./Fab";
+
 import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
@@ -48,7 +48,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
       
       
           </Switch>
-        <Fab hidden={formVisible} onClick={showForm} />
+       
         <div className='sidebar-label'>Stocks</div>
         {positions.map((position) => {
           return (

@@ -69,8 +69,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, c
       )
       .then(
           function(data){
-            console.log('fetch ticker data from FMP')
-            console.log(data);
+          
             setstockName(data[0]['companyName'])
             setCompanyDescription(data[0]['description'])
             setExchange(data[0]['exchangeShortName'])
@@ -91,8 +90,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, c
     const fetchPositionNews = async () =>{
       const polygon = polygonApi()
       polygon.getQuote(watchedStocks.stockSymbol).then((response) => {
-        console.log('fetch data from polygon')
-        console.log(response)
+      
         if(response.ok){
           setStories(response.data)
         }
@@ -124,16 +122,14 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, c
       )
       .then(
           function(data){
-            console.log('fetch ticker data from alphavantage')
-            console.log(data);
+            
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(watchedStocks.stockSymbol);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
               }
-              console.log(stockChartXValuesFunction);
-              console.log(stockChartYValuesFunction);
+           
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
@@ -206,11 +202,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, c
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(stockSymbol)
-    console.log(stockName)
-    console.log(currentPrice)
-    console.log(buyPrice)
-    console.log(shares)
+  
     const payload = {
       stockSymbol,
       stockName,

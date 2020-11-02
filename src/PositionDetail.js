@@ -25,7 +25,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
-  const [profitLoss, setProfitLoss] = useState('');
+  const [boughtPrice, setBoughtPrice] = useState('');
+  const [soldPrice, setSoldPrice] = useState('');
 
   // setstockName(data[0][companyName])
   //           setCompanyDescription(data[0][description])
@@ -69,8 +70,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       )
       .then(
           function(data){
-            console.log('fetch ticker data from FMP')
-            console.log(data);
             setstockName(data[0]['companyName'])
             setCompanyDescription(data[0]['description'])
             setExchange(data[0]['exchangeShortName'])
@@ -91,8 +90,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     const fetchPositionNews = async () =>{
       const polygon = polygonApi()
       polygon.getQuote(positions.stockSymbol).then((response) => {
-        console.log('fetch data from polygon')
-        console.log(response)
+      
+      
         if(response.ok){
           setStories(response.data)
         }
@@ -124,23 +123,20 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       )
       .then(
           function(data){
-            console.log('fetch ticker data from alphavantage')
-            console.log(data);
+          
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(positions.stockSymbol);
               for(let key in data['Time Series (5min)']){
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
               }
-              console.log(stockChartXValuesFunction);
-              console.log(stockChartYValuesFunction);
+             
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
-              setProfitLoss(parseInt(positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice))
-              console.log(profitLoss);
-              createInstance(profitLoss);
+              setSoldPrice(parseInt(stockChartYValues[0]))
+              setBoughtPrice(positions.buyPrice)
               setIsLoading(false);
           }
       )
@@ -208,11 +204,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(stockSymbol)
-    console.log(stockName)
-    console.log(currentPrice)
-    console.log(buyPrice)
-    console.log(shares)
+   
     const payload = {
       stockSymbol,
       stockName,
@@ -224,18 +216,23 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     createPosition(payload);
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
+    // console.log(stockSymbol)
+    // console.log(stockName)
+    // console.log(soldPrice)
+    // console.log(boughtPrice)
+    // console.log(shares)
+    // const payload ={
+    // stockSymbol,
+    // stockName,
+    // soldPrice,
+    // boughtPrice,
+    // shares
+    // };
 
-    const payload ={
-    stockSymbol,
-    stockName,
-    currentPrice,
-    buyPrice,
-    };
+    // createInstance(payload)
+   await dispatch(exitPosition(positions.id));
 
-    createInstance(payload)
-    dispatch(exitPosition(positions.id));
-    
     
     
   }

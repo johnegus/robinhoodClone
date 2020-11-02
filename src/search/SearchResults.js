@@ -26,11 +26,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(stockSymbol)
-    console.log(stockName)
-    console.log(currentPrice)
-    console.log(buyPrice)
-    console.log(shares)
+    
       const payload = {
         stockSymbol,
         stockName,
@@ -78,8 +74,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
       )
       .then(
           function(data){
-            console.log('fetch ticker data from FMP')
-            console.log(data);
+           
             setstockName(data[0]['companyName'])
             setstockSymbol(stockSymbol)
             setExchange(data[0]['exchangeShortName'])
@@ -113,14 +108,13 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
         )
         .then(
             function(data){
-              console.log('fetch ticker data from alphavantage')
-                console.log(data);
+            
+    
                 for(let key in data['Time Series (5min)']){
                     stockChartXValuesFunction.push(key);
                     stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
                 }
-                console.log(stockChartXValuesFunction);
-                console.log(stockChartYValuesFunction);
+        
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
                 setcurrentPrice(parseInt(stockChartYValues[0]))

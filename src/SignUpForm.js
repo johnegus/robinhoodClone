@@ -27,7 +27,7 @@ const SignUpForm = () => {
       password,
       confirmPassword,
     };
-    console.log('handleSubmit -> newUser', newUser);
+    
     dispatch(signUp(newUser));
   };
 
