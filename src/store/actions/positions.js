@@ -24,6 +24,7 @@ export const createPosition = (data) => async (dispatch, getState) => {
   if (response.ok) {
     // dispatch(hideForm());
     dispatch(getPositions());
+    dispatch(hideForm());
   }
 };
 
@@ -59,5 +60,6 @@ export const exitPosition = (id) => async (dispatch, getState) => {
 
   if (response.ok) {
     dispatch(getPositions());
+    window.location.replace('/')
   }
 };

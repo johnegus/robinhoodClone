@@ -1,4 +1,3 @@
-import merge from "lodash/merge";
 import { LOAD_WATCHED, EXIT_WATCHED } from "../actions/watched-stocks";
 import {SET_CURRENT_WATCHED_STOCK} from '../actions/current-watched-stock';
 

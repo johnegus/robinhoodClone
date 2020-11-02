@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SearchContext } from './SearchContext';
 
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import polygonApi from '../util/polygon';
+
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
 import { hideForm } from "../store/actions/ui";
@@ -14,7 +13,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => {
    const context = useContext(SearchContext);
-   const [stories, setStories] = useState([]);
    const [isLoading, setIsLoading] = useState(true); 
    const [stockChartXValues, setstockChartXValues] = useState([]);
    const [stockChartYValues, setstockChartYValues] = useState([]);
@@ -23,13 +21,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
    const [currentPrice, setcurrentPrice] = useState("");
    const [buyPrice, setbuyPrice] = useState("");
    const [shares, setshares] = useState("");
-   const [profitLoss, setProfitLoss] = useState('');
-   const [livedescription, setCompanyDescription] = useState('');
-   const [liveimage, setImage] = useState('');
    const [liveexchange, setExchange] = useState('');
-   
-    const dispatch = useDispatch();
-    const { id } = useParams();
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -75,9 +67,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
             console.log(data);
             setstockName(data[0]['companyName'])
             setstockSymbol(stockSymbol)
-            setCompanyDescription(data[0]['description'])
             setExchange(data[0]['exchangeShortName'])
-            setImage(data[0]['image'])
               
           }
       )
@@ -86,25 +76,6 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
   }, [context.searchQuery]);
-    //polygon news fetch -------------------------------------------------------------
-    useEffect(() => {
-      if (!context.searchQuery) {
-        return;
-      }
-      const fetchPositionNews = async () =>{
-        const polygon = polygonApi()
-        polygon.getQuote(context.searchQuery).then((response) => {
-          console.log('fetch data from polygon')
-          console.log(response)
-          if(response.ok){
-            setStories(response.data)
-          }
-        });
-      }
-      fetchPositionNews();  
-      //setinterval would go here return the clear interval
-      //return ()=> clearInterval
-    }, [context.searchQuery]);
    //alphavantage stock fetch -------------------------------------------------------------
    useEffect(() => {
     if (!context.searchQuery) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, setState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import polygonApi from './util/polygon';
@@ -22,7 +22,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [currentPrice, setcurrentPrice] = useState("");
   const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
-  const [profitLoss, setProfitLoss] = useState('');
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
@@ -138,8 +137,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
-              setProfitLoss((parseInt(stockChartYValues[0])) - positions.buyPrice)
-              setProfitLoss(positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice)
               setIsLoading(false);
           }
       )
@@ -234,7 +231,7 @@ return (
       >
         
         <div>
-        <img src={liveimage} alt="Logo" />
+        <img src={liveimage} alt="Company Logo" />
         <h1 className="bigger">{positions.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
         <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
@@ -278,7 +275,8 @@ return (
         
       </form>
   
-            <button onClick={()=> dispatch(exitPosition(positions.id))} >Exit Position</button>
+            <button onClick={async ()=> await dispatch(exitPosition(positions.id))} >Exit Position</button>
+            
     
         </div>
       </div>

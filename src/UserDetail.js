@@ -1,16 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { getOneUser } from "./store/actions/current-user";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import Chart from './dashboard/Chart'
+import React from "react";
+
+import { Line } from 'react-chartjs-2';
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
-import { baseUrl } from "./config";
 
-const UserDetail = (currentUser, getOneUser) => {
-  const [ticker, setTicker] = useState('');
-  const [liveimage, setImage] = useState('');
-  const [liveexchange, setExchange] = useState('');
+const data = {
+  labels: ["2020-10-30 20:00:00", "2020-10-30 19:55:00", "2020-10-30 19:50:00", "2020-10-30 19:20:00", "2020-10-30 18:55:00", "2020-10-30 18:50:00", "2020-10-30 18:30:00", "2020-10-30 18:20:00", "2020-10-30 17:55:00", "2020-10-30 17:35:00",
+],
+  datasets: [
+    {
+      label: 'Portfolio',
+      data: ["265.3000", "265.3500", "265.3000", "265.5000", "265.6800", "265.5000", "265.5100", "265.5400", "265.5100", "265.7800"],
+      fill: false,
+      backgroundColor: 'red',
+      borderColor: 'red',
+    },
+  ],
+}
+
+const options = {
+  legend: {
+    display: true,
+  },
+  elements: {
+    point:{
+        radius: 0
+    }
+},
+  scales: {
+    yAxes: [
+      {
+        display: false,
+        ticks: {
+          beginAtZero: false,
+        },
+      },
+    ],
+    xAxes: [{
+      display: false,
+      ticks: {
+        reverse: true,
+      }
+  }]
+  },
+}
+
+const UserDetail = () => {
+
 
   //financial modeling prep fetch---------------------------------------------------
   // useEffect(() => {
@@ -50,6 +86,8 @@ const UserDetail = (currentUser, getOneUser) => {
   //   //return ()=> clearInterval
   // }, []);
 
+
+
 return (
   <div className="pokemon-detail">
     <div
@@ -62,7 +100,7 @@ return (
       
     </div>
     <Deposits />
-    <Chart />
+    <Line data={data} options={options} />
     
     <div className="pokemon-detail-lists">
       
@@ -75,7 +113,6 @@ return (
       </div>
       
     </div>
-    
   </div>
 );
  

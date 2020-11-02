@@ -10,6 +10,13 @@
     Watchlist
     Asset/Stock Search
 
+## Hopeful Bonus Features:
+
+    Market News
+    Unusual Market Activity
+    Graphs
+    News Sharing 
+
 ## User authentication
 
     Sign Up
@@ -18,11 +25,13 @@
 
 ## Front-end Technologies:
 
-    React
+    Reactchartsjs-2
+    material-ui
     Redux
-    Alpaca API  
+    Financial Modelling Prep (company info)  
     Polygon API (newsfeed)
     Alphavantage API (stock tickers)
+
     
 ## Backend Technologies:
 
@@ -45,12 +54,19 @@
     - POST /api/bookmarks (add bookmarked asset to watchlist)
     - GET /api/bookmarks/ (get watchlist for display in sidebar)
     - DELETE /api/bookmarks/:id (delete bookmarked asset)
-    
-    
-## Hopeful Bonus Features:
 
-    Market News
-    Unusual Market Activity
-    News Sharing 
+## Frontend Routes:
+    
+    Dashboard 
+    - /
+    
+    Positions 
+    - positions/:id (sell entire position)
+    
+    Watchlist (just bookmarked assets)
+    - watchlist/:id
+    
+    
+
 
 

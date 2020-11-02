@@ -271,14 +271,13 @@ td.centered {
 }
 
 .newsContainer{
-  /* border: 2px solid red; */
-
+  border-bottom: 2px solid grey;
   padding: 6px;
-  border-radius: 10px;
   display: grid;
   grid-template-columns:  30% 70% ;
   grid-template-rows: 30% 70%;
   grid-gap: 5px;
+  max-width: 800px;
   position: relative;
 }
 
