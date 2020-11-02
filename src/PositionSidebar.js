@@ -21,9 +21,9 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
     getPositions();
   }, []);
 
-  // useEffect(() => {
-  //   getWatchedStocks();
-  // }, []);
+  useEffect(() => {
+    getWatchedStocks();
+  }, []);
 
   const { id } = useParams();
   const positionId = Number.parseInt(id);
@@ -32,9 +32,9 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
     return null;
   }
 
-  // if (!watchedStocks) {
-  //   return null;
-  // }
+  if (!watchedStocks) {
+    return null;
+  }
   return (
     <main>
       <LogoutButton />
@@ -72,7 +72,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
           );
         })}
         <div>Watchlist</div>
-        {/* {watchedStocks.map((watchedStock) => {
+        {watchedStocks.map((watchedStock) => {
           return (
             <NavLink key={watchedStock.id} to={`/watchlist/${watchedStock.id}`}>
               <div
@@ -94,7 +94,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
               </div>
             </NavLink>
           );
-        })} */}
+        })}
       </nav>
       {formVisible ? (
         <PositionForm />
@@ -116,14 +116,14 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
 const PositionSidebarContainer = () => {
   const formVisible = useSelector((state) => state.ui.formVisible);
   const positions = useSelector((state) => Object.values(state.positions));
-  // const watchedStocks = useSelector((state) => Object.values(state.watchedList));
+  const watchedStocks = useSelector((state) => Object.values(state.watchedStocks));
   const dispatch = useDispatch();
   return (
     <PositionSidebar
       positions={positions}
-      // watchedStocks={watchedStocks}
+      watchedStocks={watchedStocks}
       formVisible={formVisible}
-      // getWatchedStocks={() => dispatch(getWatchedStocks())}
+      getWatchedStocks={() => dispatch(getWatchedStocks())}
       getPositions={() => dispatch(getPositions())}
       showForm={() => dispatch(showForm())}
     />

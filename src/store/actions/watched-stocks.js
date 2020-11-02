@@ -39,8 +39,8 @@ export const getWatchedStocks = () => async (dispatch, getState) => {
   });
 
   if (response.ok) {
-    const list = await response.json();
-    dispatch(load(list));
+    const watchedList = await response.json();
+    dispatch(load(watchedList));
   } 
 };
 
