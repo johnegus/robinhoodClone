@@ -49,7 +49,7 @@ input {
 }
 
 input:focus {
-  border-bottom-color: blueviolet;
+  border-bottom-color: green;
 }
 
 nav {

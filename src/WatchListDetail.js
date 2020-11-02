@@ -13,7 +13,7 @@ import { createInstance } from "./store/actions/history";
 
 
 
-const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) => {
+const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, createPosition}) => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -37,7 +37,9 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
 
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  useEffect(() => {
+    getWatchedStocks(id);
+  }, [id]);
 
   useEffect(() => {
     createInstance(id);
@@ -317,6 +319,7 @@ return (
       watchedStocks ={watchedStocks}
       positions = {positions}
       getOneWatchedStock={(id) => dispatch(getOneWatchedStock(id))}
+      getWatchedStocks={(id) => dispatch(getWatchedStocks(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
       />
     

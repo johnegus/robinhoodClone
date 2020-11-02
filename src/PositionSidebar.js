@@ -11,12 +11,13 @@ import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
 import UserDetail from './UserDetail';
 import WatchListDetail from './WatchListDetail';
-
+import { exitWatchedStock } from './store/actions/watched-stocks'
 
 
 import SearchContainer from "./search/SearchContainer";
 
 const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisible, showForm, watchedStocks }) => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getPositions();
@@ -88,7 +89,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
                 <div>
                   <div className="primary-text">{watchedStock.stockName}</div>
                   <div className="secondary-text">
-                  
+                  <span onClick={async ()=> await dispatch(exitWatchedStock(watchedStock.id))} >Delete</span>
                   </div>
 
                 </div>
@@ -111,7 +112,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}
           />
-           <Route path="/" component={UserDetail} />
+           <Route exact={true} path="/" component={UserDetail} />
         </Switch>
       )}
     </main>
@@ -131,6 +132,7 @@ const PositionSidebarContainer = () => {
       getWatchedStocks={() => dispatch(getWatchedStocks())}
       getPositions={() => dispatch(getPositions())}
       showForm={() => dispatch(showForm())}
+      exitWatchedStock={(id) => dispatch(exitWatchedStock(id))}
     />
   );
 };

@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
+import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
 
-const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => {
+const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedStock}) => {
    const context = useContext(SearchContext);
    const [isLoading, setIsLoading] = useState(true); 
    const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -40,6 +41,20 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
       };
       createPosition(payload);
     };
+
+    const handleClick= (e) =>{    
+      e.preventDefault();    
+      const payload = {
+        stockSymbol,
+        stockName,
+        currentPrice,
+        
+      };
+      createWatchedStock(payload);
+    
+    }
+
+
     
     const updateProperty = (callback) => (e) => {
       callback(e.target.value);
@@ -123,17 +138,6 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
       return null;
     }
   
-    if (isLoading) {
-      return (
-      <>
-      
-      <main className="centered middled">
-        <b>Fetching market data...</b>
-        <CircularProgress />
-        </main>
-      </>
-      )
-    }
     const lineChartData = {
       labels: stockChartXValues,
       datasets: [
@@ -208,7 +212,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
           onChange={updateProperty(setshares)}
         />
         <button type="submit">Buy Shares!</button>
-        
+        <button onClick={handleClick} >Add to Watchlist</button>
       </form>
         </div>
         {/* <div className='newsFeed'>
@@ -239,6 +243,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, hideForm}) => 
   
       <SearchDetail
       createPosition={(positions) => dispatch(createPosition(positions))}
+      createWatchedStock={(watchedStocks) => dispatch(createWatchedStock(watchedStocks))}
       hideForm={() => dispatch(hideForm())}
       />
     

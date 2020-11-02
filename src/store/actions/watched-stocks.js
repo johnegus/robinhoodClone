@@ -57,5 +57,6 @@ export const exitWatchedStock = (id) => async (dispatch, getState) => {
 
   if (response.ok) {
     dispatch(getWatchedStocks());
+    window.location.replace('/')
   }
 };
