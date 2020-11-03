@@ -134,7 +134,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
-              setbuyPrice(parseInt(stockChartYValues[0]))
               setIsLoading(false);
           }
       )
@@ -201,6 +200,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
  
   const handleSubmit = (e) => {
     e.preventDefault();
+    setbuyPrice(parseInt(stockChartYValues[0]))
 
    
     const payload = {
