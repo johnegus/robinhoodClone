@@ -4,6 +4,13 @@ import { Line } from 'react-chartjs-2';
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
 
+// function createData(history) {
+//   history.map(instance => {
+//     instance.createdAt, instance.deposit - ((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares))
+//   })
+ 
+// }
+
 const data = {
   labels: ["2020-10-30 20:00:00", "2020-10-30 19:55:00", "2020-10-30 19:50:00", "2020-10-30 19:20:00", "2020-10-30 18:55:00", "2020-10-30 18:50:00", "2020-10-30 18:30:00", "2020-10-30 18:20:00", "2020-10-30 17:55:00", "2020-10-30 17:35:00",
 ],

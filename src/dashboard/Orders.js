@@ -66,7 +66,8 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Purchase Date</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Transaction</TableCell>
             <TableCell>Symbol</TableCell>
             <TableCell>Company Name</TableCell>
             <TableCell>Shares</TableCell>
@@ -79,6 +80,7 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
           {history.map((instance) => (
             <TableRow key={instance.id}>
               <TableCell>{instance.createdAt}</TableCell>
+              <TableCell>{instance.deposit ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL'}</TableCell>
               <TableCell>{instance.stockSymbol ? instance.stockSymbol : ''}</TableCell>
               <TableCell>{instance.stockName}</TableCell>
               <TableCell>{instance.shares}</TableCell>
