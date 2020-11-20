@@ -6,14 +6,13 @@ import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getWatchedStocks } from './store/actions/watched-stocks';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
 import { createInstance } from "./store/actions/history";
 
 
 
 
-const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, createPosition}) => {
+const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -37,13 +36,11 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, getWatchedStocks, c
 
   const dispatch = useDispatch();
   const { id } = useParams();
-  useEffect(() => {
-    getWatchedStocks(id);
-  }, [id]);
+ 
 
-  useEffect(() => {
-    createInstance(id);
-  }, [id]);
+  // useEffect(() => {
+  //   createInstance(id);
+  // }, [id]);
   
 
   useEffect(() => {
@@ -311,7 +308,6 @@ return (
       watchedStocks ={watchedStocks}
       positions = {positions}
       getOneWatchedStock={(id) => dispatch(getOneWatchedStock(id))}
-      getWatchedStocks={(id) => dispatch(getWatchedStocks(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
       />
     

@@ -134,6 +134,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
+              console.log("current price: $" + parseInt(stockChartYValues[0]))
+              setSoldPrice(currentPrice)
               setIsLoading(false);
           }
       )
@@ -215,21 +217,24 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   };
 
   const handleClick = async (e) => {
-    // console.log(stockSymbol)
-    // console.log(stockName)
-    // console.log(soldPrice)
-    // console.log(boughtPrice)
-    // console.log(shares)
-    // const payload ={
-    // stockSymbol,
-    // stockName,
-    // soldPrice,
-    // boughtPrice,
-    // shares
-    // };
-
-    // createInstance(payload)
-   await dispatch(exitPosition(positions.id));
+    console.log(stockSymbol)
+    console.log(stockName)
+    
+    console.log(soldPrice)
+    setBoughtPrice(positions.buyPrice)
+    console.log(boughtPrice)
+    setshares(positions.shares)
+    console.log(shares)
+    const payload ={
+    stockSymbol,
+    stockName,
+    soldPrice,
+    boughtPrice,
+    shares
+    };
+debugger
+    await createInstance(payload);
+    await dispatch(exitPosition(positions.id));
 
     
     

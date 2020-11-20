@@ -100,10 +100,10 @@ return (
       
     </div>
     <Deposits />
-    <Line data={data} options={options} />
+    
     
     <div className="pokemon-detail-lists">
-      
+    <Line data={data} options={options} />
     
       <div>
       

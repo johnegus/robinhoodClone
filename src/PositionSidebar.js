@@ -105,12 +105,12 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
           <Route
             exact={true}
             path="/watchlist/:id"
-            render={(props) => <WatchListDetail {...props} />}
+            render={(props) => <WatchListDetail {...props} />}//component = {WatchLIstdetail}?
           />
           <Route
             exact={true}
             path="/position/:id"
-            render={(props) => <PositionDetail {...props} />}
+            render={(props) => <PositionDetail {...props} />}  
           />
            <Route exact={true} path="/" component={UserDetail} />
         </Switch>
