@@ -7,8 +7,8 @@ export default function reducer(state = {}, action) {
 
   switch (action.type) {
     case LOAD_HISTORY: {
-      const instances = action.list.map((instance) => ({ [instance.id]: instance }));
-      return merge({}, state, ...instances);
+      const history = action.historyList.map((instance) => ({ [instance.id]: instance }));
+      return merge({}, state, ...history);
     }
     default:
       return state;

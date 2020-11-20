@@ -1,7 +1,7 @@
 import { baseUrl } from "../../config";
 
 export const LOAD_HISTORY = "LOAD_HISTORY";
-export const load = (list) => ({ type: LOAD_HISTORY, list });
+export const load = (historyList) => ({ type: LOAD_HISTORY, historyList });
 
 export const createInstance = (data) => async (dispatch, getState) => {
     const {
@@ -36,7 +36,7 @@ export const createInstance = (data) => async (dispatch, getState) => {
     });
   
     if (response.ok) {
-      const list = await response.json();
-      dispatch(load(list));
+      const historyList = await response.json();
+      dispatch(load(historyList));
     }
   };

@@ -332,3 +332,7 @@ text-transform: uppercase;
   grid-column: 2/2;
   
 }
+
+.user-detail-chart{
+  max-width: 700px;
+}

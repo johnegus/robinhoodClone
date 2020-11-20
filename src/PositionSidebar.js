@@ -9,6 +9,7 @@ import PositionForm from "./PositionForm";
 import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
+import {getHistoricalData} from './store/actions/history'
 import UserDetail from './UserDetail';
 import WatchListDetail from './WatchListDetail';
 import { exitWatchedStock } from './store/actions/watched-stocks'
@@ -16,7 +17,8 @@ import { exitWatchedStock } from './store/actions/watched-stocks'
 
 import SearchContainer from "./search/SearchContainer";
 
-const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisible, showForm, watchedStocks }) => {
+const PositionSidebar = ({ positions, getPositions, getWatchedStocks, 
+  getHistoricalData, formVisible, showForm, watchedStocks }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,6 +27,9 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks, formVisibl
 
   useEffect(() => {
     getWatchedStocks();
+  }, []);
+  useEffect(() => {
+    getHistoricalData();
   }, []);
 
   const { id } = useParams();
@@ -123,14 +128,17 @@ const PositionSidebarContainer = () => {
   const formVisible = useSelector((state) => state.ui.formVisible);
   const positions = useSelector((state) => Object.values(state.positions));
   const watchedStocks = useSelector((state) => Object.values(state.watchedStocks));
+  const history = useSelector((state) => Object.values(state.history));
   const dispatch = useDispatch();
   return (
     <PositionSidebar
       positions={positions}
       watchedStocks={watchedStocks}
+      history={history}
       formVisible={formVisible}
       getWatchedStocks={() => dispatch(getWatchedStocks())}
       getPositions={() => dispatch(getPositions())}
+      getHistoricalData={() => dispatch(getHistoricalData())}
       showForm={() => dispatch(showForm())}
       exitWatchedStock={(id) => dispatch(exitWatchedStock(id))}
     />

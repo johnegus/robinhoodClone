@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
+const Orders = ({positions, history, getPositions, getHistoricalData}) => {
   useEffect(() => {
     getPositions();
   }, []);
 
-  // useEffect(() => {
-  //   getHistoricalData();
-  // }, []);
+  useEffect(() => {
+    getHistoricalData();
+  }, []);
   
   
   
@@ -62,7 +62,7 @@ const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
           ))}
         </TableBody>
       </Table>
-      {/* <Title>Portfolio History</Title>
+      <Title>Portfolio History</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -76,10 +76,10 @@ const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {instances.map((instance) => (
+          {history.map((instance) => (
             <TableRow key={instance.id}>
               <TableCell>{instance.createdAt}</TableCell>
-              <TableCell>{instance.stockSymbol.toUpperCase()}</TableCell>
+              <TableCell>SYMBOL</TableCell>
               <TableCell>{instance.stockName}</TableCell>
               <TableCell>{instance.shares}</TableCell>
               <TableCell>${instance.buyPrice}</TableCell>
@@ -88,7 +88,7 @@ const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
             </TableRow>
           ))}
         </TableBody>
-      </Table> */}
+      </Table>
   
     </React.Fragment>
   );
@@ -97,14 +97,14 @@ const Orders = ({positions, instances, getPositions, getHistoricalData}) => {
 
 const OrdersContainer = () => {
   const positions = useSelector((state) => Object.values(state.positions));
-  // const instances = useSelector((state) => Object.values(state.instances));
+  const history = useSelector((state) => Object.values(state.history));
   const dispatch = useDispatch();
   return (
     <Orders
       positions={positions}
-      // instances={instances}
+      history={history}
       getPositions={() => dispatch(getPositions())}
-      // getHistoricalData={() => dispatch(getHistoricalData())}
+      getHistoricalData={() => dispatch(getHistoricalData())}
       
     />
   );

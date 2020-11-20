@@ -99,10 +99,12 @@ return (
       </div>
       
     </div>
+    
+    <div>
     <Deposits />
+    </div>
     
-    
-    <div className="pokemon-detail-lists">
+    <div className="user-detail-chart">
     <Line data={data} options={options} />
     
       <div>
