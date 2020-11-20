@@ -84,6 +84,8 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
             setExchange(data[0]['exchangeShortName'])
               
           }
+      ).catch(error => 
+        setstockSymbol('INVALID SYMBOL')
       )
     }
     fetchCompanyInfo();  
@@ -109,6 +111,8 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
             function(response){
                 return response.json()
             }
+        ).catch(error =>  
+          setstockSymbol('INVALID SYMBOL')
         )
         .then(
             function(data){
@@ -125,7 +129,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
                 setbuyPrice(parseInt(stockChartYValues[0]))
                 
             }
-        )
+        );
           }
       fetchLivePositions();
     
@@ -189,6 +193,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
         
         
           <Line data={lineChartData} options={options} />
+          {stockSymbol !== 'INVALID SYMBOL' ? 
         <div className="pokemon-detail-lists">
           <div>
             <h4>Stock Information</h4>
@@ -224,6 +229,11 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
         <button onClick={handleClick} >Add to Watchlist</button>
       </form>
         </div>
+        :
+        <div className="centered middled">
+          <b>Invalid symbol. Try again.</b>
+          </div>
+        }  
         {/* <div className='newsFeed'>
             {stories.map(story => {
                 return (
