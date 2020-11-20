@@ -26,7 +26,11 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
   
     const handleSubmit = (e) => {
       e.preventDefault();
-    
+    console.log(stockSymbol)
+    console.log(stockName)
+    console.log(currentPrice)
+    console.log(buyPrice)
+    console.log(shares)
       const payload = {
         stockSymbol,
         stockName,
@@ -114,12 +118,12 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
                     stockChartXValuesFunction.push(key);
                     stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
                 }
-        
+                setIsLoading(false);
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
                 setcurrentPrice(parseInt(stockChartYValues[0]))
                 setbuyPrice(parseInt(stockChartYValues[0]))
-                setIsLoading(false);
+                
             }
         )
           }

@@ -28,23 +28,12 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [boughtPrice, setBoughtPrice] = useState('');
   const [soldPrice, setSoldPrice] = useState('');
 
-  // setstockName(data[0][companyName])
-  //           setCompanyDescription(data[0][description])
-  //           setExchange(data[0][exchangeShortName])
-  //           setImage(data[0][image])
+
 
   
 
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  useEffect(() => {
-    exitPosition(id);
-  }, [id]);
-
-  // useEffect(() => {
-  //   createInstance(id);
-  // }, [id]);
   
 
   useEffect(() => {
@@ -130,13 +119,13 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
               }
-             
+              setIsLoading(false);
+
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               console.log("current price: $" + parseInt(stockChartYValues[0]))
-              setSoldPrice(currentPrice)
-              setIsLoading(false);
+              setSoldPrice(parseInt(stockChartYValues[0]))
           }
       )
         }
@@ -217,14 +206,14 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   };
 
   const handleClick = async (e) => {
-    console.log(stockSymbol)
-    console.log(stockName)
+    console.log('symbol: ' + stockSymbol)
+    console.log('company: ' + stockName)
+    console.log('sellprice: ' + soldPrice)
+    const boughtPrice = positions.buyPrice
+    console.log('boughtprice: ' + boughtPrice)
+    const shares = positions.shares
+    console.log('shares: ' + shares)
     
-    console.log(soldPrice)
-    setBoughtPrice(positions.buyPrice)
-    console.log(boughtPrice)
-    setshares(positions.shares)
-    console.log(shares)
     const payload ={
     stockSymbol,
     stockName,
@@ -232,9 +221,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     boughtPrice,
     shares
     };
-debugger
-    await createInstance(payload);
-    await dispatch(exitPosition(positions.id));
+    createInstance(payload);
+    dispatch(exitPosition(positions.id));
 
     
     
@@ -347,16 +335,18 @@ return (
 
 const PositionDetailContainer = () => {
   const positions = useSelector((state) => state.positions[state.currentPosition]);
+  const history = useSelector((state) => Object.values(state.history));
   const dispatch = useDispatch();
 
   return (
 
     <PositionDetail
     positions={positions}
+    history = {history}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
-      createInstance={(profitLoss) => dispatch(createInstance(profitLoss))}
+      createInstance={(history) => dispatch(createInstance(history))}
     />
   
   );

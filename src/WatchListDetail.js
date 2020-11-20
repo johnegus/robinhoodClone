@@ -126,13 +126,13 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
               }
-           
+              setIsLoading(false);
+
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseInt(stockChartYValues[0]))
               setbuyPrice(parseInt(stockChartYValues[0]))
             
-              setIsLoading(false);
           }
       )
         }
