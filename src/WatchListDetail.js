@@ -216,6 +216,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   };
 return (
     <div className="pokemon-detail">
+
       <div
         className={`pokemon-detail-image-background`}
         
@@ -293,6 +294,7 @@ return (
               )
             })}
           </div>
+
     </div>
   );
 };

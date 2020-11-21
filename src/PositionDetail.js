@@ -231,12 +231,11 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const updateProperty = (callback) => (e) => {
     callback(e.target.value);
   };
+
+  const upOrDown = stockChartYValues[0] > stockChartYValues[99] ? 'background' : 'background2'
 return (
     <div className="pokemon-detail">
-      <div
-        className={`pokemon-detail-image-background`}
-        
-      >
+      <div className={`pokemon-detail-image-${upOrDown}`}>
         
         <div className='header-element'>
           <div className='company-logo'>
