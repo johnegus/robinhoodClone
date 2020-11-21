@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -22,20 +22,53 @@ export function Deposits({getHistoricalData, history}) {
   const year = new Date().getFullYear();
   const month =new Date().getMonth();
   const date = new Date().getDate()
+  // const [stockChartXValues, setstockChartXValues] = useState([]);
+  // const [stockChartYValues, setstockChartYValues] = useState([]);
 
   useEffect(() => {
     getHistoricalData();
   }, []);
 
+  //alphavantage stock fetch -------------------------------------------------------------
+  // useEffect(() => {
+  //   if (!history) {
+  //     return;
+  //   }
+  //   let stockChartXValuesFunction = [];
+  //   let stockChartYValuesFunction = [];
+  //   const fetchLivePositions = () =>{
+      
+        
+  //       history.map((instance) => {
+          
+  //         stockChartYValuesFunction.push(instance.deposit + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares))
+  //         stockChartXValuesFunction.push(instance.createdAt)
+  //       })
+    
+  //       }
+              
+  
+  //       setstockChartXValues(stockChartXValuesFunction)
+  //       setstockChartYValues(stockChartYValuesFunction)
+  //       console.log(stockChartXValues)
+  //       console.log(stockChartYValues)
+            
+        
+      
+  //     fetchLivePositions();
+    
+  
+  // }, [history]);
+
   return (
     <React.Fragment>
       <Title>Portfolio Value</Title>
       <Typography component="p" variant="h4">
-        {/* {history.map((instance) => (
+        {history.map((instance) => (
         <div>
           Change: {instance.deposit + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)}
         </div>
-        ))} */}
+        ))}
         ${history.reduce(function (accumulator, instance){
           return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
         }, 10000)}

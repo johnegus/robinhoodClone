@@ -1,59 +1,20 @@
-import React from "react";
+import React, { useEffect, useState }  from 'react';
 
 import { Line } from 'react-chartjs-2';
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
+import { useSelector, useDispatch } from "react-redux";
+import {getHistoricalData} from './store/actions/history';
 
-// function createData(history) {
-//   history.map(instance => {
-//     instance.createdAt, instance.deposit - ((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares))
-//   })
- 
-// }
 
-const data = {
-  labels: ["2020-10-30 20:00:00", "2020-10-30 19:55:00", "2020-10-30 19:50:00", "2020-10-30 19:20:00", "2020-10-30 18:55:00", "2020-10-30 18:50:00", "2020-10-30 18:30:00", "2020-10-30 18:20:00", "2020-10-30 17:55:00", "2020-10-30 17:35:00",
-],
-  datasets: [
-    {
-      label: 'Portfolio',
-      data: ["265.3000", "265.3500", "265.3000", "265.5000", "265.6800", "265.5000", "265.5100", "265.5400", "265.5100", "265.7800"],
-      fill: false,
-      backgroundColor: 'green',
-      borderColor: 'green',
-    },
-  ],
-}
 
-const options = {
-  legend: {
-    display: true,
-  },
-  elements: {
-    point:{
-        radius: 0
-    }
-},
-  scales: {
-    yAxes: [
-      {
-        display: false,
-        ticks: {
-          beginAtZero: false,
-        },
-      },
-    ],
-    xAxes: [{
-      display: false,
-      ticks: {
-        reverse: false,
-      }
-  }]
-  },
-}
+const UserDetail = ({getHistoricalData, history}) => {
+  const [stockChartXValues, setstockChartXValues] = useState([]);
+  const [stockChartYValues, setstockChartYValues] = useState([]);
 
-const UserDetail = () => {
-
+  useEffect(() => {
+    getHistoricalData();
+  }, []);
 
   //financial modeling prep fetch---------------------------------------------------
   // useEffect(() => {
@@ -92,8 +53,76 @@ const UserDetail = () => {
   //   //setinterval would go here return the clear interval
   //   //return ()=> clearInterval
   // }, []);
+  useEffect(() => {
+    if (!history) {
+      return;
+    }
+    let stockChartXValuesFunction = [];
+    let stockChartYValuesFunction = [];
+    let sum = 0;
+    const fetchLivePositions = () =>{
+      
+        
+        history.map((instance) => {
+          
+          stockChartYValuesFunction.push(sum+= (instance.deposit + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)))
+          stockChartXValuesFunction.push(instance.createdAt)
+        })
+    
+        }
+              
+  
+        setstockChartXValues(stockChartXValuesFunction)
+        setstockChartYValues(stockChartYValuesFunction)
+        console.log(stockChartXValues)
+        console.log(stockChartYValues)
+            
+        
+      
+      fetchLivePositions();
+    
+  
+  }, [history]);
 
-
+  const lineChartData = {
+    labels: stockChartXValues,
+    datasets: [
+      {
+        label: 'Portfolio Value',
+        data: stockChartYValues,
+        fill: false,
+        backgroundColor:'green',
+        // borderColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'green' 
+      },
+    ],
+  }
+  
+  const options = {
+    legend: {
+      display: true,
+    },
+    elements: {
+      point:{
+          radius: 0
+      }
+  },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: false,
+          },
+        },
+      ],
+      xAxes: [{
+        display: false,
+        // ticks: {
+        //   reverse: true,
+        // }
+    }]
+    },
+  }
 
 return (
   <div className="pokemon-detail">
@@ -112,7 +141,7 @@ return (
     </div>
     
     <div className="user-detail-chart">
-    <Line data={data} options={options} />
+    <Line data={lineChartData} options={options} />
     
       <div>
       
@@ -128,4 +157,17 @@ return (
   };
 
   
-  export default UserDetail;
+
+  const UserDetailContainer = () => {
+    const history = useSelector((state) => Object.values(state.history));
+    const dispatch = useDispatch();
+    return (
+      <UserDetail
+        history={history}
+        getHistoricalData={() => dispatch(getHistoricalData())}
+        
+      />
+    );
+  };
+  
+  export default UserDetailContainer;
