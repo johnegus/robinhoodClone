@@ -66,7 +66,7 @@ export function Deposits({getHistoricalData, history}) {
       <Typography component="p" variant="h4">
         {history.map((instance) => (
         <div>
-          Change: {instance.deposit + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)}
+          Change: {parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares))}
         </div>
         ))}
         ${history.reduce(function (accumulator, instance){

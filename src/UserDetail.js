@@ -60,12 +60,12 @@ const UserDetail = ({getHistoricalData, history}) => {
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
     let sum = 0;
-    const fetchLivePositions = () =>{
+    const fetchLivePositions = async () =>{
       
         
         history.map((instance) => {
           
-          stockChartYValuesFunction.push(sum+= (instance.deposit + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)))
+          stockChartYValuesFunction.push(sum+= instance.deposit + ((instance.soldPrice)*instance.shares)-((instance.boughtPrice)*instance.shares))
           stockChartXValuesFunction.push(instance.createdAt)
         })
     
