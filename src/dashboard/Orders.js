@@ -71,8 +71,9 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
             <TableCell>Symbol</TableCell>
             <TableCell>Company Name</TableCell>
             <TableCell>Shares</TableCell>
-            <TableCell>Purchase Price</TableCell>
-            <TableCell>Current Price $</TableCell>
+            <TableCell>Purchase Price $</TableCell>
+            <TableCell>Sale Price $</TableCell>
+            <TableCell>Profit/Loss $</TableCell>
             <TableCell align="right">Percent Change %</TableCell>
           </TableRow>
         </TableHead>
@@ -86,6 +87,7 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
               <TableCell>{instance.shares}</TableCell>
               <TableCell>${instance.boughtPrice}</TableCell>
               <TableCell >{`$${instance.soldPrice}`}</TableCell>
+              <TableCell >{`$${(instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)}`}</TableCell>
               <TableCell align="right">{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(0)}%</TableCell>
             </TableRow>
           ))}

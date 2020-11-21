@@ -123,9 +123,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
 
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseInt(stockChartYValues[0]))
-              console.log("current price: $" + parseInt(stockChartYValues[0]))
-              setSoldPrice(parseInt(stockChartYValues[0]))
+              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              console.log("current price: $" + parseFloat(stockChartYValues[0]).toFixed(2))
+              setSoldPrice(parseFloat(stockChartYValues[0]).toFixed(2))
           }
       )
         }
@@ -191,7 +191,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    setbuyPrice(parseInt(stockChartYValues[0]))
+    setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
 
    
     const payload = {
@@ -244,7 +244,7 @@ return (
         <div className='company-titles'>
         <h1 className="bigger">{positions.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
-        <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
+        <h1 className="bigger">${parseFloat(stockChartYValues[0]).toFixed(2)}</h1>
         </div>
         </div>
       </div>
@@ -267,10 +267,10 @@ return (
                 <b>Date Purchased:</b> {positions.createdAt}
               </li>
               <li>
-                <b>Market Value:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)}
+                <b>Market Value:</b> ${positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)}
               </li>
               <li>
-                <b>Total Return:</b> ${positions.shares*parseInt(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
+                <b>Total Return:</b> ${positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
               </li>
             </ul>
             <h2>Buy More</h2>
@@ -301,7 +301,7 @@ return (
               <b>Stock Name</b> {stockName}
             </li>
             <li>
-              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+              <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
             </li>
             <li>
               <b>Exchange</b> {liveexchange}

@@ -130,8 +130,8 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
 
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseInt(stockChartYValues[0]))
-              setbuyPrice(parseInt(stockChartYValues[0]))
+              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
             
           }
       )
@@ -229,7 +229,7 @@ return (
         <div className='company-titles'>
         <h1 className="bigger">{watchedStocks.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
-        <h1 className="bigger">${parseInt(stockChartYValues[0]).toFixed(2)}</h1>
+        <h1 className="bigger">${parseFloat(stockChartYValues[0]).toFixed(2)}</h1>
         </div>
         </div>
       </div>
@@ -267,7 +267,7 @@ return (
               <b>Stock Name</b> {stockName}
             </li>
             <li>
-              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+              <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
             </li>
             <li>
               <b>Exchange</b> {liveexchange}

@@ -125,8 +125,8 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
                 setIsLoading(false);
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
-                setcurrentPrice(parseInt(stockChartYValues[0]))
-                setbuyPrice(parseInt(stockChartYValues[0]))
+                setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+                setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
                 
             }
         );
@@ -205,7 +205,7 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
               <b>Stock Name</b> {stockName}
             </li>
             <li>
-              <b>Current Price</b> ${parseInt(stockChartYValues[0]).toFixed(2)}
+              <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
             </li>
             <li>
               <b>Exchange</b> {liveexchange}
