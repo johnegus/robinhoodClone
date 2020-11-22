@@ -282,11 +282,13 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        <button type="submit">Buy Shares!</button>
+        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        
+        <button type="submit">Buy Shares!</button>}
         
       </form>
-  
-            <button onClick={handleClick} >Exit Position</button>
+      { isNaN(currentPrice) ? 'Failed to fetch current price' :
+            <button onClick={handleClick} >Exit Position</button>}
             
     
         </div>

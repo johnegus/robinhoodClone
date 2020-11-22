@@ -225,7 +225,8 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        <button type="submit">Buy Shares!</button>
+        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        <button type="submit">Buy Shares!</button>}
         <button onClick={handleClick} >Add to Watchlist</button>
       </form>
         </div>

@@ -65,7 +65,7 @@ const UserDetail = ({getHistoricalData, history}) => {
         
         history.map((instance) => {
           
-          stockChartYValuesFunction.push(sum+= instance.deposit + ((instance.soldPrice)*instance.shares)-((instance.boughtPrice)*instance.shares))
+          stockChartYValuesFunction.push(sum+= parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares)))
           stockChartXValuesFunction.push(instance.createdAt)
         })
     
