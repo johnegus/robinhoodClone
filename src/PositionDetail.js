@@ -112,7 +112,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       )
       .then(
           function(data){
-          
+              console.log(data)
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(positions.stockSymbol);
               for(let key in data['Time Series (5min)']){
@@ -123,15 +123,54 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
 
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-              console.log("current price: $" + parseFloat(stockChartYValues[0]).toFixed(2))
-              setSoldPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              
           }
       )
         }
     fetchLivePositions();
   
 
+}, [positions]);
+
+  // fetching latest quote for each stock   
+  useEffect(() => {    
+    if (!positions) {
+      return;
+    }                                
+  const fetchCompanyInfo = async () =>{
+
+    const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+    let stockSymbol = positions.stockSymbol
+    let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
+    let stockChartXValuesFunction;
+    let stockChartYValuesFunction;
+      
+        fetch(API_CALL)
+        .then(
+            function(response){
+                return response.json()
+            }
+        )
+        .then(
+            function(data){
+              console.log('fetch  data from FMP')
+              console.log(data);
+  
+              for(let key in data){
+                stockChartXValuesFunction= key;
+                stockChartYValuesFunction= (data[key]['price']);
+              }
+                 console.log(stockChartYValuesFunction);
+                 setcurrentPrice(parseFloat(stockChartYValuesFunction).toFixed(2))
+                 setSoldPrice(parseFloat(stockChartYValuesFunction).toFixed(2))
+
+                 
+            }
+        )
+        
+}
+// fetchCompanyInfo()
+setTimeout(fetchCompanyInfo(), 50000);
 }, [positions]);
 
   if (!positions) {
@@ -270,7 +309,7 @@ return (
                 <b>Market Value:</b> ${positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)}
               </li>
               <li>
-                <b>Total Return:</b> ${positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice}
+                <b>Total Return:</b> ${(positions.shares*currentPrice-positions.shares*positions.buyPrice).toFixed(2)}
               </li>
             </ul>
             <h2>Buy More</h2>

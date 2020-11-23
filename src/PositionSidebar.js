@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
 
@@ -20,6 +20,7 @@ import SearchContainer from "./search/SearchContainer";
 const PositionSidebar = ({ positions, getPositions, getWatchedStocks, 
   getHistoricalData, formVisible, showForm, watchedStocks }) => {
   const dispatch = useDispatch();
+  const [currentPrice, setcurrentPrice] = useState("");
 
   useEffect(() => {
     getPositions();
@@ -31,6 +32,46 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
   useEffect(() => {
     getHistoricalData();
   }, []);
+
+  // fetching latest quote for each stock   
+//   useEffect(() => {                                    
+//   const fetchCompanyInfo = async () =>{
+
+//     positions.map(position => { 
+//     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+//     let stockSymbol = position.stockSymbol
+//     let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
+//     let stockChartXValuesFunction;
+//     let stockChartYValuesFunction;
+      
+//         fetch(API_CALL)
+//         .then(
+//             function(response){
+//                 return response.json()
+//             }
+//         )
+//         .then(
+//             function(data){
+//               console.log('fetch  data from FMP')
+//               console.log(data);
+  
+//               for(let key in data){
+//                 stockChartXValuesFunction= key;
+//                 stockChartYValuesFunction= (data[key]['price']);
+//               }
+//                  console.log(stockChartYValuesFunction);
+//                  setcurrentPrice(parseFloat(stockChartYValuesFunction))
+                 
+//             }
+//         )
+        
+// })
+// }
+// // fetchCompanyInfo()
+// setTimeout(fetchCompanyInfo(), 50000);
+// }, [positions]);
+
+  
 
   const { id } = useParams();
   const positionId = Number.parseInt(id);
@@ -66,7 +107,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
                 }
               >
                 <div className='randomizer'
-                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
+                  >{currentPrice}</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">

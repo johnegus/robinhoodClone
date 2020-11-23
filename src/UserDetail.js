@@ -74,8 +74,8 @@ const UserDetail = ({getHistoricalData, history}) => {
   
         setstockChartXValues(stockChartXValuesFunction)
         setstockChartYValues(stockChartYValuesFunction)
-        console.log(stockChartXValues)
-        console.log(stockChartYValues)
+        // console.log(stockChartXValues)
+        // console.log(stockChartYValues)
             
         
       
