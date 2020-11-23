@@ -104,9 +104,9 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   }
   const fetchLivePositions = async () =>{
     
-      const API_Key = '06N03QCM2TDKP6QS';
+    const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
       let stockSymbol = watchedStocks.stockSymbol
-      let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${API_Key}`;
+      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
     
@@ -119,15 +119,16 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
       )
       .then(
           function(data){
-            
+            console.log('FMP Historical data Search')
+              console.log(data)
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(watchedStocks.stockSymbol);
-              for(let key in data['Time Series (5min)']){
+              for(let key in data){
                   stockChartXValuesFunction.push(key);
-                  stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
+                  stockChartYValuesFunction.push(data[key]['open']);
               }
               setIsLoading(false);
-
+              
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))

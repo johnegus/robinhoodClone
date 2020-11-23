@@ -64,14 +64,14 @@ export function Deposits({getHistoricalData, history}) {
     <React.Fragment>
       <Title>Portfolio Value</Title>
       <Typography component="p" variant="h4">
-        {history.map((instance) => (
+        {/* {history.map((instance) => (
         <div>
           Change: {parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares))}
         </div>
-        ))}
-        ${history.reduce(function (accumulator, instance){
+        ))} */}
+        ${(history.reduce(function (accumulator, instance){
           return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
-        }, 10000)}
+        }, 10000)).toFixed(2)}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on {month + '/' + date + '/' + year}

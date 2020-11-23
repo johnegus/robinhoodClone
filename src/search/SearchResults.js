@@ -99,11 +99,11 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
     }
     const fetchLivePositions = async () =>{
       
-        const API_Key = '06N03QCM2TDKP6QS';
-        let stockSymbol = context.searchQuery
-        let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${API_Key}`;
-        let stockChartXValuesFunction = [];
-        let stockChartYValuesFunction = [];
+      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      let stockSymbol = context.searchQuery
+      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
+      let stockChartXValuesFunction = [];
+      let stockChartYValuesFunction = [];
       
       
         fetch(API_CALL)
@@ -118,9 +118,9 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
             function(data){
             
     
-                for(let key in data['Time Series (5min)']){
+                for(let key in data){
                     stockChartXValuesFunction.push(key);
-                    stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
+                    stockChartYValuesFunction.push(data[key]['open']);
                 }
                 setIsLoading(false);
                 setstockChartXValues(stockChartXValuesFunction)

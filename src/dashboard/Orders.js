@@ -81,13 +81,13 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
           {history.map((instance) => (
             <TableRow key={instance.id}>
               <TableCell>{instance.createdAt}</TableCell>
-              <TableCell>{instance.deposit ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL'}</TableCell>
+              <TableCell>{instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL'}</TableCell>
               <TableCell>{instance.stockSymbol ? instance.stockSymbol : ''}</TableCell>
               <TableCell>{instance.stockName}</TableCell>
               <TableCell>{instance.shares}</TableCell>
               <TableCell>${instance.boughtPrice}</TableCell>
               <TableCell >{`$${instance.soldPrice}`}</TableCell>
-              <TableCell >{`$${(instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)}`}</TableCell>
+              <TableCell >{`$${((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)}`}</TableCell>
               <TableCell align="right">{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(0)}%</TableCell>
             </TableRow>
           ))}

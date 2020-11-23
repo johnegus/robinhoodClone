@@ -1,16 +1,22 @@
 import React, { useEffect, useState }  from 'react';
 
-import { Line } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
 import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from './store/actions/history';
+import { getPositions } from "./store/actions/positions";
+import NewsFeed from './NewsFeed';
 
 
 
-const UserDetail = ({getHistoricalData, history}) => {
+const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
+  
+  useEffect(() => {
+    getPositions();
+  }, []);
 
   useEffect(() => {
     getHistoricalData();
@@ -84,6 +90,33 @@ const UserDetail = ({getHistoricalData, history}) => {
   
   }, [history]);
 
+  const totalCash = (history.reduce(function (accumulator, instance){
+    return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
+  }, 10000)).toFixed(2);
+  const totalAssets = (positions.reduce(function (accumulator, position){
+    return accumulator + (position.currentPrice*position.shares);
+  }, 0)).toFixed(2);
+
+  const doughnutData = {
+    datasets: [{
+        data: [totalCash - totalAssets, totalAssets],
+        backgroundColor: [
+          totalCash - totalAssets > 0 ? 'green' : 'red',
+          'orange',
+        ],
+        borderColor: [
+          totalCash - totalAssets > 0 ? 'green' : 'red',
+          'orange',
+        ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Cash',
+        'Assets'
+    ]
+};
+
   const lineChartData = {
     labels: stockChartXValues,
     datasets: [
@@ -117,9 +150,6 @@ const UserDetail = ({getHistoricalData, history}) => {
       ],
       xAxes: [{
         display: false,
-        // ticks: {
-        //   reverse: true,
-        // }
     }]
     },
   }
@@ -142,11 +172,12 @@ return (
     
     <div className="user-detail-chart">
     <Line data={lineChartData} options={options} />
+    <Doughnut data={doughnutData} />
     
       <div>
       
       <Orders />
-      
+      <NewsFeed />
       
       </div>
       
@@ -159,11 +190,14 @@ return (
   
 
   const UserDetailContainer = () => {
+    const positions = useSelector((state) => Object.values(state.positions));
     const history = useSelector((state) => Object.values(state.history));
     const dispatch = useDispatch();
     return (
       <UserDetail
         history={history}
+        positions={positions}
+        getPositions={() => dispatch(getPositions())}
         getHistoricalData={() => dispatch(getHistoricalData())}
         
       />

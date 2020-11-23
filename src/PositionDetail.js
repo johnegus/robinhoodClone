@@ -97,9 +97,9 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   }
   const fetchLivePositions = async () =>{
     
-      const API_Key = '06N03QCM2TDKP6QS';
-      let stockSymbol = positions.stockSymbol
-      let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${API_Key}`;
+    const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+    let stockSymbol = positions.stockSymbol
+    let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
     
@@ -112,12 +112,13 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       )
       .then(
           function(data){
+            console.log('FMP Historical data Position')
               console.log(data)
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(positions.stockSymbol);
-              for(let key in data['Time Series (5min)']){
+              for(let key in data){
                   stockChartXValuesFunction.push(key);
-                  stockChartYValuesFunction.push(data['Time Series (5min)'][key]['1. open']);
+                  stockChartYValuesFunction.push(data[key]['open']);
               }
               setIsLoading(false);
 
@@ -169,8 +170,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
         )
         
 }
-// fetchCompanyInfo()
-setTimeout(fetchCompanyInfo(), 50000);
+fetchCompanyInfo()
+// setTimeout(fetchCompanyInfo(), 50000);
 }, [positions]);
 
   if (!positions) {
@@ -306,7 +307,7 @@ return (
                 <b>Date Purchased:</b> {positions.createdAt}
               </li>
               <li>
-                <b>Market Value:</b> ${positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)}
+                <b>Market Value:</b> ${(positions.shares*currentPrice).toFixed(2)}
               </li>
               <li>
                 <b>Total Return:</b> ${(positions.shares*currentPrice-positions.shares*positions.buyPrice).toFixed(2)}
