@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Orders = ({positions, history, getPositions, getHistoricalData}) => {
-// const [rows, setRows] = useState([]);
+const [rows, setRows] = useState([]);
 
   useEffect(() => {
     getPositions();
@@ -37,37 +37,53 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
     getHistoricalData();
   }, []);
   
-  const rows = [];
+
   useEffect(() => {
     if (!history) {
       return;
     }
 
- const  mapHistoryToRows = async () => {
-    history.map((instance) => {
-    rows.push({
-      date: instance.createdAt, transaction: instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL',
-      symbol: instance.stockSymbol ? instance.stockSymbol : '',
-      companyName: instance.stockName,
-      shares: instance.shares,
-      purchasePrice: instance.boughtPrice,
-      currentPrice: instance.soldPrice,
-      percentChange: ((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)
-    })
+ const  mapHistoryToRows = () => {
+    const gridRows = history.slice(0).reverse().map((instance) => {
+      return ({
+        id: instance.id,
+        date: instance.createdAt, 
+        transaction: instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : (instance.shares !== 0 ?
+          'SELL' : 'WITHDRAWAL: '+ '$'+ instance.deposit),
+        symbol: instance.stockSymbol ? instance.stockSymbol : '',
+        companyName: instance.stockName,
+        shares: instance.shares,
+        purchasePrice: instance.boughtPrice,
+        currentPrice: instance.soldPrice,
+        percentChange: ((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)
+      })
 
     })
+    setRows(gridRows);
   }
   mapHistoryToRows();
 
   }, [history]); 
 
+  // rows.push({
+  //   date: 4, 
+  //   transaction: 'sell',
+  //   symbol: 'sdf',
+  //   companyName: 'asdfsdf',
+  //   shares: 2,
+  //   purchasePrice: 3,
+  //   currentPrice: 4,
+  //   percentChange: 5
+  // })
+
+
   
   const classes = useStyles();
 
   const columns = [
-    { field: 'date', headerName: 'Date', width: 70 },
+    { field: 'date', headerName: 'Date', width: 130 },
     { field: 'transaction', headerName: 'Transaction', width: 130 },
-    { field: 'symbol', headerName: 'Symbol', width: 130 },
+    { field: 'symbol', headerName: 'Symbol', width: 70 },
     { field: 'companyName', headerName: 'Company Name', width: 130 },
     {
       field: 'shares',
@@ -125,7 +141,7 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
         </TableBody>
       </Table>
       <Title>Portfolio History</Title>
-      <Table size="small" >
+      {/* <Table size="small" >
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -160,9 +176,9 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-      <div style={{ height: 400, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+      </Table> */}
+      <div style={{ height: 1000, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
     </div>
   
     </React.Fragment>
