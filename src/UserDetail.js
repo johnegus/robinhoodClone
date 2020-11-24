@@ -91,10 +91,15 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
     
   
   }, [history]);
+  const deposits = (history.reduce(function (accumulator, instance){
+    return accumulator +  parseFloat(instance.deposit);
+  }, 0)).toFixed(2);
+  console.log(deposits)
 
   const totalCash = (history.reduce(function (accumulator, instance){
     return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
-  }, 10000)).toFixed(2);
+  }, parseFloat(deposits))).toFixed(2);
+
   const totalAssets = (positions.reduce(function (accumulator, position){
     return accumulator + (position.currentPrice*position.shares);
   }, 0)).toFixed(2);

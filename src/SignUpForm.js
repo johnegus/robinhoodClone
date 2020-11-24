@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from './store/actions/authentication';
+import { createInstance } from './store/actions/history';
 import {Link} from 'react-router-dom'; 
 import leaf from './leaf-clipart-12-transparent.png';
 
@@ -17,9 +18,9 @@ const SignUpForm = () => {
     callback(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newUser = {
         name,
         email,
@@ -28,7 +29,15 @@ const SignUpForm = () => {
       confirmPassword,
     };
     
-    dispatch(signUp(newUser));
+    await dispatch(signUp(newUser));
+
+    const deposit = cashValue;
+    const payload ={
+      deposit
+    };
+    await dispatch(createInstance(payload));
+
+   
   };
 
   return (
