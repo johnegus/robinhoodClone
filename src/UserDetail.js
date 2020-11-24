@@ -131,9 +131,9 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
         label: 'Portfolio Value',
         data: stockChartYValues,
         fill: false,
-        backgroundColor:'green',
+        backgroundColor:stockChartYValues[0] < stockChartYValues[stockChartYValues.length-1] ? 'green' : 'red',
         // borderColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'green' 
+        borderColor: stockChartYValues[0] < stockChartYValues[stockChartYValues.length-1] ? 'green' : 'red',
       },
     ],
   }

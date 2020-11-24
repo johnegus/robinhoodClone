@@ -9,6 +9,7 @@ import Title from './Title';
 import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from '../store/actions/history';
+import { DataGrid } from '@material-ui/data-grid';
 
 
 function preventDefault(event) {
@@ -21,7 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
+
 const Orders = ({positions, history, getPositions, getHistoricalData}) => {
+// const [rows, setRows] = useState([]);
+
   useEffect(() => {
     getPositions();
   }, []);
@@ -30,13 +37,68 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
     getHistoricalData();
   }, []);
   
-  // const percentChange = ((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(0);
+  const rows = [];
+  useEffect(() => {
+    if (!history) {
+      return;
+    }
+
+ const  mapHistoryToRows = async () => {
+    history.map((instance) => {
+    rows.push({
+      date: instance.createdAt, transaction: instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL',
+      symbol: instance.stockSymbol ? instance.stockSymbol : '',
+      companyName: instance.stockName,
+      shares: instance.shares,
+      purchasePrice: instance.boughtPrice,
+      currentPrice: instance.soldPrice,
+      percentChange: ((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)
+    })
+
+    })
+  }
+  mapHistoryToRows();
+
+  }, [history]); 
+
   
   const classes = useStyles();
+
+  const columns = [
+    { field: 'date', headerName: 'Date', width: 70 },
+    { field: 'transaction', headerName: 'Transaction', width: 130 },
+    { field: 'symbol', headerName: 'Symbol', width: 130 },
+    { field: 'companyName', headerName: 'Company Name', width: 130 },
+    {
+      field: 'shares',
+      headerName: 'Shares',
+      type: 'number',
+      width: 90,
+    },
+    {
+      field: 'purchasePrice',
+      headerName: 'Purchase Price',
+      type: 'number',
+      width: 90,
+    },
+    {
+      field: 'currentPrice',
+      headerName: 'Current Price',
+      type: 'number',
+      width: 90,
+    },
+    {
+      field: 'percentChange',
+      headerName: 'Percent Change',
+      type: 'number',
+      width: 90,
+    },
+    
+  ];
   return (
     <React.Fragment>
       <Title>Portfolio Assets</Title>
-      <Table size="small" className='tables'>
+      <Table size="small" >
         <TableHead>
           <TableRow>
             <TableCell>Purchase Date</TableCell>
@@ -63,7 +125,7 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
         </TableBody>
       </Table>
       <Title>Portfolio History</Title>
-      <Table size="small" className='tables'>
+      <Table size="small" >
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -99,6 +161,9 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
           ))}
         </TableBody>
       </Table>
+      <div style={{ height: 400, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+    </div>
   
     </React.Fragment>
   );

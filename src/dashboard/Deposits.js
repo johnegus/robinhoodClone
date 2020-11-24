@@ -1,5 +1,4 @@
 import React, { useEffect, useState }  from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
@@ -7,7 +6,7 @@ import {getHistoricalData} from '../store/actions/history';
 import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
 import AddMoney from './AddMoney/AddMoney'
-// import { createInstance } from "./../store/actions/history";
+import { createInstance } from "../store/actions/history";
 
 
 function preventDefault(event) {
@@ -23,23 +22,31 @@ const useStyles = makeStyles({
 export function Deposits({getHistoricalData, history}) {
   const classes = useStyles();
   const year = new Date().getFullYear();
-  const month =new Date().getMonth();
+  const month =new Date().getMonth()+1;
   const date = new Date().getDate()
-  // const [stockChartXValues, setstockChartXValues] = useState([]);
-  // const [stockChartYValues, setstockChartYValues] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getHistoricalData();
   }, []);
 
-  // const handleClick = async (e) => {
-  //   const deposit = 10000;
+  const handleClick = async (e) => {
+    const deposit = 10000;
     
-  //   const payload ={
-  //   deposit
-  //   };
-  //   createInstance(payload);
-  // }
+    const payload ={
+    deposit
+    };
+    await dispatch(createInstance(payload));
+  }
+
+  const takeOut = async (e) => {
+    const deposit = -10000;
+    
+    const payload ={
+    deposit
+    };
+    await dispatch(createInstance(payload));
+  }
 
   const deposits = (history.reduce(function (accumulator, instance){
     return accumulator +  parseFloat(instance.deposit);
@@ -61,8 +68,8 @@ export function Deposits({getHistoricalData, history}) {
         on {month + '/' + date + '/' + year}
       </Typography>
       <div>
-        {/* <AddMoney /> */}
-        {/* <button onClick={handleClick} >Add $10000</button> */}
+        <button onClick={handleClick} >Deposit $10000</button>
+        <button onClick={takeOut} >Withdrawal $10000</button>
       </div>
     </React.Fragment>
   );
