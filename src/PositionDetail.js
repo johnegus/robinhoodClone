@@ -326,8 +326,8 @@ return (
         
         <button type="submit">Buy Shares!</button>}
         
-      </form>
-      { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        </form>
+        { isNaN(currentPrice) ? 'Failed to fetch current price' :
             <button onClick={handleClick} >Exit Position</button>}
             
     

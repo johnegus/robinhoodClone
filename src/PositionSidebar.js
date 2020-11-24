@@ -67,8 +67,8 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
         
 // })
 // }
-// // fetchCompanyInfo()
-// setTimeout(fetchCompanyInfo(), 50000);
+// fetchCompanyInfo()
+// // setTimeout(fetchCompanyInfo(), 50000);
 // }, [positions]);
 
   

@@ -223,7 +223,11 @@ td.centered {
 }
 
 
-
+@media screen and (max-width: 500px) {
+  nav {
+    display: none;
+  }
+}
 @media screen and (min-width: 1000px) {
   .pokemon-detail-lists {
     display: flex;
@@ -289,6 +293,18 @@ td.centered {
   position: relative;
 }
 
+.moversContainer{
+  border-bottom: 2px solid grey;
+  padding: 6px;
+  display: grid;
+  grid-template-columns:  30% 70% ;
+  grid-template-rows: 30% 70%;
+  grid-gap: 5px;
+  max-width: 400px;
+  position: relative;
+  
+}
+
 .newsTitle{
   /* border: 2px solid red; */
   font-weight: bold;
@@ -342,4 +358,44 @@ text-transform: uppercase;
 
 .user-detail-chart{
   max-width: 700px;
+  grid-column: 1/2;
+  grid-row: 1/2;
 }
+
+.tables {
+  min-width: 100%;
+}
+
+.user-detail{
+  padding: 6px;
+  display: grid;
+  grid-template-columns:  70% 30% ;
+  grid-template-rows:  0.25fr 1fr 50%;
+  grid-gap: 20px;
+  max-width: 100%;
+  position: relative;
+  
+}
+
+.doughnut {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.user-data-tables{
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+.infogrid__movers {
+  grid-column: 2/3;
+  grid-row: 2/4;
+}
+
+.infogrid__userNews{
+  grid-column: 1/2;
+  grid-row: 3/4;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+

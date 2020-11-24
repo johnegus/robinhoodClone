@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from './store/actions/history';
 import { getPositions } from "./store/actions/positions";
 import NewsFeed from './NewsFeed';
+import TopMovers from './TopMovers';
+import TopLosers from './TopLosers';
 
 
 
@@ -157,9 +159,7 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
 return (
   <div className="pokemon-detail">
     <div
-      className={`pokemon-detail-image-background`}
-      
-    >
+      className={`pokemon-detail-image-background`}>
       <div>
       <h1 className="bigger">Welcome to Algo</h1>
       </div>
@@ -168,18 +168,28 @@ return (
     
     <div>
     <Deposits />
+    
     </div>
-    
-    <div className="user-detail-chart">
-    <Line data={lineChartData} options={options} />
-    <Doughnut data={doughnutData} />
-    
-      <div>
-      
-      <Orders />
-      <NewsFeed />
-      
+    <div className="user-detail">
+      <div className="user-detail-chart">
+        <Line data={lineChartData} options={options} />
       </div>
+      <div className='doughnut'>
+        <Doughnut data={doughnutData} />
+      </div>
+      <div className='user-data-tables'>
+         <Orders />
+      </div>
+      
+      <div className='infoGrid__userNews'>
+      <NewsFeed />
+      </div>
+      <div className='infogrid__movers'>
+      <TopMovers />
+      <TopLosers />
+      </div>
+    
+      
       
     </div>
   </div>

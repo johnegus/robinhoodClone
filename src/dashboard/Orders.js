@@ -30,13 +30,13 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
     getHistoricalData();
   }, []);
   
-  
+  // const percentChange = ((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(0);
   
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Portfolio Assets</Title>
-      <Table size="small">
+      <Table size="small" className='tables'>
         <TableHead>
           <TableRow>
             <TableCell>Purchase Date</TableCell>
@@ -63,7 +63,7 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
         </TableBody>
       </Table>
       <Title>Portfolio History</Title>
-      <Table size="small">
+      <Table size="small" className='tables'>
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -88,7 +88,13 @@ const Orders = ({positions, history, getPositions, getHistoricalData}) => {
               <TableCell>${instance.boughtPrice}</TableCell>
               <TableCell >{`$${instance.soldPrice}`}</TableCell>
               <TableCell >{`$${((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)}`}</TableCell>
-              <TableCell align="right">{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(0)}%</TableCell>
+              <TableCell align="right">
+                {((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2) < 0 ? <span style={{color: 'red'}}>{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2)}%</span> 
+                : 
+                <span>{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2)}%</span>
+                }
+                
+                </TableCell>
             </TableRow>
           ))}
         </TableBody>
