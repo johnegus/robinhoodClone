@@ -20,7 +20,7 @@ import SearchContainer from "./search/SearchContainer";
 const PositionSidebar = ({ positions, getPositions, getWatchedStocks, 
   getHistoricalData, formVisible, showForm, watchedStocks }) => {
   const dispatch = useDispatch();
-  const [currentPrice, setcurrentPrice] = useState("");
+  const [currentPrices, setcurrentPrices] = useState([]);
 
   useEffect(() => {
     getPositions();
@@ -35,16 +35,17 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
 
   // fetching latest quote for each stock   
 //   useEffect(() => {                                    
-//   const fetchCompanyInfo = async () =>{
-
-//     positions.map(position => { 
+//   const fetchCurrentPrices = () =>{
 //     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-//     let stockSymbol = position.stockSymbol
-//     let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
-//     let stockChartXValuesFunction;
 //     let stockChartYValuesFunction;
+    
+//     const fetchedPrices = positions.map(position => { 
+//       let stockSymbol = position.stockSymbol
+//       let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
+
+
       
-//         fetch(API_CALL)
+//         return fetch(API_CALL)
 //         .then(
 //             function(response){
 //                 return response.json()
@@ -53,22 +54,22 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
 //         .then(
 //             function(data){
 //               console.log('fetch  data from FMP')
-//               console.log(data);
+//               console.log(data)
   
-//               for(let key in data){
-//                 stockChartXValuesFunction= key;
-//                 stockChartYValuesFunction= (data[key]['price']);
-//               }
-//                  console.log(stockChartYValuesFunction);
-//                  setcurrentPrice(parseFloat(stockChartYValuesFunction))
+          
+              
+//                 stockChartYValuesFunction= (data[0]['price']);
+//                 console.log(stockChartYValuesFunction)
+                         
                  
 //             }
-//         )
-        
+//         )   
 // })
+// setcurrentPrices(fetchedPrices)
+// console.log(currentPrices);
 // }
-// fetchCompanyInfo()
-// // setTimeout(fetchCompanyInfo(), 50000);
+// fetchCurrentPrices()
+// // setInterval(fetchCurrentPrices(), 60000);
 // }, [positions]);
 
   
@@ -107,7 +108,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
                 }
               >
                 <div className='randomizer'
-                  >{currentPrice}</div>
+                  >price</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">

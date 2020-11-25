@@ -53,6 +53,7 @@ export function Deposits({getHistoricalData, history}) {
   }, 0)).toFixed(2);
   return (
     <React.Fragment>
+      <div className= 'userHeader'>
       <Title>Portfolio Value</Title>
       <Typography component="p" variant="h4">
         {/* {history.map((instance) => (
@@ -70,6 +71,7 @@ export function Deposits({getHistoricalData, history}) {
       <div>
         <button onClick={handleClick} >Deposit $10000</button>
         <button onClick={takeOut} >Withdrawal $10000</button>
+      </div>
       </div>
     </React.Fragment>
   );

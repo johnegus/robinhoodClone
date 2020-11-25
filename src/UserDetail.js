@@ -94,7 +94,6 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
   const deposits = (history.reduce(function (accumulator, instance){
     return accumulator +  parseFloat(instance.deposit);
   }, 0)).toFixed(2);
-  console.log(deposits)
 
   const totalCash = (history.reduce(function (accumulator, instance){
     return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
@@ -115,7 +114,9 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
           totalCash - totalAssets > 0 ? 'green' : 'red',
           'orange',
         ],
+        borderWidth: 5,
     }],
+    
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
@@ -134,6 +135,7 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
         backgroundColor:stockChartYValues[0] < stockChartYValues[stockChartYValues.length-1] ? 'green' : 'red',
         // borderColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: stockChartYValues[0] < stockChartYValues[stockChartYValues.length-1] ? 'green' : 'red',
+        
       },
     ],
   }
@@ -161,6 +163,11 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
     },
   }
 
+  const pieOptions= {
+    //cutoutPercentage: 40,
+   responsive: true,
+ }
+
 return (
   <div className="pokemon-detail">
     <div
@@ -180,7 +187,7 @@ return (
         <Line data={lineChartData} options={options} />
       </div>
       <div className='doughnut'>
-        <Doughnut data={doughnutData} />
+        <Doughnut data={doughnutData} options={pieOptions} />
       </div>
       <div className='user-data-tables'>
          <Orders />

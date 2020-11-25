@@ -7,9 +7,6 @@ const NewsFeed = props => {
     const [isLoading, setIsLoading] = useState(true); 
     
     useEffect(() => {
-        if (!props) {
-          return;
-        }
         const fetchPositionNews = async () =>{
           const polygon = polygonApi()
           polygon.getQuote('SPY').then((response) => {
@@ -17,6 +14,7 @@ const NewsFeed = props => {
           
             if(response.ok){
                 setIsLoading(false);
+                console.log(response.data)
               setStories(response.data)
             }
           });
@@ -24,7 +22,7 @@ const NewsFeed = props => {
         fetchPositionNews();  
         //setinterval would go here return the clear interval
         //return ()=> clearInterval
-      }, [props]); 
+      }, []); 
       const loading = () => {
         if (isLoading) {
         return (
@@ -43,6 +41,8 @@ const NewsFeed = props => {
         <div>
         <h2>News</h2>
         {loading}
+        {stories === [] ? 'You have reached your news fetch limit, try again later.' :
+        <div> 
         {stories.map(story => {
             return (
               <div className='newsContainer' key={story.timestamp}>
@@ -57,8 +57,11 @@ const NewsFeed = props => {
                </div>
             )
           })}
+          </div>}
         </div>
       )
 }
+
+
 
 export default NewsFeed;

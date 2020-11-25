@@ -44,7 +44,7 @@ const [rows, setRows] = useState([]);
     }
 
  const  mapHistoryToRows = () => {
-    const gridRows = history.slice(0).reverse().map((instance) => {
+    const gridRows = history.map((instance) => {
       return ({
         id: instance.id,
         date: instance.createdAt, 
@@ -99,7 +99,7 @@ const [rows, setRows] = useState([]);
     },
     {
       field: 'currentPrice',
-      headerName: 'Current Price',
+      headerName: 'Sell Price',
       type: 'number',
       width: 90,
     },
@@ -123,7 +123,7 @@ const [rows, setRows] = useState([]);
             <TableCell>Shares</TableCell>
             <TableCell>Purchase Price</TableCell>
             <TableCell>Current Price $</TableCell>
-            <TableCell align="right">Percent Change %</TableCell>
+            <TableCell align="right">Total Value</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -135,7 +135,7 @@ const [rows, setRows] = useState([]);
               <TableCell>{position.shares}</TableCell>
               <TableCell>${position.buyPrice}</TableCell>
               <TableCell >{`$${position.currentPrice}`}</TableCell>
-              <TableCell align="right">{((position.currentPrice/position.buyPrice)*100-100).toFixed(0)}%</TableCell>
+          <TableCell align="right">${(position.shares * position.currentPrice).toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

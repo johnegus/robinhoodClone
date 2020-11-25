@@ -227,6 +227,9 @@ td.centered {
   nav {
     display: none;
   }
+  .user-detail {
+    display: flex;
+  }
 }
 @media screen and (min-width: 1000px) {
   .pokemon-detail-lists {
@@ -380,6 +383,10 @@ text-transform: uppercase;
 .doughnut {
   grid-column: 2/3;
   grid-row: 1/2;
+  display: flex;
+ justify-content: center;
+ align-items: center;
+ 
 }
 
 .user-data-tables{
@@ -399,3 +406,7 @@ text-transform: uppercase;
   padding-bottom: 25px;
 }
 
+/* .userHeader{
+  display: flex;
+  height: 150px;
+} */
