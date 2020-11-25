@@ -22,8 +22,7 @@ const TopLosers = props => {
       )
       .then(
           function(data){
-            console.log('fetch  data from FMP')
-            console.log(data);
+            setIsLoading(false)
             setStories(data)
             // for(let key in data){
             //   stockChartXValuesFunction.push(key);

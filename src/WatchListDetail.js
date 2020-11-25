@@ -7,7 +7,6 @@ import { Line } from 'react-chartjs-2';
 import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
-import { createInstance } from "./store/actions/history";
 
 
 
@@ -25,7 +24,6 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
-  const [profitLoss, setProfitLoss] = useState('');
 
   // setstockName(data[0][companyName])
   //           setCompanyDescription(data[0][description])
@@ -34,7 +32,6 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
 
   
 
-  const dispatch = useDispatch();
   const { id } = useParams();
  
 
@@ -119,8 +116,8 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
       )
       .then(
           function(data){
-            console.log('FMP Historical data Search')
-              console.log(data)
+            // console.log('FMP Historical data Search')
+            //   console.log(data)
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(watchedStocks.stockSymbol);
               for(let key in data){
@@ -285,7 +282,7 @@ return (
                 <div className='newsContainer' key={story.timestamp}>
                     <div className='newsTitle'>
                       
-                      <a className='newsLink' target="_blank" href={story.url}>{story.title}</a>
+                      <a className='newsLink' alt='news' href={story.url}>{story.title}</a>
                     </div>
                     <div className='newsSummary'>
                     {story.summary}

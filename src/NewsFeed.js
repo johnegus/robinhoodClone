@@ -14,7 +14,6 @@ const NewsFeed = props => {
           
             if(response.ok){
                 setIsLoading(false);
-                console.log(response.data)
               setStories(response.data)
             }
           });
@@ -48,12 +47,12 @@ const NewsFeed = props => {
               <div className='newsContainer' key={story.timestamp}>
                   <div className='newsTitle'>
                     
-                    <a className='newsLink' target="_blank" href={story.url}>{story.title}</a>
+                    <a className='newsLink' href={story.url}>{story.title}</a>
                   </div>
                   <div className='newsSummary'>
                   {story.summary}
                   </div>
-                   <img height='100%' width='100%' src={story.image}></img>
+                   <img height='100%' width='100%' src={story.image} alt='news'></img>
                </div>
             )
           })}

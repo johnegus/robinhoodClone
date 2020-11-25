@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
+import { NavLink, Route, Switch, useParams } from "react-router-dom";
 
 import LogoutButton from "./LogoutButton";
 import PositionDetail from "./PositionDetail";
@@ -20,7 +20,7 @@ import SearchContainer from "./search/SearchContainer";
 const PositionSidebar = ({ positions, getPositions, getWatchedStocks, 
   getHistoricalData, formVisible, showForm, watchedStocks }) => {
   const dispatch = useDispatch();
-  const [currentPrices, setcurrentPrices] = useState([]);
+  // const [currentPrices, setcurrentPrices] = useState([]);
 
   useEffect(() => {
     getPositions();
@@ -33,7 +33,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
     getHistoricalData();
   }, []);
 
-  // fetching latest quote for each stock   
+//   // fetching latest quote for each stock   
 //   useEffect(() => {                                    
 //   const fetchCurrentPrices = () =>{
 //     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';

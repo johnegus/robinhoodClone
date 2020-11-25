@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedStock}) => {
+const SearchDetail = ({createPosition, createWatchedStock}) => {
    const context = useContext(SearchContext);
    const [isLoading, setIsLoading] = useState(true); 
    const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -256,7 +256,6 @@ const SearchDetail = ({positions, getOnePosition, createPosition, createWatchedS
   };
   
   const SearchDetailContainer = () => {
-    const positions = useSelector((state) => state.positions[state.currentPosition]);
     const dispatch = useDispatch();
   
     return (

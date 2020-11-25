@@ -12,9 +12,7 @@ import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
 
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -78,7 +76,6 @@ const [rows, setRows] = useState([]);
 
 
   
-  const classes = useStyles();
 
   const columns = [
     { field: 'date', headerName: 'Date', width: 130 },

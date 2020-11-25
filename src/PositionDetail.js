@@ -25,7 +25,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
-  const [boughtPrice, setBoughtPrice] = useState('');
   const [soldPrice, setSoldPrice] = useState('');
 
 
@@ -361,12 +360,12 @@ return (
                 <div className='newsContainer' key={story.timestamp}>
                     <div className='newsTitle'>
                       
-                      <a className='newsLink' target="_blank" href={story.url}>{story.title}</a>
+                      <a className='newsLink' href={story.url}>{story.title}</a>
                     </div>
                     <div className='newsSummary'>
                     {story.summary}
                     </div>
-                     <img height='100%' width='100%' src={story.image}></img>
+                     <img height='100%' width='100%' src={story.image} alt='news'></img>
                  </div>
               )
             })}

@@ -1,17 +1,13 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect }  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import {getHistoricalData} from '../store/actions/history';
-import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
-import AddMoney from './AddMoney/AddMoney'
 import { createInstance } from "../store/actions/history";
 
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+
 
 const useStyles = makeStyles({
   depositContext: {
