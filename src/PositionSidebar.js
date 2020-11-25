@@ -4,9 +4,7 @@ import { NavLink, Route, Switch, useParams } from "react-router-dom";
 
 import LogoutButton from "./LogoutButton";
 import PositionDetail from "./PositionDetail";
-import PositionForm from "./PositionForm";
 
-import { showForm } from "./store/actions/ui";
 import { getPositions } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
 import {getHistoricalData} from './store/actions/history'
@@ -17,21 +15,20 @@ import { exitWatchedStock } from './store/actions/watched-stocks'
 
 import SearchContainer from "./search/SearchContainer";
 
-const PositionSidebar = ({ positions, getPositions, getWatchedStocks, 
-  getHistoricalData, formVisible, showForm, watchedStocks }) => {
+const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
   const dispatch = useDispatch();
   // const [currentPrices, setcurrentPrices] = useState([]);
 
   useEffect(() => {
-    getPositions();
-  }, []);
+    dispatch(getPositions())
+  }, [dispatch]);
 
   useEffect(() => {
-    getWatchedStocks();
-  }, []);
+    dispatch(getWatchedStocks());
+  }, [dispatch]);
   useEffect(() => {
-    getHistoricalData();
-  }, []);
+    dispatch(getHistoricalData());
+  }, [dispatch]);
 
 //   // fetching latest quote for each stock   
 //   useEffect(() => {                                    
@@ -66,11 +63,12 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
 //         )   
 // })
 // setcurrentPrices(fetchedPrices)
-// console.log(currentPrices);
+
 // }
 // fetchCurrentPrices()
+// console.log(currentPrices);
 // // setInterval(fetchCurrentPrices(), 60000);
-// }, [positions]);
+// }, [dispatch]);
 
   
 
@@ -145,9 +143,7 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
           );
         })}
       </nav>
-      {formVisible ? (
-        <PositionForm />
-      ) : (
+      
         <Switch>
           <Route
             exact={true}
@@ -161,13 +157,12 @@ const PositionSidebar = ({ positions, getPositions, getWatchedStocks,
           />
            <Route exact={true} path="/" component={UserDetail} />
         </Switch>
-      )}
+      
     </main>
   );
 };
 
 const PositionSidebarContainer = () => {
-  const formVisible = useSelector((state) => state.ui.formVisible);
   const positions = useSelector((state) => Object.values(state.positions));
   const watchedStocks = useSelector((state) => Object.values(state.watchedStocks));
   const history = useSelector((state) => Object.values(state.history));
@@ -177,11 +172,8 @@ const PositionSidebarContainer = () => {
       positions={positions}
       watchedStocks={watchedStocks}
       history={history}
-      formVisible={formVisible}
-      getWatchedStocks={() => dispatch(getWatchedStocks())}
-      getPositions={() => dispatch(getPositions())}
-      getHistoricalData={() => dispatch(getHistoricalData())}
-      showForm={() => dispatch(showForm())}
+     
+      
       exitWatchedStock={(id) => dispatch(exitWatchedStock(id))}
     />
   );

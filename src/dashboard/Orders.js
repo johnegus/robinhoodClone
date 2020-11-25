@@ -1,5 +1,4 @@
 import React, { useEffect, useState }  from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,11 +13,7 @@ import { DataGrid } from '@material-ui/data-grid';
 
 
 
-const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
+
 
 
 
@@ -46,8 +41,8 @@ const [rows, setRows] = useState([]);
       return ({
         id: instance.id,
         date: instance.createdAt, 
-        transaction: instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : (instance.shares !== 0 ?
-          'SELL' : 'WITHDRAWAL: '+ '$'+ instance.deposit),
+        transaction: instance.deposit > 0 ? 'DEPOSIT: $'+ instance.deposit : (instance.shares !== 0 ?
+          'SELL' : 'WITHDRAWAL: $'+ instance.deposit),
         symbol: instance.stockSymbol ? instance.stockSymbol : '',
         companyName: instance.stockName,
         shares: instance.shares,
