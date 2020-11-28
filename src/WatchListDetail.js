@@ -7,6 +7,7 @@ import { Line } from 'react-chartjs-2';
 import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
+import CountUp from 'react-countup';
 
 
 
@@ -121,7 +122,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(watchedStocks.stockSymbol);
               for(let key in data){
-                  stockChartXValuesFunction.push(key);
+                  stockChartXValuesFunction.push(data[key]['date']);
                   stockChartYValuesFunction.push(data[key]['open']);
               }
               setIsLoading(false);
@@ -161,9 +162,10 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
         label: watchedStocks.stockSymbol,
         data: stockChartYValues,
         fill: false,
-        backgroundColor:stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red',
+        backgroundColor:stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
         // borderColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red'
+        borderColor: stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+        borderWidth: 4
       },
     ],
   }
@@ -213,7 +215,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
     callback(e.target.value);
   };
 
-  const upOrDown = stockChartYValues[0] > stockChartYValues[99] ? 'background' : 'background2'
+  const upOrDown = stockChartYValues[0] > stockChartYValues[399] ? 'background' : 'background2'
 return (
     <div className="pokemon-detail">
 
@@ -226,7 +228,10 @@ return (
         <div className='company-titles'>
         <h1 className="bigger">{watchedStocks.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
-        <h1 className="bigger">${parseFloat(stockChartYValues[0]).toFixed(2)}</h1>
+        <h1 className="bigger">
+        $<CountUp start={0} decimals={2} end={currentPrice} duration={1.00} separator="," />
+
+        </h1>
         </div>
         </div>
       </div>

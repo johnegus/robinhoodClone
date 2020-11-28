@@ -58,24 +58,10 @@ const [rows, setRows] = useState([]);
 
   }, [history]); 
 
-  // rows.push({
-  //   date: 4, 
-  //   transaction: 'sell',
-  //   symbol: 'sdf',
-  //   companyName: 'asdfsdf',
-  //   shares: 2,
-  //   purchasePrice: 3,
-  //   currentPrice: 4,
-  //   percentChange: 5
-  // })
-
-
-  
-
   const columns = [
     { field: 'date', headerName: 'Date', width: 130 },
     { field: 'transaction', headerName: 'Transaction', width: 130 },
-    { field: 'symbol', headerName: 'Symbol', width: 70 },
+    { field: 'symbol', headerName: 'Symbol', width: 90 },
     { field: 'companyName', headerName: 'Company Name', width: 130 },
     {
       field: 'shares',
@@ -97,9 +83,9 @@ const [rows, setRows] = useState([]);
     },
     {
       field: 'percentChange',
-      headerName: 'Percent Change',
+      headerName: 'Profit',
       type: 'number',
-      width: 90,
+      width: 130,
     },
     
   ];

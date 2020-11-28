@@ -119,7 +119,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             
     
                 for(let key in data){
-                    stockChartXValuesFunction.push(key);
+                    stockChartXValuesFunction.push(data[key]['date']);
                     stockChartYValuesFunction.push(data[key]['open']);
                 }
                 setIsLoading(false);
@@ -158,9 +158,10 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           label: context.searchQuery,
           data: stockChartYValues,
           fill: false,
-          backgroundColor:stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red',
+          backgroundColor:stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
           // borderColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: stockChartYValues[0] > stockChartYValues[99] ? 'green' : 'red'
+          borderColor: stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+          borderWidth: 4
         },
       ],
     }

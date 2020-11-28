@@ -122,7 +122,8 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
     labels: [
         'Cash',
         'Assets'
-    ]
+    ],
+    
 };
 
   const lineChartData = {

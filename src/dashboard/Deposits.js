@@ -1,6 +1,7 @@
 import React, { useEffect }  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CountUp from 'react-countup';
 import Title from './Title';
 import {getHistoricalData} from '../store/actions/history';
 import { useSelector, useDispatch } from "react-redux";
@@ -52,14 +53,10 @@ export function Deposits({getHistoricalData, history}) {
       <div className= 'userHeader'>
       <Title>Portfolio Value</Title>
       <Typography component="p" variant="h4">
-        {/* {history.map((instance) => (
-        <div>
-          Change: {parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares))}
-        </div>
-        ))} */}
-        ${(history.reduce(function (accumulator, instance){
+      $<CountUp start={0} decimals={2} end={(history.reduce(function (accumulator, instance){
           return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
-        }, parseFloat(deposits))).toFixed(2)}
+        }, parseFloat(deposits))).toFixed(2)} duration={1.00} separator="," />
+        
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on {month + '/' + date + '/' + year}
