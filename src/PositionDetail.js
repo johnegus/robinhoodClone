@@ -113,8 +113,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       )
       .then(
           function(data){
-            console.log('FMP Historical data Position')
-              console.log(data)
+           
               // setVolume(data['Time Series (5min)'][0]["5. volume"]);
               setstockSymbol(positions.stockSymbol);
               for(let key in data){
@@ -250,13 +249,11 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   };
 
   const handleClick = async (e) => {
-    console.log('symbol: ' + stockSymbol)
-    console.log('company: ' + stockName)
-    console.log('sellprice: ' + soldPrice)
+    
     const boughtPrice = positions.buyPrice
-    console.log('boughtprice: ' + boughtPrice)
+    
     const shares = positions.shares
-    console.log('shares: ' + shares)
+   
     
     const payload ={
     stockSymbol,

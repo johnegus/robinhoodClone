@@ -30,7 +30,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
     dispatch(getHistoricalData());
   }, [dispatch]);
 
-//   // fetching latest quote for each stock   
+  // fetching latest quote for each stock   
 //   useEffect(() => {                                    
 //   const fetchCurrentPrices = () =>{
 //     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
@@ -42,7 +42,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
 
 
       
-//         return fetch(API_CALL)
+//          returnfetch(API_CALL)
 //         .then(
 //             function(response){
 //                 return response.json()
@@ -62,11 +62,11 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
 //             }
 //         )   
 // })
-// setcurrentPrices(fetchedPrices)
 
+// console.log(fetchedPrices);
 // }
-// fetchCurrentPrices()
-// console.log(currentPrices);
+// fetchCurrentPrices();
+
 // // setInterval(fetchCurrentPrices(), 60000);
 // }, [dispatch]);
 
@@ -106,7 +106,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
                 }
               >
                 <div className='randomizer'
-                  >price</div>
+                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SearchContext } from './SearchContext';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
