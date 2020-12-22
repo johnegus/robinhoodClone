@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Route, Switch, useParams } from "react-router-dom";
 
 import LogoutButton from "./LogoutButton";
 import PositionDetail from "./PositionDetail";
 
-import { getPositions } from "./store/actions/positions";
+import { getPositions, updatePositionAndGet } from "./store/actions/positions";
 import {getWatchedStocks} from './store/actions/watched-stocks'
 import {getHistoricalData} from './store/actions/history'
 import UserDetail from './UserDetail';
@@ -15,9 +15,8 @@ import { exitWatchedStock } from './store/actions/watched-stocks'
 
 import SearchContainer from "./search/SearchContainer";
 
-const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
+const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePositionAndGet }) => {
   const dispatch = useDispatch();
-  // const [currentPrices, setcurrentPrices] = useState([]);
 
   useEffect(() => {
     dispatch(getPositions())
@@ -30,45 +29,45 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
     dispatch(getHistoricalData());
   }, [dispatch]);
 
-  // fetching latest quote for each stock   
-//   useEffect(() => {                                    
-//   const fetchCurrentPrices = () =>{
-//     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-//     let stockChartYValuesFunction;
+  //updatepositions =================================================================================
+  const [flag, setflag] = useState(0)
+  const [posLen,setPosLen ] = useState(0)
+  useEffect(()=>{
+     if(posLen !== positions.length){
+
+      const delay=()=>{
+        setTimeout(()=>{
+          delay()
+          const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+          let stockSymbols = positions.map(m=>{return m.stockSymbol}).join(',')
+          let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbols}?apikey=${API_Key}`;
+          fetch(API_CALL)
+          .then((response)=>{
+            return response.json()
+          }).then((data)=>{
+            data.map(m=>{
+              return updatePositionAndGet({
+                stockSymbol:m.symbol,
+                currentPrice:m.price
+              })
+            })
+            
+            getPositions();
+          })  
+        },100000)
+      }
+      delay()
+      setPosLen(positions.length);
+    }
+  },[positions,posLen])
+  useEffect(() => {
     
-//     const fetchedPrices = positions.map(position => { 
-//       let stockSymbol = position.stockSymbol
-//       let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
-
-
-      
-//          returnfetch(API_CALL)
-//         .then(
-//             function(response){
-//                 return response.json()
-//             }
-//         )
-//         .then(
-//             function(data){
-//               console.log('fetch  data from FMP')
-//               console.log(data)
-  
-          
-              
-//                 stockChartYValuesFunction= (data[0]['price']);
-//                 console.log(stockChartYValuesFunction)
-                         
-                 
-//             }
-//         )   
-// })
-
-// console.log(fetchedPrices);
-// }
-// fetchCurrentPrices();
-
-// // setInterval(fetchCurrentPrices(), 60000);
-// }, [dispatch]);
+    
+    if(positions.length===0 && flag===0){
+      setflag(1)
+      getPositions();
+    }
+  },[positions.length, flag, getPositions]);
 
   
 
@@ -105,8 +104,8 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks }) => {
                     : "nav-entry"
                 }
               >
-                <div className='randomizer'
-                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
+                <div className='randomizer' 
+                  >{parseFloat(100*(position.currentPrice - position.buyPrice)/position.buyPrice).toFixed(2)}%</div>
                 <div>
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">
@@ -172,7 +171,9 @@ const PositionSidebarContainer = () => {
       positions={positions}
       watchedStocks={watchedStocks}
       history={history}
-     
+      updatePositionAndGet={(data)=>{
+        dispatch(updatePositionAndGet(data))
+      }}
       
       exitWatchedStock={(id) => dispatch(exitWatchedStock(id))}
     />

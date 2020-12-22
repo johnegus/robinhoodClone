@@ -63,3 +63,22 @@ export const exitPosition = (id) => async (dispatch, getState) => {
     window.location.replace('/')
   }
 };
+
+
+export const updatePositionAndGet = (data) => async (dispatch, getState) =>{
+  const {
+    authentication: { token },
+  } = getState();
+  const response = await fetch(`${baseUrl}/positions/update`, {
+    method:"post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (response.ok) {
+    const list = await response.json();
+  }
+}
