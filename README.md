@@ -1,4 +1,13 @@
 # robinhoodClone
+
+This is a stock trading application similiar to Robinhood that I built using React and Express.  Users can securely create accounts, log in and paper trade stocks using real time data.  
+
+## Pictures
+
+![ERD](./login_screen.png)
+![ERD](./stock_detail.png)
+![ERD](./user_dashboard.png)
+
 ## Database Diagram
 
 ![ERD](./databaseSchema/database3.png)
