@@ -13,7 +13,7 @@ This is a stock trading application similiar to Robinhood that I built using Rea
 
 ## Database Diagram
 
-![ERD](./databaseSchema/database3.png)
+![ERD](./databaseSchema/database_diagram.png)
 
 [robinHoodClone Backend](https://github.com/johnegus/robinhoodCloneBackend)
 
