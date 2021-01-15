@@ -79,6 +79,7 @@ td.centered {
   position: absolute;
   top: 0px;
   right: 10px;
+  z-index: 5;
 }
 
 #searchbar-holder {
@@ -223,12 +224,12 @@ td.centered {
 }
 
 
-@media screen and (max-width: 500px) {
-  nav {
+@media screen and (max-width: 1000px) {
+  nav, .infogrid__movers, .infoGrid__userNews, .doughtnut {
     display: none;
   }
-  .user-detail {
-    display: flex;
+  .user-detail, .user-data-tables {
+    display: inline-table
   }
 }
 @media screen and (min-width: 1000px) {

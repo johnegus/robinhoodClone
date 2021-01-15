@@ -119,42 +119,7 @@ const [rows, setRows] = useState([]);
         </TableBody>
       </Table>
       <Title>Portfolio History</Title>
-      {/* <Table size="small" >
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Transaction</TableCell>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Company Name</TableCell>
-            <TableCell>Shares</TableCell>
-            <TableCell>Purchase Price $</TableCell>
-            <TableCell>Sale Price $</TableCell>
-            <TableCell>Profit/Loss $</TableCell>
-            <TableCell align="right">Percent Change %</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {history.map((instance) => (
-            <TableRow key={instance.id}>
-              <TableCell>{instance.createdAt}</TableCell>
-              <TableCell>{instance.deposit > 0 ? 'DEPOSIT: ' + '$'+ instance.deposit : 'SELL'}</TableCell>
-              <TableCell>{instance.stockSymbol ? instance.stockSymbol : ''}</TableCell>
-              <TableCell>{instance.stockName}</TableCell>
-              <TableCell>{instance.shares}</TableCell>
-              <TableCell>${instance.boughtPrice}</TableCell>
-              <TableCell >{`$${instance.soldPrice}`}</TableCell>
-              <TableCell >{`$${((instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares)).toFixed(2)}`}</TableCell>
-              <TableCell align="right">
-                {((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2) < 0 ? <span style={{color: 'red'}}>{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2)}%</span> 
-                : 
-                <span>{((instance.soldPrice/instance.boughtPrice)*100-100).toFixed(2)}%</span>
-                }
-                
-                </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table> */}
+   
       <div style={{ height: 1000, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
     </div>
