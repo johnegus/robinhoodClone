@@ -9,7 +9,7 @@ const TopLosers = props => {
   useEffect(() => {
     
     const fetchCompanyInfo = async () =>{
-      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let API_CALL = `https://financialmodelingprep.com/api/v3/losers?limit=10&apikey=${API_Key}`;
     //   let stockChartXValuesFunction = [];
     //   let stockChartYValuesFunction = [];

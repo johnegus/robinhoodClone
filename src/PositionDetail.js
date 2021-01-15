@@ -47,7 +47,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       return;
     }
     const fetchCompanyInfo = async () =>{
-      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let stockSymbol = positions.stockSymbol
       let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
      
@@ -98,7 +98,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   }
   const fetchLivePositions = async () =>{
     
-    const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+    const API_Key = process.env.REACT_APP_FMP_API_KEY;
     let stockSymbol = positions.stockSymbol
     let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
@@ -134,46 +134,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
 
 }, [positions]);
 
-//   // fetching latest quote for each stock   
-//   useEffect(() => {    
-//     if (!positions) {
-//       return;
-//     }                                
-//   const fetchCompanyInfo = async () =>{
 
-//     const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
-//     let stockSymbol = positions.stockSymbol
-//     let API_CALL = `https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${API_Key}`;
-//     let stockChartXValuesFunction;
-//     let stockChartYValuesFunction;
-      
-//         fetch(API_CALL)
-//         .then(
-//             function(response){
-//                 return response.json()
-//             }
-//         )
-//         .then(
-//             function(data){
-//               console.log('fetch  data from FMP')
-//               console.log(data);
-  
-//               for(let key in data){
-//                 stockChartXValuesFunction= key;
-//                 stockChartYValuesFunction= (data[key]['price']);
-//               }
-//                  console.log(stockChartYValuesFunction);
-//                  setcurrentPrice(parseFloat(stockChartYValuesFunction).toFixed(2))
-//                  setSoldPrice(parseFloat(stockChartYValuesFunction).toFixed(2))
-
-                 
-//             }
-//         )
-        
-// }
-// fetchCompanyInfo()
-// // setTimeout(fetchCompanyInfo(), 50000);
-// }, [positions]);
 
   if (!positions) {
     return null;

@@ -51,7 +51,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
       return;
     }
     const fetchCompanyInfo = async () =>{
-      const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+      const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let stockSymbol = watchedStocks.stockSymbol
       let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
      
@@ -102,7 +102,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   }
   const fetchLivePositions = async () =>{
     
-    const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+    const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let stockSymbol = watchedStocks.stockSymbol
       let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];

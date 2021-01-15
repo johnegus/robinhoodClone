@@ -38,7 +38,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       const delay=()=>{
         setTimeout(()=>{
           delay()
-          const API_Key = 'f04ddc95561236e9dccd1ffa355ad55b';
+          const API_Key = process.env.REACT_APP_FMP_API_KEY;
           let stockSymbols = positions.map(m=>{return m.stockSymbol}).join(',')
           let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbols}?apikey=${API_Key}`;
           fetch(API_CALL)
