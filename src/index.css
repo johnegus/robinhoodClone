@@ -53,7 +53,7 @@ input:focus {
 }
 
 nav {
-  flex: 0 0 400px;
+  flex: 0 0 370px;
   overflow-y: auto;
   position:relative;
 
@@ -291,8 +291,9 @@ td.centered {
   padding: 6px;
   display: grid;
   grid-template-columns:  30% 70% ;
-  grid-template-rows: 30% 70%;
-  grid-gap: 5px;
+  grid-template-rows: 60% auto;
+  grid-gap: 20px;
+  min-height: 250px;
   max-width: 800px;
   position: relative;
 }
@@ -302,7 +303,7 @@ td.centered {
   padding: 6px;
   display: grid;
   grid-template-columns:  30% 70% ;
-  grid-template-rows: 30% 70%;
+  grid-template-rows: 70% 30%;
   grid-gap: 5px;
   max-width: 400px;
   position: relative;
@@ -325,8 +326,8 @@ td.centered {
 
 .newsImg{
   /* border: 2px solid red; */
-  height: 50px;
-  width:  50px;
+  height: 150px;
+  width:  150px;
   grid-column: 1/2;
   grid-row: 1/3;
 }
@@ -374,7 +375,7 @@ text-transform: uppercase;
   padding: 6px;
   display: grid;
   grid-template-columns:  70% 30% ;
-  grid-template-rows:  0.25fr 1fr 50%;
+  grid-template-rows:  0.25fr 1fr 2.25fr;
   grid-gap: 20px;
   max-width: 100%;
   position: relative;
@@ -407,7 +408,12 @@ text-transform: uppercase;
   padding-bottom: 25px;
 }
 
-/* .userHeader{
-  display: flex;
-  height: 150px;
-} */
+.green {
+  color: green;
+  margin: 20px;
+}
+
+.red{
+  color: red;
+  margin: 20px;
+}

@@ -9,7 +9,7 @@ import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
-
+import '../index.css'
 
 
 
@@ -59,10 +59,10 @@ const [rows, setRows] = useState([]);
   }, [history]); 
 
   const columns = [
-    { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'transaction', headerName: 'Transaction', width: 130 },
+    { field: 'date', headerName: 'Date', width: 90 },
+    { field: 'transaction', headerName: 'Transaction', width: 90 },
     { field: 'symbol', headerName: 'Symbol', width: 90 },
-    { field: 'companyName', headerName: 'Company Name', width: 130 },
+    { field: 'companyName', headerName: 'Company Name', width: 90 },
     {
       field: 'shares',
       headerName: 'Shares',
@@ -85,7 +85,7 @@ const [rows, setRows] = useState([]);
       field: 'percentChange',
       headerName: 'Profit',
       type: 'number',
-      width: 130,
+      width: 90,
     },
     
   ];
@@ -113,7 +113,11 @@ const [rows, setRows] = useState([]);
               <TableCell>{position.shares}</TableCell>
               <TableCell>${position.buyPrice}</TableCell>
               <TableCell >{`$${position.currentPrice}`}</TableCell>
-          <TableCell align="right">${(position.shares * position.currentPrice).toFixed(2)}</TableCell>
+          <TableCell align="right"
+          className={`${(position.shares * position.currentPrice).toFixed(2) > 0
+            ? "green" : "red"}`}
+          
+          >${(position.shares * position.currentPrice).toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -121,7 +125,7 @@ const [rows, setRows] = useState([]);
       <Title>Portfolio History</Title>
    
       <div style={{ height: 1000, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
+      <DataGrid rows={rows} columns={columns} pageSize={20} />
     </div>
   
     </React.Fragment>

@@ -104,9 +104,14 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
                     : "nav-entry"
                 }
               >
-                <div className='randomizer' 
+
+
+                <div className={`${parseFloat(100*(position.currentPrice - position.buyPrice)/position.buyPrice).toFixed(2) > 0
+                 ? "green" : "red"}`} 
                   >{parseFloat(100*(position.currentPrice - position.buyPrice)/position.buyPrice).toFixed(2)}%</div>
                 <div>
+
+
                   <div className="primary-text">{position.stockName}</div>
                   <div className="secondary-text">
                   {position.shares} share{ position.shares===1 ? '' : 's'} at ${position.currentPrice}     
