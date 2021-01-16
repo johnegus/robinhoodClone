@@ -133,7 +133,8 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
                     : "nav-entry"
                 }
               >
-                <div className='randomizer'
+                <div className={`${((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1) > 0
+                 ? "green" : "red"}`} 
                   >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
                 <div>
                   <div className="primary-text">{watchedStock.stockName}</div>

@@ -113,11 +113,13 @@ const [rows, setRows] = useState([]);
               <TableCell>{position.shares}</TableCell>
               <TableCell>${position.buyPrice}</TableCell>
               <TableCell >{`$${position.currentPrice}`}</TableCell>
-          <TableCell align="right"
-          className={`${(position.shares * position.currentPrice).toFixed(2) > 0
-            ? "green" : "red"}`}
-          
-          >${(position.shares * position.currentPrice).toFixed(2)}</TableCell>
+          <TableCell align="right">
+            <div className={`${(position.currentPrice - position.buyPrice).toFixed(2) > 0
+            ? "green" : "red"}`}>
+              ${(position.shares * position.currentPrice).toFixed(2)}
+            </div>
+            
+            </TableCell>
             </TableRow>
           ))}
         </TableBody>

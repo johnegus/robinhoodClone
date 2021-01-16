@@ -411,9 +411,11 @@ text-transform: uppercase;
 .green {
   color: green;
   margin: 20px;
+  font-weight: bold;
 }
 
 .red{
   color: red;
   margin: 20px;
+  font-weight: bold;
 }
