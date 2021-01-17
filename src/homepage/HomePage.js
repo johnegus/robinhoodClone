@@ -114,9 +114,9 @@ const ContactContainer = () => {
                 <>
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://www.linkedin.com/in/john-hiestand-3bb22a17/">
+      <a color="inherit" href="https://www.linkedin.com/in/john-hiestand-3bb22a17/">
       John Hiestand 
-      </Link>{' '}
+      </a>{' '}
       {new Date().getFullYear()}
       {'.'}
       

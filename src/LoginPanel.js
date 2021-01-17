@@ -25,6 +25,15 @@ const LoginPanel = (props) => {
 
 
   return (
+    <>
+    <div id="logout-button-holder">
+    <Link to="/homepage">
+          <button type="button">
+          Home Page
+          </button>
+        </Link>
+      
+    </div>
     <main className="centered middled">
       <img src={leaf} alt="img" />
       <form onSubmit={handleSubmit}>
@@ -40,7 +49,7 @@ const LoginPanel = (props) => {
           value={password}
           onChange={updatePassword}
         />
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
         <Link to="/signup">
      <button type="button">
      Sign Up
@@ -48,6 +57,7 @@ const LoginPanel = (props) => {
       </Link>
       </form>
     </main>
+    </>
   );
 };
 

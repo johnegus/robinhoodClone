@@ -41,6 +41,15 @@ const SignUpForm = () => {
   };
 
   return (
+    <>
+    <div id="logout-button-holder">
+    <Link to="/homepage">
+          <button type="button">
+          Home Page
+          </button>
+        </Link>
+      
+    </div>
     <main className="centered middled">
       <img src={leaf} alt="img" />
       <form onSubmit={handleSubmit}>
@@ -85,6 +94,7 @@ const SignUpForm = () => {
         </Link>
       </form>
     </main>
+    </>
   );
 };
 
