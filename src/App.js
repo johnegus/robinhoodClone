@@ -9,6 +9,7 @@ import PositionSidebar from "./PositionSidebar";
 import SignUpForm from './SignUpForm';
 import SearchDetailContainer from './search/SearchResults'
 import NotFound from "./NotFound";
+import HomePage from "./homepage/HomePage";
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
@@ -24,6 +25,14 @@ const App = ({ needLogin, loadToken }) => {
   return (
     <BrowserRouter>
       <Switch>
+        
+        <ProtectedRoute
+          path="/homepage"
+          exact={true}
+          needLogin={needLogin}
+          component={HomePage}
+        />
+        
         <ProtectedRoute
           path="/login"
           exact={true}
