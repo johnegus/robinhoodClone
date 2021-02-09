@@ -8,6 +8,7 @@ import { createPosition } from "./store/actions/positions";
 import { createInstance } from "./store/actions/history";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CountUp from 'react-countup';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -28,7 +29,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
   const [soldPrice, setSoldPrice] = useState('');
-
+  const [screen, setScreen] = useState('1day')
+  const [timeIndex, setTimeIndex] =useState (79)
 
 
   
@@ -152,15 +154,15 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     )
   }
   const lineChartData = {
-    labels: stockChartXValues,
+    labels: stockChartXValues.slice(0, timeIndex),
     datasets: [
       {
         label: positions.stockSymbol,
-        data: stockChartYValues,
+        data: stockChartYValues.slice(0, timeIndex),
         fill: false,
-        backgroundColor:stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+        backgroundColor:stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
         // borderColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+        borderColor: stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
         borderWidth: 4,
         
       },
@@ -234,7 +236,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     callback(e.target.value);
   };
 
-  const upOrDown = stockChartYValues[0] > stockChartYValues[399] ? 'background' : 'background2'
+  const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
+  const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
 return (
     <div className="pokemon-detail">
       <div className={`pokemon-detail-image-${upOrDown}`}>
@@ -256,7 +259,23 @@ return (
       
         <div>
         <Line data={lineChartData} options={options} />
-          
+        <div className='button-container'> 
+              <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
+                              onClick={async ()=> {
+                                setScreen('1day')
+                                setTimeIndex(79)
+                              }}>1 Day</Button>
+              <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2}  
+                              onClick={async ()=> {
+                                setScreen('1week')
+                                setTimeIndex(399)
+                              }}>1 week</Button>
+              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+                              onClick={async ()=> {
+                                setScreen('1month')
+                                setTimeIndex(399)
+                              }}>1 month</Button> */}
+          </div>
         </div>
         <div className='your-position'>
           <h2>Your Position</h2>
@@ -287,12 +306,12 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        { isNaN(currentPrice) ? 'Failed to fetch current price. Cannot buy. Try again later.' :
         
         <button type="submit">Buy Shares!</button>}
         
         </form>
-        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        { isNaN(currentPrice) ? 'Failed to fetch current price. Cannot sell. Try again later.' :
             <button onClick={handleClick} >Exit Position</button>}
             
     

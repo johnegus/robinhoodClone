@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SearchContext } from './SearchContext';
 
 import { useDispatch } from "react-redux";
-
+import Button from '@material-ui/core/Button';
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
 import { createWatchedStock } from "../store/actions/watched-stocks";
@@ -23,7 +23,9 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
    const [buyPrice, setbuyPrice] = useState("");
    const [shares, setshares] = useState("");
    const [liveexchange, setExchange] = useState('');
-  
+   const [screen, setScreen] = useState('1day')
+   const [timeIndex, setTimeIndex] =useState (79)
+
     const handleSubmit = (e) => {
       e.preventDefault();
     console.log(stockSymbol)
@@ -152,15 +154,15 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
     }
   
     const lineChartData = {
-      labels: stockChartXValues,
+      labels: stockChartXValues.slice(0, timeIndex),
       datasets: [
         {
           label: context.searchQuery,
-          data: stockChartYValues,
+          data: stockChartYValues.slice(0, timeIndex),
           fill: false,
-          backgroundColor:stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+          backgroundColor:stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
           // borderColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+          borderColor: stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
           borderWidth: 4
         },
       ],
@@ -188,12 +190,30 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
       }]
       },
     }
-   
+    const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
+
   return (
       <div className="pokemon-detail">
         
         
           <Line data={lineChartData} options={options} />
+          <div className='button-container'> 
+              <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
+                              onClick={async ()=> {
+                                setScreen('1day')
+                                setTimeIndex(79)
+                              }}>1 Day</Button>
+              <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2} 
+                              onClick={async ()=> {
+                                setScreen('1week')
+                                setTimeIndex(399)
+                              }}>1 week</Button>
+              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+                              onClick={async ()=> {
+                                setScreen('1month')
+                                setTimeIndex(399)
+                              }}>1 month</Button> */}
+          </div>
           {stockSymbol !== 'INVALID SYMBOL' ? 
         <div className="pokemon-detail-lists">
           <div>
@@ -228,7 +248,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        { isNaN(currentPrice) ? 'Failed to fetch current price. Try again later.' :
         <button type="submit">Buy Shares!</button>}
         <button onClick={handleClick} >Add to Watchlist</button>
       </form>
@@ -238,22 +258,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           <b>Invalid symbol. Try again.</b>
           </div>
         }  
-        {/* <div className='newsFeed'>
-            {stories.map(story => {
-                return (
-                  <div className='newsContainer' key={story.timestamp}>
-                      <div className='newsTitle'>
-                        
-                        <a className='newsLink' target="_blank" href={story.url}>{story.title}</a>
-                      </div>
-                      <div className='newsSummary'>
-                      {story.summary}
-                      </div>
-                       <img height='100%' width='100%' src={story.image}></img>
-                   </div>
-                )
-              })}
-            </div> */}
+  
       </div>
     );
   };

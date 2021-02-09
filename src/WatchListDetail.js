@@ -8,6 +8,8 @@ import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
 import CountUp from 'react-countup';
+import Button from '@material-ui/core/Button';
+
 
 
 
@@ -25,6 +27,8 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
+  const [screen, setScreen] = useState('1day')
+  const [timeIndex, setTimeIndex] =useState (79)
 
   // setstockName(data[0][companyName])
   //           setCompanyDescription(data[0][description])
@@ -155,16 +159,28 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
     </>
     )
   }
+  console.log(stockChartXValues)
+
+  // const timeIndex = (screen) => {
+  //   if (screen === '1day'){
+  //     return 79
+  //   }
+
+  //   if (screen === '1week'){
+  //     return 399
+  //   }
+  // }
   const lineChartData = {
-    labels: stockChartXValues,
+    
+    labels: stockChartXValues.slice(0, timeIndex),
     datasets: [
       {
         label: watchedStocks.stockSymbol,
-        data: stockChartYValues,
+        data: stockChartYValues.slice(0, timeIndex),
         fill: false,
-        backgroundColor:stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+        backgroundColor:stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
         // borderColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: stockChartYValues[0] > stockChartYValues[399] ? 'green' : 'red',
+        borderColor: stockChartYValues[0] > stockChartYValues[timeIndex] ? 'green' : 'red',
         borderWidth: 4
       },
     ],
@@ -215,7 +231,9 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
     callback(e.target.value);
   };
 
-  const upOrDown = stockChartYValues[0] > stockChartYValues[399] ? 'background' : 'background2'
+  const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
+  const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
+
 return (
     <div className="pokemon-detail">
 
@@ -237,9 +255,25 @@ return (
       </div>
       <div className="pokemon-detail-lists">
       
-        <div>
+        <div className='stock-chart'>
         <Line data={lineChartData} options={options} />
-          
+        <div className='button-container'> 
+              <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
+                              onClick={async ()=> {
+                                setScreen('1day')
+                                setTimeIndex(79)
+                              }}>1 Day</Button>
+              <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2} 
+                              onClick={async ()=> {
+                                setScreen('1week')
+                                setTimeIndex(399)
+                              }}>1 week</Button>
+              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+                              onClick={async ()=> {
+                                setScreen('1month')
+                                setTimeIndex(399)
+                              }}>1 month</Button> */}
+          </div>
         </div>
         <div>
           
@@ -252,7 +286,7 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price' :
+        { isNaN(currentPrice) ? 'Failed to fetch current price. Try again later.' :
         <button type="submit">Buy Shares!</button>}
         
       </form>
