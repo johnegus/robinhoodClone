@@ -220,7 +220,9 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           </div>
             <form onSubmit={handleSubmit}>
         <input
+          className='search-input'
           type="number"
+          min="1"
           placeholder="Shares"
           required
           value={shares}

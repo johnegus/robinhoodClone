@@ -43,9 +43,10 @@ input {
   box-sizing: border-box;
   display: block;
   margin-bottom: 2em;
+  margin-top: 2em;
   outline: 0;
   padding: .25em .5em;
-  width: 100%;
+  width: 20rem;
 }
 
 input:focus {
@@ -204,11 +205,13 @@ td.centered {
 }
 
 .pokemon-detail-lists {
-  padding-left: 25px;
-  margin-bottom: 1em;
+  padding: 25px;
+  margin: 1em;
   z-index: 5;
 }
-
+.your-position{
+  margin: 25px
+}
 .primary-text {
   font-size: 1.3em;
 }
@@ -418,4 +421,27 @@ text-transform: uppercase;
   color: red;
   margin: 20px;
   font-weight: bold;
+}
+
+.newsFeed{
+  margin: 3em;
+
+}
+
+.stock-information{
+  
+  margin-bottom: 1em;
+}
+
+.search-input{
+  width: 90%;
+}
+
+.close-search {
+  position: absolute;
+  left: 300px;
+  
+}
+.search-bar{
+  width: 100%;
 }

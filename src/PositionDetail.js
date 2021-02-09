@@ -258,7 +258,7 @@ return (
         <Line data={lineChartData} options={options} />
           
         </div>
-        <div>
+        <div className='your-position'>
           <h2>Your Position</h2>
             <ul>
               <li>
@@ -281,6 +281,7 @@ return (
             <form onSubmit={handleSubmit}>
         <input
           type="number"
+          min="1"
           placeholder="Shares"
           required
           value={shares}
@@ -298,6 +299,7 @@ return (
         </div>
       </div>
       <div className='newsFeed'>
+        <div className='stock-information'>
       <h2>Stock Information</h2>
           <ul>
             <li>
@@ -314,10 +316,9 @@ return (
             </li>
             <li>
               <b>Company Description</b> {livedescription}
-            </li>
-            
-            
+            </li>            
           </ul>
+          </div>
           <h2>News</h2>
           {stories.map(story => {
               return (

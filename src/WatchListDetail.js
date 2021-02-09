@@ -282,7 +282,9 @@ return (
             
           </ul>
           <h2>News</h2>
-          {stories.map(story => {
+
+          {stories.length === 0 ? 'You have exceeded the amount of free news fetchs, try again later.' :
+          stories.map(story => {
               return (
                 <div className='newsContainer' key={story.timestamp}>
                     <div className='newsTitle'>
