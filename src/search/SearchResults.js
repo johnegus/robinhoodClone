@@ -103,7 +103,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
       
       const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let stockSymbol = context.searchQuery
-      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
+      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/30min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
       
@@ -124,16 +124,17 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
                     stockChartXValuesFunction.push(data[key]['date']);
                     stockChartYValuesFunction.push(data[key]['open']);
                 }
-                setIsLoading(false);
+                
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
                 setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
                 setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-                
+                setIsLoading(false);
             }
         );
           }
       fetchLivePositions();
+      
     
   
   }, [context.searchQuery]);
@@ -201,18 +202,18 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
               <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1day')
-                                setTimeIndex(79)
+                                setTimeIndex(9)
                               }}>1 Day</Button>
               <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1week')
-                                setTimeIndex(399)
+                                setTimeIndex(70)
                               }}>1 week</Button>
-              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+              <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1month')
-                                setTimeIndex(399)
-                              }}>1 month</Button> */}
+                                setTimeIndex(199)
+                              }}>1 month</Button>
           </div>
           {stockSymbol !== 'INVALID SYMBOL' ? 
         <div className="pokemon-detail-lists">

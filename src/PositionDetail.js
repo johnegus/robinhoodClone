@@ -31,6 +31,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [soldPrice, setSoldPrice] = useState('');
   const [screen, setScreen] = useState('1day')
   const [timeIndex, setTimeIndex] =useState (79)
+  const [monthChart, setMonthChart] = useState('30min')
+
 
 
   
@@ -50,8 +52,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     }
     const fetchCompanyInfo = async () =>{
       const API_Key = process.env.REACT_APP_FMP_API_KEY;
-      let stockSymbol = positions.stockSymbol
-      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${API_Key}`;
+      let stockSymbol1 = positions.stockSymbol
+      let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbol1}?apikey=${API_Key}`;
      
     
       fetch(API_CALL)
@@ -102,7 +104,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     
     const API_Key = process.env.REACT_APP_FMP_API_KEY;
     let stockSymbol = positions.stockSymbol
-    let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
+    let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/30min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
     
@@ -122,17 +124,19 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
                   stockChartXValuesFunction.push(data[key]['date']);
                   stockChartYValuesFunction.push(data[key]['open']);
               }
-              setIsLoading(false);
-
+              
+              
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
               setSoldPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              setIsLoading(false);
+              
           }
       )
         }
     fetchLivePositions();
-  
+    
 
 }, [positions]);
 
@@ -198,7 +202,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const handleSubmit = (e) => {
     e.preventDefault();
     setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-
+    const currentPrice = positions.currentPrice
    
     const payload = {
       stockSymbol,
@@ -250,7 +254,7 @@ return (
         <h1 className="bigger">{positions.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
         <h1 className="bigger">
-        $<CountUp start={0} decimals={2} end={currentPrice} duration={1.00} separator="," />
+        $<CountUp start={0} decimals={2} end={positions.currentPrice} duration={1.00} separator="," />
           </h1>
         </div>
         </div>
@@ -263,18 +267,19 @@ return (
               <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1day')
-                                setTimeIndex(79)
+                                setTimeIndex(9)
                               }}>1 Day</Button>
               <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2}  
                               onClick={async ()=> {
                                 setScreen('1week')
-                                setTimeIndex(399)
+                                setTimeIndex(70)
                               }}>1 week</Button>
-              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+              <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1month')
-                                setTimeIndex(399)
-                              }}>1 month</Button> */}
+                                setMonthChart('30min')
+                                setTimeIndex(199)
+                              }}>1 month</Button>
           </div>
         </div>
         <div className='your-position'>
@@ -290,10 +295,10 @@ return (
                 <b>Date Purchased:</b> {positions.createdAt}
               </li>
               <li>
-                <b>Market Value:</b> ${(positions.shares*currentPrice).toFixed(2)}
+                <b>Market Value:</b> ${(positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)).toFixed(2)}
               </li>
               <li>
-                <b>Total Return:</b> ${(positions.shares*currentPrice-positions.shares*positions.buyPrice).toFixed(2)}
+                <b>Total Return:</b> ${(positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice).toFixed(2)}
               </li>
             </ul>
             <h2>Buy More</h2>
@@ -306,12 +311,12 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price. Cannot buy. Try again later.' :
+        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? 'Failed to fetch current price. Cannot buy. Try again later.' :
         
         <button type="submit">Buy Shares!</button>}
         
         </form>
-        { isNaN(currentPrice) ? 'Failed to fetch current price. Cannot sell. Try again later.' :
+        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? 'Failed to fetch current price. Cannot sell. Try again later.' :
             <button onClick={handleClick} >Exit Position</button>}
             
     

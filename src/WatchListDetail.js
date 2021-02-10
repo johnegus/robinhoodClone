@@ -29,20 +29,12 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [liveexchange, setExchange] = useState('');
   const [screen, setScreen] = useState('1day')
   const [timeIndex, setTimeIndex] =useState (79)
-
-  // setstockName(data[0][companyName])
-  //           setCompanyDescription(data[0][description])
-  //           setExchange(data[0][exchangeShortName])
-  //           setImage(data[0][image])
+  const [monthChart, setMonthChart] = useState('30min')
 
   
 
   const { id } = useParams();
- 
 
-  // useEffect(() => {
-  //   createInstance(id);
-  // }, [id]);
   
 
   useEffect(() => {
@@ -108,7 +100,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
     
     const API_Key = process.env.REACT_APP_FMP_API_KEY;
       let stockSymbol = watchedStocks.stockSymbol
-      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/5min/${stockSymbol}?apikey=${API_Key}`;
+      let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/30min/${stockSymbol}?apikey=${API_Key}`;
       let stockChartXValuesFunction = [];
       let stockChartYValuesFunction = [];
     
@@ -129,13 +121,13 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
                   stockChartXValuesFunction.push(data[key]['date']);
                   stockChartYValuesFunction.push(data[key]['open']);
               }
-              setIsLoading(false);
               
+              setIsLoading(false);
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
               setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
               setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-            
+              
           }
       )
         }
@@ -261,18 +253,20 @@ return (
               <Button variant={screen==='1day' ? 'contained':"outlined"} color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1day')
-                                setTimeIndex(79)
+                                setTimeIndex(9)
                               }}>1 Day</Button>
               <Button variant={screen==='1week' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1week')
-                                setTimeIndex(399)
+                                setTimeIndex(70)
                               }}>1 week</Button>
-              {/* <Button variant={screen==='1month' ? 'contained':"outlined"}  color="primary" 
+              <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
+                                console.log(stockChartXValues)
                                 setScreen('1month')
-                                setTimeIndex(399)
-                              }}>1 month</Button> */}
+                                setMonthChart('30min')
+                                setTimeIndex(199)
+                              }}>1 month</Button>
           </div>
         </div>
         <div>
