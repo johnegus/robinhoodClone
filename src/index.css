@@ -75,11 +75,11 @@ td.centered {
 }
 
 #logout-button-holder {
-  background-color: green;
-  border: 1px solid green;
+  /* background-color: green;
+  border: 1px solid green; */
   position: absolute;
   top: 0px;
-  right: 10px;
+  right: 20px;
   z-index: 5;
 }
 
@@ -231,7 +231,8 @@ td.centered {
   z-index: 5;
 }
 .your-position{
-  margin: 25px
+  margin: 25px;
+  margin-left: 5rem;
 }
 .primary-text {
   font-size: 1.3em;
@@ -255,6 +256,16 @@ td.centered {
   .user-detail, .user-data-tables {
     display: inline-table
   }
+
+  .company-titles {
+    
+    margin-left: 1rem;
+}
+.header-element {
+  display: flex;
+  height: 200px;
+}
+
 }
 @media screen and (min-width: 1000px) {
   .pokemon-detail-lists {
@@ -272,11 +283,7 @@ td.centered {
     flex: 0 0 200px;
   }
 
-  .pokemon-detail-image-background {
-    display: flex;
-    flex-direction: row;
-    
-  }
+
 
   .pokemon-detail h1 {
     flex: 1 0 0;
@@ -477,4 +484,61 @@ text-transform: uppercase;
 .stock-chart {
   margin: 10px;
   
+}
+
+.exit-position {
+  padding-top: 20px;
+}
+
+.fade-out {
+  animation: fadeOut ease 8s;
+  -webkit-animation: fadeOut ease 8s;
+  -moz-animation: fadeOut ease 8s;
+  -o-animation: fadeOut ease 8s;
+  -ms-animation: fadeOut ease 8s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+}
 }

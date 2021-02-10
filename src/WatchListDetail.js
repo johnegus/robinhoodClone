@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 
 
@@ -27,9 +28,10 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
-  const [screen, setScreen] = useState('1day')
-  const [timeIndex, setTimeIndex] =useState (79)
+  const [screen, setScreen] = useState('1week')
+  const [timeIndex, setTimeIndex] =useState (70)
   const [monthChart, setMonthChart] = useState('30min')
+  const [success, setSuccess] = useState('')
 
   
 
@@ -125,8 +127,8 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
               setIsLoading(false);
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-              setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              setcurrentPrice(watchedStocks.currentPrice)
+              setbuyPrice(watchedStocks.currentPrice)
               
           }
       )
@@ -206,7 +208,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
  
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const currentPrice = watchedStocks.currentPrice
   
     const payload = {
       stockSymbol,
@@ -217,6 +219,11 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
       
     };
     createPosition(payload);
+    setSuccess(`${shares} of ${stockName} bought at ${buyPrice}.`)
+        setTimeout(function()
+           {
+            setSuccess('')
+           },8000);
   };
 
   const updateProperty = (callback) => (e) => {
@@ -239,7 +246,7 @@ return (
         <h1 className="bigger">{watchedStocks.stockSymbol}</h1>
         <h1 className="bigger">{stockName}</h1>
         <h1 className="bigger">
-        $<CountUp start={0} decimals={2} end={currentPrice} duration={1.00} separator="," />
+        $<CountUp start={0} decimals={2} end={watchedStocks.currentPrice} duration={1.00} separator="," />
 
         </h1>
         </div>
@@ -269,7 +276,7 @@ return (
                               }}>1 month</Button>
           </div>
         </div>
-        <div>
+        <div className='your-position'>
           
             <h2>Buy</h2>
             <form onSubmit={handleSubmit}>
@@ -281,7 +288,11 @@ return (
           onChange={updateProperty(setshares)}
         />
         { isNaN(currentPrice) ? 'Failed to fetch current price. Try again later.' :
-        <button type="submit">Buy Shares!</button>}
+        <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
+        {success ?
+         <Alert className='fade-out' severity="success">{success}</Alert> :
+         ''
+         }
         
       </form>
               
@@ -298,7 +309,7 @@ return (
               <b>Stock Name</b> {stockName}
             </li>
             <li>
-              <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
+              <b>Current Price</b> ${watchedStocks.currentPrice}
             </li>
             <li>
               <b>Exchange</b> {liveexchange}

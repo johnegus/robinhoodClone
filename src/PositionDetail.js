@@ -9,6 +9,7 @@ import { createInstance } from "./store/actions/history";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 
 
@@ -29,10 +30,10 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
   const [soldPrice, setSoldPrice] = useState('');
-  const [screen, setScreen] = useState('1day')
-  const [timeIndex, setTimeIndex] =useState (79)
+  const [screen, setScreen] = useState('1week')
+  const [timeIndex, setTimeIndex] =useState (70)
   const [monthChart, setMonthChart] = useState('30min')
-
+  const [success, setSuccess] = useState('')
 
 
   
@@ -128,8 +129,8 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
               
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-              setSoldPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+              setcurrentPrice(positions.currentPrice)
+              setSoldPrice(positions.currentPrice)
               setIsLoading(false);
               
           }
@@ -201,7 +202,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
+    setbuyPrice(positions.currentPrice)
     const currentPrice = positions.currentPrice
    
     const payload = {
@@ -213,6 +214,11 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       
     };
     createPosition(payload);
+    setSuccess(`${shares} of ${stockName} bought at ${buyPrice}.`)
+        setTimeout(function()
+           {
+            setSuccess('')
+           },8000);
   };
 
   const handleClick = async (e) => {
@@ -230,6 +236,11 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     shares
     };
     createInstance(payload);
+    setSuccess(`${shares} of ${stockName} sold at ${soldPrice}.`)
+        setTimeout(function()
+           {
+            setSuccess('')
+           },8000);
     dispatch(exitPosition(positions.id));
 
     
@@ -295,10 +306,10 @@ return (
                 <b>Date Purchased:</b> {positions.createdAt}
               </li>
               <li>
-                <b>Market Value:</b> ${(positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)).toFixed(2)}
+                <b>Market Value:</b> ${(positions.shares*positions.currentPrice).toFixed(2)}
               </li>
               <li>
-                <b>Total Return:</b> ${(positions.shares*parseFloat(stockChartYValues[0]).toFixed(2)-positions.shares*positions.buyPrice).toFixed(2)}
+                <b>Total Return:</b> ${(positions.shares*positions.currentPrice-positions.shares*positions.buyPrice).toFixed(2)}
               </li>
             </ul>
             <h2>Buy More</h2>
@@ -311,15 +322,19 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? 'Failed to fetch current price. Cannot buy. Try again later.' :
+        { isNaN(positions.currentPrice) ? <Alert severity="error">Failed to fetch current price. Cannot buy. Try again later.</Alert>:
         
-        <button type="submit">Buy Shares!</button>}
+        <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
         
         </form>
-        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? 'Failed to fetch current price. Cannot sell. Try again later.' :
-            <button onClick={handleClick} >Exit Position</button>}
-            
-    
+        <div className='exit-position'>
+        { isNaN(positions.currentPrice) ? <Alert severity="error">Failed to fetch current price. Cannot sell. Try again later.</Alert> :
+            <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Exit Position</Button>}
+         </div>   
+         {success ?
+         <Alert className='fade-out' severity="success">{success}</Alert> :
+         ''
+         }
         </div>
       </div>
       <div className='newsFeed'>
@@ -333,7 +348,7 @@ return (
               <b>Stock Name</b> {stockName}
             </li>
             <li>
-              <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
+              <b>Current Price</b> ${positions.currentPrice}
             </li>
             <li>
               <b>Exchange</b> {liveexchange}

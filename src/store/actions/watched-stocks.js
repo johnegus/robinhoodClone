@@ -60,3 +60,21 @@ export const exitWatchedStock = (id) => async (dispatch, getState) => {
     window.location.replace('/')
   }
 };
+
+export const updateWatchedStockAndGet = (data) => async (dispatch, getState) =>{
+  const {
+    authentication: { token },
+  } = getState();
+  const response = await fetch(`${baseUrl}/watchlist/update`, {
+    method:"post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (response.ok) {
+    const watchedList = await response.json();
+  }
+}

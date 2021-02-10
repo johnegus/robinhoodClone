@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton";
 import PositionDetail from "./PositionDetail";
 
 import { getPositions, updatePositionAndGet } from "./store/actions/positions";
-import {getWatchedStocks} from './store/actions/watched-stocks'
+import {getWatchedStocks, updateWatchedStockAndGet} from './store/actions/watched-stocks'
 import {getHistoricalData} from './store/actions/history'
 import UserDetail from './UserDetail';
 import WatchListDetail from './WatchListDetail';
@@ -14,8 +14,9 @@ import { exitWatchedStock } from './store/actions/watched-stocks'
 
 
 import SearchContainer from "./search/SearchContainer";
+import NotFound from "./NotFound";
 
-const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePositionAndGet }) => {
+const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePositionAndGet, updateWatchedStockAndGet }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
             
             getPositions();
           })  
-        },100000)
+        },60000)
       }
       delay()
       setPosLen(positions.length);
@@ -68,6 +69,46 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       getPositions();
     }
   },[positions.length, flag, getPositions]);
+
+  //updatewatchedstocks =================================================================================
+  const [flag2, setflag2] = useState(0)
+  const [posLen2,setPosLen2 ] = useState(0)
+  useEffect(()=>{
+     if(posLen2 !== watchedStocks.length){
+
+      const delay=()=>{
+        setTimeout(()=>{
+          delay()
+          const API_Key = process.env.REACT_APP_FMP_API_KEY;
+          let stockSymbols = watchedStocks.map(m=>{return m.stockSymbol}).join(',')
+          let API_CALL = `https://financialmodelingprep.com/api/v3/profile/${stockSymbols}?apikey=${API_Key}`;
+          fetch(API_CALL)
+          .then((response)=>{
+            return response.json()
+          }).then((data)=>{
+            data.map(m=>{
+              return updateWatchedStockAndGet({
+                stockSymbol:m.symbol,
+                currentPrice:m.price
+              })
+            })
+            
+            getWatchedStocks();
+          })  
+        },60000)
+      }
+      delay()
+      setPosLen2(getWatchedStocks.length);
+    }
+  },[watchedStocks,posLen2])
+  useEffect(() => {
+    
+    
+    if(watchedStocks.length===0 && flag2===0){
+      setflag2(1)
+      getWatchedStocks();
+    }
+  },[getWatchedStocks.length, flag2, getWatchedStocks]);
 
   
 
@@ -135,7 +176,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
               >
                 <div className={`${((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1) > 0
                  ? "green" : "red"}`} 
-                  >{((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1)}%</div>
+                  >{watchedStock.currentPrice}</div>
                 <div>
                   <div className="primary-text">{watchedStock.stockName}</div>
                   <div className="secondary-text">
@@ -150,17 +191,22 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       </nav>
       
         <Switch>
+        {/* <Route path="/watchlist/*" component={NotFound} />
+           <Route path="/positions/*" component={NotFound} /> */}
           <Route
-            exact={true}
+            
             path="/watchlist/:id"
-            render={(props) => <WatchListDetail {...props} />}//component = {WatchLIstdetail}?
+            render={(props) => <WatchListDetail {...props} />}
           />
           <Route
-            exact={true}
+           
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}  
           />
+          
            <Route exact={true} path="/" component={UserDetail} />
+           
+           <Route component={NotFound} />
         </Switch>
       
     </main>
@@ -179,6 +225,9 @@ const PositionSidebarContainer = () => {
       history={history}
       updatePositionAndGet={(data)=>{
         dispatch(updatePositionAndGet(data))
+      }}
+      updateWatchedStockAndGet={(data)=>{
+        dispatch(updateWatchedStockAndGet(data))
       }}
       
       exitWatchedStock={(id) => dispatch(exitWatchedStock(id))}

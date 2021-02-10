@@ -8,6 +8,9 @@ import { createPosition } from "../store/actions/positions";
 import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+
+
 
 
 
@@ -23,16 +26,15 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
    const [buyPrice, setbuyPrice] = useState("");
    const [shares, setshares] = useState("");
    const [liveexchange, setExchange] = useState('');
-   const [screen, setScreen] = useState('1day')
-   const [timeIndex, setTimeIndex] =useState (79)
+   const [screen, setScreen] = useState('1week')
+   const [timeIndex, setTimeIndex] =useState (70)
+   const [success, setSuccess] = useState('')
+
 
     const handleSubmit = (e) => {
       e.preventDefault();
-    console.log(stockSymbol)
-    console.log(stockName)
-    console.log(currentPrice)
-    console.log(buyPrice)
-    console.log(shares)
+      let currentPrice = parseFloat(stockChartYValues[0]).toFixed(2)
+      let buyPrice = parseFloat(stockChartYValues[0]).toFixed(2)
       const payload = {
         stockSymbol,
         stockName,
@@ -42,10 +44,16 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
         
       };
       createPosition(payload);
+      setSuccess(`${shares} of ${stockName} bought at ${buyPrice}.`)
+        setTimeout(function()
+           {
+            setSuccess('')
+           },8000);
     };
 
     const handleClick= (e) =>{    
-      e.preventDefault();    
+      e.preventDefault(); 
+      let currentPrice = parseFloat(stockChartYValues[0]).toFixed(2)   
       const payload = {
         stockSymbol,
         stockName,
@@ -53,6 +61,11 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
         
       };
       createWatchedStock(payload);
+      setSuccess(`${stockName} has been added to your watchlist.`)
+        setTimeout(function()
+           {
+            setSuccess('')
+           },8000);
     
     }
 
@@ -117,20 +130,23 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           setstockSymbol('INVALID SYMBOL')
         )
         .then(
-            function(data){
+           function(data){
             
     
                 for(let key in data){
                     stockChartXValuesFunction.push(data[key]['date']);
                     stockChartYValuesFunction.push(data[key]['open']);
                 }
+               
                 
+                setTimeout(function(){ setIsLoading(false); }, 250);
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
+               
                 setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
                 setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-                setIsLoading(false);
             }
+            
         );
           }
       fetchLivePositions();
@@ -249,17 +265,24 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price. Try again later.' :
-        <button type="submit">Buy Shares!</button>}
-        <button onClick={handleClick} >Add to Watchlist</button>
+        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? <Alert severity="error">Failed to fetch current price. Try again later.</Alert>:
+        <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
+        <div className='exit-position'>
+        <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Add to Watchlist</Button>
+        </div>
+      
       </form>
         </div>
+        
         :
         <div className="centered middled">
-          <b>Invalid symbol. Try again.</b>
+          <Alert severity="error">Invalid symbol. Try again.</Alert>
           </div>
         }  
-  
+    {success ?
+         <Alert className='fade-out' severity="success">{success}</Alert> :
+         ''
+         }
       </div>
     );
   };
