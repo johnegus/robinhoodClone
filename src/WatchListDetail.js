@@ -219,7 +219,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
       
     };
     createPosition(payload);
-    setSuccess(`${shares} of ${stockName} bought at ${buyPrice}.`)
+    setSuccess(`${shares} shares of ${stockName} bought at ${buyPrice}.`)
         setTimeout(function()
            {
             setSuccess('')

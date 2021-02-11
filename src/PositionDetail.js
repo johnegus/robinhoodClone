@@ -202,7 +202,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    setbuyPrice(positions.currentPrice)
+    const buyPrice = positions.currentPrice
     const currentPrice = positions.currentPrice
    
     const payload = {
@@ -214,7 +214,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
       
     };
     createPosition(payload);
-    setSuccess(`${shares} of ${stockName} bought at ${buyPrice}.`)
+    setSuccess(`${shares} shares of ${stockName} bought at ${buyPrice}.`)
         setTimeout(function()
            {
             setSuccess('')
@@ -236,7 +236,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
     shares
     };
     createInstance(payload);
-    setSuccess(`${shares} of ${stockName} sold at ${soldPrice}.`)
+    setSuccess(`${shares} shares of ${stockName} sold at ${soldPrice}.`)
         setTimeout(function()
            {
             setSuccess('')

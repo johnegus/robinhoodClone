@@ -17,5 +17,7 @@ export const getOneWatchedStock = (id) => async (dispatch, getState) => {
   if (response.ok) {
     const current = await response.json();
     dispatch(setCurrentWatchedStock(current));
+  } else{
+    console.log('There is no stock like that')
   }
 };

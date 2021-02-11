@@ -191,13 +191,16 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       </nav>
       
         <Switch>
-        {/* <Route path="/watchlist/*" component={NotFound} />
-           <Route path="/positions/*" component={NotFound} /> */}
-          <Route
+          
             
+            <Route
+            exact={true}
             path="/watchlist/:id"
+            
             render={(props) => <WatchListDetail {...props} />}
-          />
+            />
+            
+         
           <Route
            
             path="/position/:id"
