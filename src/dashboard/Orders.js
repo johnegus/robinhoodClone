@@ -9,6 +9,8 @@ import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
+import Link from '@material-ui/core/Link';
+
 import '../index.css'
 
 
@@ -108,7 +110,12 @@ const [rows, setRows] = useState([]);
           {positions.map((position) => (
             <TableRow key={position.id}>
               <TableCell>{position.createdAt}</TableCell>
-              <TableCell>{position.stockSymbol.toUpperCase()}</TableCell>
+              <TableCell>
+              <Link underline='always' color="inherit" href={`/position/${position.id}`}>
+                
+                {position.stockSymbol.toUpperCase()}
+                </Link>
+                </TableCell>
               <TableCell>{position.stockName}</TableCell>
               <TableCell>{position.shares}</TableCell>
               <TableCell>${position.buyPrice}</TableCell>

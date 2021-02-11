@@ -54,7 +54,6 @@ useEffect(() => {
   const fetchPositionNews = async () =>{
      const API_Key = process.env.REACT_APP_FMP_API_KEY;
      let stockSymbol = positions.stockSymbol
-     console.log(stockSymbol)
 
 let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=${stockSymbol}&limit=10&apikey=${API_Key}`;
 
@@ -265,7 +264,6 @@ fetch(API_CALL)
 
   const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
   const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
-  console.log(stories)
 
 
   const loading = () => {

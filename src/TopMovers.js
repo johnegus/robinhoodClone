@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Link from '@material-ui/core/Link';
 
 const TopMovers = props => {
     const [stories, setStories] = useState([]);
@@ -24,15 +25,7 @@ const TopMovers = props => {
           function(data){
             setIsLoading(false)
             setStories(data)
-            // for(let key in data){
-            //   stockChartXValuesFunction.push(key);
-            //   stockChartYValuesFunction.push(data[key]['ticker']);
-            // }
-            //   console.log(stockChartXValuesFunction[0][companyName]);
-            //   console.log(stockChartYValuesFunction);
-            // setCompanyDescription(data[0]['description'])
-            // setExchange(data[0]['exchangeShortName'])
-            // setImage(data[0]['image'])
+       
               
           }
       )
@@ -63,11 +56,13 @@ const TopMovers = props => {
             return (
               <div className='moversContainer' key={story.ticker}>
                   <div className='newsTitle'>
-                  {story.ticker}
+                  
                   <div>
                   {story.companyName}
                   </div>
-                   
+                  <Link href={`/stock/${story.ticker}`}>
+                  {story.ticker}
+                   </Link>
                   </div>
                   <div className='newsSummary'>
                   

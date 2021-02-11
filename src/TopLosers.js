@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Link from '@material-ui/core/Link';
 
 const TopLosers = props => {
     const [stories, setStories] = useState([]);
@@ -24,16 +25,7 @@ const TopLosers = props => {
           function(data){
             setIsLoading(false)
             setStories(data)
-            // for(let key in data){
-            //   stockChartXValuesFunction.push(key);
-            //   stockChartYValuesFunction.push(data[key]['ticker']);
-            // }
-            //   console.log(stockChartXValuesFunction[0][companyName]);
-            //   console.log(stockChartYValuesFunction);
-            // setCompanyDescription(data[0]['description'])
-            // setExchange(data[0]['exchangeShortName'])
-            // setImage(data[0]['image'])
-              
+          
           }
       )
     }
@@ -67,7 +59,9 @@ const TopLosers = props => {
                   <div>
                   {story.companyName}
                   </div>
-                   
+                  <Link href={`/stock/${story.ticker}`} color='secondary'>
+                  {story.ticker}
+                   </Link>
                   </div>
                   <div className='newsSummary'>
                   

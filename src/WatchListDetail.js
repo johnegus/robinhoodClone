@@ -52,7 +52,6 @@ useEffect(() => {
   const fetchPositionNews = async () =>{
      const API_Key = process.env.REACT_APP_FMP_API_KEY;
      let stockSymbol = watchedStocks.stockSymbol
-     console.log(stockSymbol)
 
 let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=${stockSymbol}&limit=10&apikey=${API_Key}`;
 
@@ -128,9 +127,7 @@ fetch(API_CALL)
       )
       .then(
           function(data){
-            // console.log('FMP Historical data Search')
-            //   console.log(data)
-              // setVolume(data['Time Series (5min)'][0]["5. volume"]);
+         
               setstockSymbol(watchedStocks.stockSymbol);
               for(let key in data){
                   stockChartXValuesFunction.push(data[key]['date']);
@@ -166,17 +163,7 @@ fetch(API_CALL)
     </>
     )
   }
-  console.log(stockChartXValues)
 
-  // const timeIndex = (screen) => {
-  //   if (screen === '1day'){
-  //     return 79
-  //   }
-
-  //   if (screen === '1week'){
-  //     return 399
-  //   }
-  // }
   const lineChartData = {
     
     labels: stockChartXValues.slice(0, timeIndex),
@@ -294,7 +281,6 @@ return (
                               }}>1 week</Button>
               <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
-                                console.log(stockChartXValues)
                                 setScreen('1month')
                                 setMonthChart('30min')
                                 setTimeIndex(199)

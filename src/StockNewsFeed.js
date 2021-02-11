@@ -44,7 +44,6 @@ const StockNewsFeed = ({stockSymbol}) => {
         )
       }
     }
-console.log(stories)
       return (
         <div>
         <h2>News</h2>

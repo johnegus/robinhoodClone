@@ -37,7 +37,6 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
   
 
   const { stockSymbol } = useParams();
-  console.log(stockSymbol)
 
   
 
@@ -149,7 +148,6 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     </>
     )
   }
-  console.log(stockChartXValues)
 
   // const timeIndex = (screen) => {
   //   if (screen === '1day'){
@@ -283,7 +281,6 @@ return (
                               }}>1 week</Button>
               <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
-                                console.log(stockChartXValues)
                                 setScreen('1month')
                                 setMonthChart('30min')
                                 setTimeIndex(199)

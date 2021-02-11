@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import Link from '@material-ui/core/Link';
+
 
 const NewsFeed = props => {
     const [stories, setStories] = useState([]);
@@ -44,7 +46,6 @@ const NewsFeed = props => {
         )
       }
     }
-console.log(stories)
       return (
         <div>
         <h2>News</h2>
@@ -58,7 +59,11 @@ console.log(stories)
                   <div className='newsTitle'>
                     
                     <a className='newsLink' href={story.url}>{story.title}</a>
+                    
+
+                    <Link href={`/stock/${story.symbol}`}>
                     <div>{story.symbol}</div>
+                   </Link>
                     <div>{story.publishedDate}</div>
                   </div>
                   <div className='newsSummary'>
