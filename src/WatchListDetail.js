@@ -10,6 +10,8 @@ import { getOneWatchedStock} from "./store/actions/current-watched-stock";
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+import leaf from "./leaf-clipart-12-transparent.png";
+
 
 
 
@@ -350,7 +352,7 @@ return (
                     <div>{story.text}</div>
                 
                   </div>
-                   <img height='100%' width='100%' src={story.image} alt='news'></img>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
                </div>
             )
           })}

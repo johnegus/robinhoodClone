@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import Link from '@material-ui/core/Link';
+import leaf from "./leaf-clipart-12-transparent.png";
+
 
 
 const NewsFeed = props => {
@@ -71,7 +73,7 @@ const NewsFeed = props => {
                     <div>{story.text}</div>
                 
                   </div>
-                   <img height='100%' width='100%' src={story.image} alt='news'></img>
+                   <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
                </div>
             )
           })}

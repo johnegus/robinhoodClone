@@ -8,6 +8,7 @@ import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOneWatchedStock} from "./store/actions/current-watched-stock";
 import { createWatchedStock } from "./store/actions/watched-stocks";
+import leaf from "./leaf-clipart-12-transparent.png";
 
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
@@ -349,7 +350,10 @@ return (
                     <div className='newsSummary'>
                     {story.summary}
                     </div>
-                     <img height='100%' width='100%' src={story.image}></img>
+                   
+                    <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img> :
+                   
+                    
                  </div>
               )
             })}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
@@ -10,6 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+import leaf from "./leaf-clipart-12-transparent.png";
+
 
 
 
@@ -405,7 +406,7 @@ return (
                     <div>{story.text}</div>
                 
                   </div>
-                   <img height='100%' width='100%' src={story.image} alt='news'></img>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
                </div>
             )
           })}
