@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import polygonApi from './util/polygon';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
 const NewsFeed = props => {
     const [stories, setStories] = useState([]);
@@ -40,9 +41,10 @@ const NewsFeed = props => {
         <div>
         <h2>News</h2>
         {loading}
-        {stories === [] ? 'You have reached your news fetch limit, try again later.' :
+        
         <div> 
-        {stories.map(story => {
+          {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
+          stories.map(story => {
             return (
               <div className='newsContainer' key={story.timestamp}>
                   <div className='newsTitle'>
@@ -56,7 +58,7 @@ const NewsFeed = props => {
                </div>
             )
           })}
-          </div>}
+          </div>
         </div>
       )
 }

@@ -287,7 +287,7 @@ return (
           value={shares}
           onChange={updateProperty(setshares)}
         />
-        { isNaN(currentPrice) ? 'Failed to fetch current price. Try again later.' :
+        { isNaN(currentPrice) ? <Alert severity="error">Failed to fetch current price. Try again later.</Alert> :
         <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
         {success ?
          <Alert className='fade-out' severity="success">{success}</Alert> :
@@ -322,7 +322,7 @@ return (
           </ul>
           <h2>News</h2>
 
-          {stories.length === 0 ? 'You have exceeded the amount of free news fetchs, try again later.' :
+          {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
           stories.map(story => {
               return (
                 <div className='newsContainer' key={story.timestamp}>

@@ -253,6 +253,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
 
   const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
   const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
+  console.log(stories)
 return (
     <div className="pokemon-detail">
       <div className={`pokemon-detail-image-${upOrDown}`}>
@@ -359,7 +360,8 @@ return (
           </ul>
           </div>
           <h2>News</h2>
-          {stories.map(story => {
+          {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
+          stories.map(story => {
               return (
                 <div className='newsContainer' key={story.timestamp}>
                     <div className='newsTitle'>
