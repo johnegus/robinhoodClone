@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 
-const NewsFeed = props => {
+const StockNewsFeed = ({stockSymbol}) => {
     const [stories, setStories] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
     
@@ -10,7 +10,7 @@ const NewsFeed = props => {
         const fetchPositionNews = async () =>{
            const API_Key = process.env.REACT_APP_FMP_API_KEY;
  
-      let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?limit=20&apikey=${API_Key}`;
+      let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=${stockSymbol}&limit=10&apikey=${API_Key}`;
      
     
       fetch(API_CALL)
@@ -77,4 +77,4 @@ console.log(stories)
 
 
 
-export default NewsFeed;
+export default StockNewsFeed;

@@ -350,7 +350,7 @@ td.centered {
 
 .newsSummary{
   padding: 10px;
-
+  overflow: hidden;
   grid-column: 1/3;
   grid-row: 2/3;
 }

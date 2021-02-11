@@ -10,6 +10,8 @@ import {getWatchedStocks, updateWatchedStockAndGet} from './store/actions/watche
 import {getHistoricalData} from './store/actions/history'
 import UserDetail from './UserDetail';
 import WatchListDetail from './WatchListDetail';
+import StockDetail from './StockDetail';
+
 import { exitWatchedStock } from './store/actions/watched-stocks'
 
 
@@ -206,6 +208,11 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
             path="/position/:id"
             render={(props) => <PositionDetail {...props} />}  
           />
+          <Route
+           
+           path="/stock/:stockSymbol"
+           render={(props) => <StockDetail {...props} />}  
+         />
           
            <Route exact={true} path="/" component={UserDetail} />
            

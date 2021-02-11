@@ -32,6 +32,8 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [timeIndex, setTimeIndex] =useState (70)
   const [monthChart, setMonthChart] = useState('30min')
   const [success, setSuccess] = useState('')
+  const [storiesLoading, setStoriesLoading] = useState(true)
+
 
   
 
@@ -42,7 +44,35 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   useEffect(() => {
     getOneWatchedStock(id);
   }, [id]);
+// news fetch ---------------------------------------------------------------------
+useEffect(() => {
+  if (!watchedStocks) {
+    return;
+  }
+  const fetchPositionNews = async () =>{
+     const API_Key = process.env.REACT_APP_FMP_API_KEY;
+     let stockSymbol = watchedStocks.stockSymbol
+     console.log(stockSymbol)
 
+let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=${stockSymbol}&limit=10&apikey=${API_Key}`;
+
+
+fetch(API_CALL)
+.then(
+    function(response){
+        return response.json()
+    }
+)
+.then(
+    function(data){
+      setStories(data)
+      setStoriesLoading(false)
+        
+    }
+)
+}
+  fetchPositionNews();  
+}, [watchedStocks]); 
   //financial modeling prep fetch---------------------------------------------------
   useEffect(() => {
     if (!watchedStocks) {
@@ -75,24 +105,7 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
   }, [watchedStocks]);
-  //polygon news fetch -------------------------------------------------------------
-  useEffect(() => {
-    if (!watchedStocks) {
-      return;
-    }
-    const fetchPositionNews = async () =>{
-      const polygon = polygonApi()
-      polygon.getQuote(watchedStocks.stockSymbol).then((response) => {
-      
-        if(response.ok){
-          setStories(response.data)
-        }
-      });
-    }
-    fetchPositionNews();  
-    //setinterval would go here return the clear interval
-    //return ()=> clearInterval
-  }, [watchedStocks]);
+
  //alphavantage stock fetch -------------------------------------------------------------
  useEffect(() => {
   if (!watchedStocks) {
@@ -232,7 +245,19 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
 
   const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
   const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
-
+  const loading = () => {
+    if (storiesLoading) {
+    return (
+    <>
+    
+    <main className="centered middled">
+      <b>Fetching market data...</b>
+      <CircularProgress />
+      </main>
+    </>
+    )
+  }
+}
 return (
     <div className="pokemon-detail">
 
@@ -321,22 +346,29 @@ return (
             
           </ul>
           <h2>News</h2>
-
+        {loading}
+        
+        <div> 
           {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
           stories.map(story => {
-              return (
-                <div className='newsContainer' key={story.timestamp}>
-                    <div className='newsTitle'>
-                      
-                      <a className='newsLink' alt='news' href={story.url}>{story.title}</a>
-                    </div>
-                    <div className='newsSummary'>
-                    {story.summary}
-                    </div>
-                     <img height='100%' width='100%' src={story.image}></img>
-                 </div>
-              )
-            })}
+            return (
+              <div className='newsContainer' key={story.timestamp}>
+                  <div className='newsTitle'>
+                    
+                    <a className='newsLink' href={story.url}>{story.title}</a>
+                    <div>{story.symbol}</div>
+                    <div>{story.publishedDate}</div>
+                  </div>
+                  <div className='newsSummary'>
+                    
+                    <div>{story.text}</div>
+                
+                  </div>
+                   <img height='100%' width='100%' src={story.image} alt='news'></img>
+               </div>
+            )
+          })}
+          </div>
           </div>
 
     </div>
