@@ -137,7 +137,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
           </Switch>
        
         <div className='sidebar-label'>Stocks</div>
-        {positions.map((position) => {
+        {positions.slice(0).reverse().map((position) => {
           return (
             <NavLink key={position.id} to={`/position/${position.id}`}>
               <div
@@ -166,7 +166,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
           );
         })}
         <div className='sidebar-label'>Watchlist</div>
-        {watchedStocks.map((watchedStock) => {
+        {watchedStocks.slice(0).reverse().map((watchedStock) => {
           return (
             <NavLink key={watchedStock.id} to={`/watchlist/${watchedStock.id}`}>
               <div

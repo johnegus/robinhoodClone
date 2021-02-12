@@ -39,7 +39,7 @@ const [rows, setRows] = useState([]);
     }
 
  const  mapHistoryToRows = () => {
-    const gridRows = history.map((instance) => {
+    const gridRows = history.slice(0).reverse().map((instance) => {
       return ({
         id: instance.id,
         date: instance.createdAt, 
@@ -107,7 +107,7 @@ const [rows, setRows] = useState([]);
           </TableRow>
         </TableHead>
         <TableBody>
-          {positions.map((position) => (
+          {positions.slice(0).reverse().map((position) => (
             <TableRow key={position.id}>
               <TableCell>{position.createdAt}</TableCell>
               <TableCell>

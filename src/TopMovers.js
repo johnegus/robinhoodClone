@@ -49,7 +49,7 @@ const TopMovers = props => {
     }
 
       return (
-        <div>
+        <div className='losersandwinners'>
         <h2 style={{color: 'green'}}>Top Gainers</h2>
         {loading}
         {stories.slice(0, 5).map(story => {

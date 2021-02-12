@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
@@ -36,6 +36,7 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [timeIndex, setTimeIndex] =useState (70)
   const [success, setSuccess] = useState('')
   const [storiesLoading, setStoriesLoading] = useState(true)
+  const history = useHistory();
 
   
 
@@ -254,7 +255,7 @@ fetch(API_CALL)
             setSuccess('')
            },8000);
     dispatch(exitPosition(positions.id));
-
+    // history.push('/');
     
     
   }
@@ -321,6 +322,7 @@ return (
           </div>
         </div>
         <div className='your-position'>
+          <div>
           <h2>Your Position</h2>
             <ul>
               <li>
@@ -339,6 +341,8 @@ return (
                 <b>Total Return:</b> ${(positions.shares*positions.currentPrice-positions.shares*positions.buyPrice).toFixed(2)}
               </li>
             </ul>
+            
+            <div className='buy-more'>
             <h2>Buy More</h2>
             <form onSubmit={handleSubmit}>
         <input
@@ -354,6 +358,7 @@ return (
         <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
         
         </form>
+        </div>
         <div className='exit-position'>
         { isNaN(positions.currentPrice) ? <Alert severity="error">Failed to fetch current price. Cannot sell. Try again later.</Alert> :
             <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Exit Position</Button>}
@@ -362,7 +367,8 @@ return (
          <Alert className='fade-out' severity="success">{success}</Alert> :
          ''
          }
-        </div>
+         </div>
+         </div>
       </div>
       <div className='newsFeed'>
         <div className='stock-information'>

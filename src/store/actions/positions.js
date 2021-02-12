@@ -8,6 +8,7 @@ export const load = (list) => ({ type: LOAD, list });
 
 
 
+
 export const createPosition = (data) => async (dispatch, getState) => {
   const {
     authentication: { token },
@@ -48,6 +49,7 @@ export const getPositions = () => async (dispatch, getState) => {
 };
 
 export const exitPosition = (id) => async (dispatch, getState) => {
+
   const {
     authentication: { token },
   } = getState();
@@ -61,11 +63,13 @@ export const exitPosition = (id) => async (dispatch, getState) => {
   if (response.ok) {
     dispatch(getPositions());
     window.location.replace('/')
+    
   }
 };
 
 
 export const updatePositionAndGet = (data) => async (dispatch, getState) =>{
+
   const {
     authentication: { token },
   } = getState();

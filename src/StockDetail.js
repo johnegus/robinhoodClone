@@ -34,6 +34,8 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
   const [timeIndex, setTimeIndex] =useState (70)
   const [monthChart, setMonthChart] = useState('30min')
   const [success, setSuccess] = useState('')
+  const [storiesLoading, setStoriesLoading] = useState(true)
+
 
   
 
@@ -74,24 +76,33 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     //setinterval would go here return the clear interval
     //return ()=> clearInterval
   }, [stockSymbol]);
-  //polygon news fetch -------------------------------------------------------------
   useEffect(() => {
     if (!stockSymbol) {
       return;
     }
     const fetchPositionNews = async () =>{
-      const polygon = polygonApi()
-      polygon.getQuote(stockSymbol).then((response) => {
-      
-        if(response.ok){
-          setStories(response.data)
-        }
-      });
-    }
+       const API_Key = process.env.REACT_APP_FMP_API_KEY;
+       
+  
+  let API_CALL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=${stockSymbol}&limit=10&apikey=${API_Key}`;
+  
+  
+  fetch(API_CALL)
+  .then(
+      function(response){
+          return response.json()
+      }
+  )
+  .then(
+      function(data){
+        setStories(data)
+        setStoriesLoading(false)
+          
+      }
+  )
+  }
     fetchPositionNews();  
-    //setinterval would go here return the clear interval
-    //return ()=> clearInterval
-  }, [stockSymbol]);
+  }, [stockSymbol]); 
  //alphavantage stock fetch -------------------------------------------------------------
  useEffect(() => {
   if (!stockSymbol) {
@@ -246,6 +257,19 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
   const upOrDown = stockChartYValues[0] > stockChartYValues[timeIndex] ? 'background' : 'background2'
   const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
 
+  const loading = () => {
+    if (storiesLoading) {
+    return (
+    <>
+    
+    <main className="centered middled">
+      <b>Fetching market data...</b>
+      <CircularProgress />
+      </main>
+    </>
+    )
+  }
+}
 return (
     <div className="pokemon-detail">
 
@@ -338,25 +362,29 @@ return (
             
           </ul>
           <h2>News</h2>
-
+          {loading}
+        
+        <div> 
           {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
           stories.map(story => {
-              return (
-                <div className='newsContainer' key={story.timestamp}>
-                    <div className='newsTitle'>
-                      
-                      <a className='newsLink' alt='news' href={story.url}>{story.title}</a>
-                    </div>
-                    <div className='newsSummary'>
-                    {story.summary}
-                    </div>
-                   
-                    <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img> :
-                   
+            return (
+              <div className='newsContainer' key={story.timestamp}>
+                  <div className='newsTitle'>
                     
-                 </div>
-              )
-            })}
+                    <a className='newsLink' href={story.url}>{story.title}</a>
+                    <div>{story.symbol}</div>
+                    <div>{story.publishedDate}</div>
+                  </div>
+                  <div className='newsSummary'>
+                    
+                    <div>{story.text}</div>
+                
+                  </div>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
+               </div>
+            )
+          })}
+          </div>
           </div>
 
     </div>

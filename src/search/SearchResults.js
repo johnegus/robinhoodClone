@@ -9,6 +9,8 @@ import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import Link from '@material-ui/core/Link';
+
 
 
 
@@ -237,10 +239,16 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> {stockSymbol}
+              <b>Symbol</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+                
+              {stockSymbol}
+                </Link>
             </li>
             <li>
-              <b>Stock Name</b> {stockName}
+              <b>Stock Name</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+                
+              {stockName}
+                  </Link>
             </li>
             <li>
               <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
