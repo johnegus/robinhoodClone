@@ -51,7 +51,7 @@ const SignUpForm = () => {
       
     </div>
     <main className="centered middled">
-      <img src={leaf} alt="img" />
+      <img className='leaf-rotate' src={leaf} alt="img" />
       <form onSubmit={handleSubmit}>
         <input
           type='text'
