@@ -51,7 +51,7 @@ const TopMovers = props => {
       return (
         <div className='losersandwinners'>
         <h2 style={{color: 'green'}}>Top Gainers</h2>
-        {loading}
+        {loading()}
         {stories.slice(0, 5).map(story => {
             return (
               <div className='moversContainer' key={story.ticker}>

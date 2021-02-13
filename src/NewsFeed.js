@@ -51,13 +51,13 @@ const NewsFeed = props => {
       return (
         <div>
         <h2>News</h2>
-        {loading}
+        {loading()}
         
         <div> 
           {stories.length === 0 ? <Alert severity="error">You have exceeded the amount of free news fetches, try again later.</Alert> :
           stories.map(story => {
             return (
-              <div className='newsContainer' key={story.timestamp}>
+              <div className='newsContainer' key={story.url}>
                   <div className='newsTitle'>
                     
                     <a className='newsLink' href={story.url}>{story.title}</a>

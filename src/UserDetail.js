@@ -154,7 +154,7 @@ return (
         <Line data={lineChartData} options={options} />
       </div>
       <div className='doughnut'>
-        <Doughnut data={doughnutData} options={pieOptions} height="200em" />
+        <Doughnut data={doughnutData} options={pieOptions} height={200} />
       </div>
       <div className='user-data-tables'>
          <Orders />

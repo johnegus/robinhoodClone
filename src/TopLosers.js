@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 
-const TopLosers = props => {
+const TopLosers = () => {
     const [stories, setStories] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
     
@@ -50,7 +50,7 @@ const TopLosers = props => {
       return (
         <div className='losersandwinners'>
         <h2 style={{color: 'red'}}>Top Losers</h2>
-        {loading}
+        {loading()}
         {stories.slice(0, 5).map(story => {
             return (
               <div className='moversContainer' key={story.ticker}>
