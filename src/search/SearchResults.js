@@ -235,13 +235,13 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+              <b>Symbol</b> <Link underline='always' color="inherit" href={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockSymbol}
                 </Link>
             </li>
             <li>
-              <b>Stock Name</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+              <b>Stock Name</b> <Link underline='always' color="inherit" href={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockName}
                   </Link>

@@ -110,7 +110,7 @@ const [rows, setRows] = useState([]);
             <TableRow key={position.id}>
               <TableCell>{position.createdAt}</TableCell>
               <TableCell>
-              <Link underline='always' color="inherit" href={`/position/${position.id}`}>
+              <Link underline='always' color="inherit" href={`/dashboard/position/${position.id}`}>
                 
                 {position.stockSymbol.toUpperCase()}
                 </Link>

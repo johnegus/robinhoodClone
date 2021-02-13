@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import { logout } from "./store/actions/authentication";
 import {Link} from 'react-router-dom'; 
-import Button from '@material-ui/core/Button';
 
 
 const LogoutButton = () => {
@@ -15,13 +14,13 @@ const LogoutButton = () => {
   return (
     <>
     
-    <div id="logout-button-holder">
-    <Link to="/">
-          <Button variant="contained" color='primary'>
-          Profile
-          </Button>
+    <div className="logout-button-holder2">
+    <Link to="/dashboard">
+          <button type="button">
+          Dashboard
+          </button>
         </Link>
-      <Button variant="contained" color='primary' onClick={handleClick}>Logout</Button>
+      <button type="button" onClick={handleClick}>Logout</button>
     </div>
     </>
     

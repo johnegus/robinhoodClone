@@ -10,6 +10,9 @@ import SignUpForm from './SignUpForm';
 import SearchDetailContainer from './search/SearchResults'
 import NotFound from "./NotFound";
 import HomePage from "./homepage/HomePage";
+import UserDetailContainer from "./UserDetail";
+import WatchedStockDetailContainer from "./StockDetail";
+import PositionDetailContainer from "./PositionDetail";
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
@@ -26,12 +29,7 @@ const App = ({ needLogin, loadToken }) => {
     <BrowserRouter>
       <Switch>
         
-        <ProtectedRoute
-          path="/homepage"
-          exact={true}
-          needLogin={needLogin}
-          component={HomePage}
-        />
+        
         
         <ProtectedRoute
           path="/login"
@@ -45,17 +43,41 @@ const App = ({ needLogin, loadToken }) => {
           needLogin={needLogin}
           component={SignUpForm}
         />
-        <PrivateRoute
+        <ProtectedRoute
           path="/"
+          exact={true}
+          needLogin={needLogin}
+          component={HomePage}
+        />
+        <PrivateRoute
+          path="/dashboard"
           needLogin={needLogin}
           component={PositionSidebar}
         />
+        
         <PrivateRoute
-          path="/search"
+          path="/dashboard/search"
           needLogin={needLogin}
           component={SearchDetailContainer}
         />
-        <Route path='*' component={NotFound} />
+        <PrivateRoute
+           
+           path="/dashboard/position/:id"
+           needLogin={needLogin}
+           component={PositionDetailContainer}  
+         />
+         <PrivateRoute
+          
+          path="/dashboard/stock/:stockSymbol"
+          needLogin={needLogin}
+          component={WatchedStockDetailContainer}   
+        />
+        <PrivateRoute
+          path="/dashboard"
+          needLogin={needLogin}
+          component={UserDetailContainer}
+        />
+        
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

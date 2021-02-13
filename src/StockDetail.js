@@ -17,7 +17,7 @@ import Alert from '@material-ui/lab/Alert';
 
 
 
-const StockDetail = ({createWatchedStock, createPosition}) => {
+const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -264,6 +264,8 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     )
   }
 }
+
+// console.log(watchedStocks)
 return (
     <div className="pokemon-detail">
 
@@ -320,7 +322,9 @@ return (
         <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
 
         <div className='exit-position'>
+          {/* {watchedStocks.stockSymbol.includes(stockSymbol)? '' : */}
         <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Add to Watchlist</Button>
+      
         </div>
 
         {success ?

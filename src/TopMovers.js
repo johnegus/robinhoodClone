@@ -60,7 +60,7 @@ const TopMovers = props => {
                   <div>
                   {story.companyName}
                   </div>
-                  <Link href={`/stock/${story.ticker}`}>
+                  <Link href={`/dashboard/stock/${story.ticker}`}>
                   {story.ticker}
                    </Link>
                   </div>

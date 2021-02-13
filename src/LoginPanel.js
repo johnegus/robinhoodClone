@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./store/actions/authentication";
-import {Link} from 'react-router-dom'; 
+import {Link, Redirect} from 'react-router-dom'; 
 import leaf from './leaf-clipart-12-transparent.png';
 
 
@@ -26,7 +26,7 @@ const LoginPanel = (props) => {
 
   return (
     <>
-    <div id="logout-button-holder">
+    <div className="logout-button-holder">
     <Link to="/homepage">
           <button type="button">
           Home Page

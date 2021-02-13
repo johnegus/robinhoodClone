@@ -59,7 +59,7 @@ const TopLosers = () => {
                   <div>
                   {story.companyName}
                   </div>
-                  <Link href={`/stock/${story.ticker}`} color='secondary'>
+                  <Link href={`/dashboard/stock/${story.ticker}`} color='secondary'>
                   {story.ticker}
                    </Link>
                   </div>

@@ -52,7 +52,7 @@ const HomePage = ({ authenticated, setAuthenticated }) => {
 const Header = () =>{
     return(
         <>
-        <div id="logout-button-holder">
+        <div className="logout-button-holder">
     <Link to="/login">
           <button type="button">
           Log In

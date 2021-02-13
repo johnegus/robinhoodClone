@@ -139,7 +139,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
         <div className='sidebar-label'>Stocks</div>
         {positions.slice(0).reverse().map((position) => {
           return (
-            <NavLink key={position.id} to={`/position/${position.id}`}>
+            <NavLink key={position.id} to={`/dashboard/position/${position.id}`}>
               <div
                 className={
                   positionId === position.id
@@ -168,7 +168,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
         <div className='sidebar-label'>Watchlist</div>
         {watchedStocks.slice(0).reverse().map((watchedStock) => {
           return (
-            <NavLink key={watchedStock.id} to={`/watchlist/${watchedStock.id}`}>
+            <NavLink key={watchedStock.id} to={`/dashboard/stock/${watchedStock.stockSymbol}`}>
               <div
                 className={
                   positionId === watchedStock.id
@@ -194,28 +194,20 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       
         <Switch>
           
-            
-            <Route
-            exact={true}
-            path="/watchlist/:id"
-            
-            render={(props) => <WatchListDetail {...props} />}
-            />
-            
          
           <Route
            
-            path="/position/:id"
+            path="/dashboard/position/:id"
             render={(props) => <PositionDetail {...props} />}  
           />
           <Route
            
-           path="/stock/:stockSymbol"
+           path="/dashboard/stock/:stockSymbol"
            render={(props) => <StockDetail {...props} />}  
          />
           
-           <Route exact={true} path="/" component={UserDetail} />
-           
+           <Route exact={true} path="/dashboard" component={UserDetail} />
+           <Route component={PositionSidebar} />
            <Route component={NotFound} />
         </Switch>
       

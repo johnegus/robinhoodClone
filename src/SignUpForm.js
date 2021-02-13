@@ -42,8 +42,8 @@ const SignUpForm = () => {
 
   return (
     <>
-    <div id="logout-button-holder">
-    <Link to="/homepage">
+    <div className="logout-button-holder">
+    <Link to="/">
           <button type="button">
           Home Page
           </button>
