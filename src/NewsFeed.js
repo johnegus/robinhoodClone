@@ -73,7 +73,7 @@ const NewsFeed = props => {
                     <div>{story.text}</div>
                 
                   </div>
-                   <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
+                   <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news'></img>
                </div>
             )
           })}

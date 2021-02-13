@@ -62,7 +62,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       delay()
       setPosLen(positions.length);
     }
-  },[positions,posLen])
+  },[positions, posLen, updatePositionAndGet])
   useEffect(() => {
     
     
@@ -70,7 +70,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       setflag(1)
       getPositions();
     }
-  },[positions.length, flag, getPositions]);
+  },[positions.length, flag, updatePositionAndGet]);
 
   //updatewatchedstocks =================================================================================
   const [flag2, setflag2] = useState(0)
@@ -102,7 +102,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       delay()
       setPosLen2(getWatchedStocks.length);
     }
-  },[watchedStocks,posLen2])
+  },[watchedStocks, posLen2, updateWatchedStockAndGet])
   useEffect(() => {
     
     
@@ -110,7 +110,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
       setflag2(1)
       getWatchedStocks();
     }
-  },[getWatchedStocks.length, flag2, getWatchedStocks]);
+  },[watchedStocks.length, flag2, updateWatchedStockAndGet]);
 
   
 

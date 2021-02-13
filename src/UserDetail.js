@@ -17,12 +17,14 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
   const [stockChartYValues, setstockChartYValues] = useState([]);
   
   useEffect(() => {
-    getPositions();
-  }, []);
+    if(!positions)
+      getPositions();
+  });
 
   useEffect(() => {
-    getHistoricalData();
-  }, []);
+    if(!history)
+      getHistoricalData();
+  });
 
  
   useEffect(() => {
@@ -39,6 +41,7 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
           
           stockChartYValuesFunction.push(sum+= parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares)))
           stockChartXValuesFunction.push(instance.createdAt)
+          return instance
         })
     
         }

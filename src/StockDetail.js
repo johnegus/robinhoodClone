@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -24,15 +23,12 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
   const [stockName, setstockName] = useState("");
-  const [currentPrice, setcurrentPrice] = useState("");
-  const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
   const [liveexchange, setExchange] = useState('');
   const [screen, setScreen] = useState('1week')
   const [timeIndex, setTimeIndex] =useState (70)
-  const [monthChart, setMonthChart] = useState('30min')
   const [success, setSuccess] = useState('')
   const [storiesLoading, setStoriesLoading] = useState(true)
 
@@ -134,8 +130,6 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
               setTimeout(function(){ setIsLoading(false); }, 250);
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-              setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
               
           }
       )
@@ -143,7 +137,7 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     fetchLivePositions();
   
 
-}, [stockSymbol]);
+}, [stockSymbol, stockChartYValues]);
 
   if (!stockSymbol) {
     return null;
@@ -307,7 +301,6 @@ return (
               <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1month')
-                                setMonthChart('30min')
                                 setTimeIndex(199)
                               }}>1 month</Button>
           </div>
@@ -380,7 +373,7 @@ return (
                     <div>{story.text}</div>
                 
                   </div>
-                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news'></img>
                </div>
             )
           })}

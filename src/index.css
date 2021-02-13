@@ -428,6 +428,7 @@ text-transform: uppercase;
 .user-data-tables{
   grid-column: 1/2;
   grid-row: 2/3;
+  margin: 10px;
 }
 
 .infogrid__movers {
@@ -596,4 +597,8 @@ box-shadow:         4px 4px 5px 0px rgba(50, 50, 50, 0.75);
     -webkit-transform: rotateY(360deg);
             transform: rotateY(360deg);
   }
+}
+
+.userHeader{
+  margin: 10px;
 }

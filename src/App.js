@@ -17,7 +17,7 @@ const App = ({ needLogin, loadToken }) => {
   useEffect(() => {
     setLoaded(true);
     loadToken();
-  }, []);
+  }, [loadToken]);
 
   if (!loaded) {
     return null;

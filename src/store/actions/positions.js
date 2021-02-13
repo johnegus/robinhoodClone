@@ -83,6 +83,6 @@ export const updatePositionAndGet = (data) => async (dispatch, getState) =>{
   });
 
   if (response.ok) {
-    const list = await response.json();
+    await response.json();
   }
 }

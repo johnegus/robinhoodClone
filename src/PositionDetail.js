@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
@@ -16,7 +16,6 @@ import leaf from "./leaf-clipart-12-transparent.png";
 
 
 import { getOnePosition } from "./store/actions/current-position";
-import StockNewsFeed from "./StockNewsFeed";
 
 const PositionDetail = ({ positions, getOnePosition, createPosition, createInstance }) => {
   const [stories, setStories] = useState([]);
@@ -25,8 +24,6 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [stockChartYValues, setstockChartYValues] = useState([]);
   const [stockSymbol, setstockSymbol] = useState("");
   const [stockName, setstockName] = useState("");
-  const [currentPrice, setcurrentPrice] = useState("");
-  const [buyPrice, setbuyPrice] = useState("");
   const [shares, setshares] = useState("");
   const [livedescription, setCompanyDescription] = useState('');
   const [liveimage, setImage] = useState('');
@@ -36,19 +33,23 @@ const PositionDetail = ({ positions, getOnePosition, createPosition, createInsta
   const [timeIndex, setTimeIndex] =useState (70)
   const [success, setSuccess] = useState('')
   const [storiesLoading, setStoriesLoading] = useState(true)
-  const history = useHistory();
 
   
 
   const dispatch = useDispatch();
   const { id } = useParams();
+  const prevId = useState(null)
   
 
   useEffect(() => {
-    getOnePosition(id);
-  }, [id]);
 
-// news fetch ---------------------------------------------------------------------
+    if(prevId[0]!==id){
+      getOnePosition(id);
+      prevId[1](id)
+    }
+  }, [id,getOnePosition,prevId]);
+
+// financial modeling prep news fetch ---------------------------------------------------------------------
 useEffect(() => {
   if (!positions) {
     return;
@@ -76,7 +77,7 @@ fetch(API_CALL)
 }
   fetchPositionNews();  
 }, [positions]); 
-  //financial modeling prep fetch---------------------------------------------------
+  //financial modeling prep stock info fetch---------------------------------------------------
   useEffect(() => {
     if (!positions) {
       return;
@@ -108,8 +109,8 @@ fetch(API_CALL)
     //return ()=> clearInterval
   }, [positions]);
  
- //alphavantage stock fetch -------------------------------------------------------------
- useEffect(() => {
+  //financial modeling prep ticker data fetch---------------------------------------------------
+  useEffect(() => {
   if (!positions) {
     return;
   }
@@ -141,7 +142,6 @@ fetch(API_CALL)
               
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
-              setcurrentPrice(positions.currentPrice)
               setSoldPrice(positions.currentPrice)
               setIsLoading(false);
               
@@ -412,7 +412,7 @@ return (
                     <div>{story.text}</div>
                 
                   </div>
-                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news'></img>
                </div>
             )
           })}

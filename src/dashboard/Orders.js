@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
-
 import '../index.css'
 
 
@@ -24,13 +23,13 @@ import '../index.css'
 const Orders = ({positions, history, getPositions, getHistoricalData}) => {
 const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    getPositions();
-  }, []);
+  // useEffect(() => {
+  //   getPositions();
+  // }, []);
 
-  useEffect(() => {
-    getHistoricalData();
-  }, []);
+  // useEffect(() => {
+  //   getHistoricalData();
+  // }, []);
   
 
   useEffect(() => {

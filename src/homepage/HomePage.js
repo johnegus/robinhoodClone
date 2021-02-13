@@ -124,13 +124,13 @@ const ContactContainer = () => {
     
     <div className='miniInfo1'>
     <div>
-    <a href="https://github.com/johnegus/" target="_blank"> 
+    <a href="https://github.com/johnegus/" target="_blank" rel="noopener noreferrer"> 
       
         <img className='icons' height='25px' width='25px' src={github} alt='github' />
         </a>
     </div>
     <div>
-    <a href="https://www.linkedin.com/in/john-hiestand-3bb22a17/" target="_blank"> 
+    <a href="https://www.linkedin.com/in/john-hiestand-3bb22a17/" target="_blank" rel="noopener noreferrer"> 
         
         <img className='icons' height='25px' width='25px' src={linkedin} alt='linkedin' />
         </a>

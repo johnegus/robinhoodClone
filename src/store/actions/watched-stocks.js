@@ -75,6 +75,6 @@ export const updateWatchedStockAndGet = (data) => async (dispatch, getState) =>{
   });
 
   if (response.ok) {
-    const watchedList = await response.json();
+    await response.json();
   }
 }

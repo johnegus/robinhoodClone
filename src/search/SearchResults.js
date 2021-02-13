@@ -24,8 +24,6 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
    const [stockChartYValues, setstockChartYValues] = useState([]);
    const [stockSymbol, setstockSymbol] = useState("");
    const [stockName, setstockName] = useState("");
-   const [currentPrice, setcurrentPrice] = useState("");
-   const [buyPrice, setbuyPrice] = useState("");
    const [shares, setshares] = useState("");
    const [liveexchange, setExchange] = useState('');
    const [screen, setScreen] = useState('1week')
@@ -145,8 +143,6 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
                
-                setcurrentPrice(parseFloat(stockChartYValues[0]).toFixed(2))
-                setbuyPrice(parseFloat(stockChartYValues[0]).toFixed(2))
             }
             
         );
@@ -155,7 +151,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
       
     
   
-  }, [context.searchQuery]);
+  }, [context.searchQuery, stockChartYValues]);
   
     if (!context.searchQuery) {
       return null;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import polygonApi from './util/polygon';
 import { Line } from 'react-chartjs-2';
 import { createPosition } from "./store/actions/positions";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -32,7 +31,6 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
   const [liveexchange, setExchange] = useState('');
   const [screen, setScreen] = useState('1week')
   const [timeIndex, setTimeIndex] =useState (70)
-  const [monthChart, setMonthChart] = useState('30min')
   const [success, setSuccess] = useState('')
   const [storiesLoading, setStoriesLoading] = useState(true)
 
@@ -43,9 +41,14 @@ const WatchListDetail = ({watchedStocks, getOneWatchedStock, createPosition}) =>
 
   
 
+  const previd = useState(null)
+
   useEffect(() => {
-    getOneWatchedStock(id);
-  }, [id]);
+    if(previd[0]!==id){
+      previd[1](id);
+      getOneWatchedStock(id);
+    }
+  }, [id,getOneWatchedStock,previd]);
 // news fetch ---------------------------------------------------------------------
 useEffect(() => {
   if (!watchedStocks) {
@@ -284,7 +287,6 @@ return (
               <Button variant={screen==='1month' ? 'contained':"outlined"}  color={upOrDown2} 
                               onClick={async ()=> {
                                 setScreen('1month')
-                                setMonthChart('30min')
                                 setTimeIndex(199)
                               }}>1 month</Button>
           </div>
@@ -352,7 +354,7 @@ return (
                     <div>{story.text}</div>
                 
                   </div>
-                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news image'></img>
+                  <img height='100%' width='100%' src={story.image ? story.image : leaf} alt='news'></img>
                </div>
             )
           })}

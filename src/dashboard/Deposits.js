@@ -24,8 +24,9 @@ export function Deposits({getHistoricalData, history}) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getHistoricalData();
-  }, []);
+    if(!history)
+      getHistoricalData();
+  });
 
   const handleClick = async (e) => {
     const deposit = 10000;
