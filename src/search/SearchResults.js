@@ -156,17 +156,19 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
     if (!context.searchQuery) {
       return null;
     }
+    const loading = () => {
     if (isLoading) {
       return (
       <>
       
-      <main >
+      <main className="centered middled">
        
         <CircularProgress />
         </main>
       </>
       )
     }
+  }
   
     const lineChartData = {
       labels: stockChartXValues.slice(0, timeIndex),
@@ -208,8 +210,8 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
     const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
 
   return (
-      <div className="pokemon-detail">
-        
+      <div className="position-detail">
+        {loading()}
         
           <Line data={lineChartData} options={options} />
           <div className='button-container'> 
@@ -230,7 +232,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
                               }}>1 month</Button>
           </div>
           {stockSymbol !== 'INVALID SYMBOL' ? 
-        <div className="pokemon-detail-lists">
+        <div className="position-detail-lists">
           <div>
             <h4>Stock Information</h4>
             <ul>

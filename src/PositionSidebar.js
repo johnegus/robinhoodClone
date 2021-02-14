@@ -174,9 +174,8 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
                     : "nav-entry"
                 }
               >
-                <div className={`${((Math.random() * 3.00) + 1).toFixed(2) *(Math.round(Math.random()) * 2 - 1) > 0
-                 ? "green" : "red"}`} 
-                  >{watchedStock.currentPrice}</div>
+                <div className='purple' 
+                  >${watchedStock.currentPrice}</div>
                 <div>
                   <div className="primary-text">{watchedStock.stockName}</div>
                   <div className="secondary-text">
@@ -205,8 +204,8 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
          />
           
            <Route exact={true} path="/dashboard/user" component={UserDetail} />
-           <Route component={PositionSidebar} />
-           {/* <Route component={NotFound} /> */}
+           {/* <Route component={PositionSidebar} />
+           <Route component={NotFound} /> */}
         </Switch>
       
     </main>

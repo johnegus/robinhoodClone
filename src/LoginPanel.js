@@ -27,7 +27,7 @@ const LoginPanel = (props) => {
   return (
     <>
     <div className="logout-button-holder">
-    <Link to="/homepage">
+    <Link to="/">
           <button type="button">
           Home Page
           </button>

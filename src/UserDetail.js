@@ -136,9 +136,9 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
  }
 
 return (
-  <div className="pokemon-detail">
+  <div className="position-detail">
     <div
-      className={`pokemon-detail-image-background`}>
+      className={`position-detail-image-background`}>
       <div>
       <h1 className="bigger">Welcome to Algo</h1>
       </div>
