@@ -55,7 +55,7 @@ const App = ({ needLogin, loadToken }) => {
           component={PositionSidebar}
         />
         
-        <PrivateRoute
+        {/* <PrivateRoute
           path="/dashboard/search"
           needLogin={needLogin}
           component={SearchDetailContainer}
@@ -73,12 +73,12 @@ const App = ({ needLogin, loadToken }) => {
           component={WatchedStockDetailContainer}   
         />
         <PrivateRoute
-          path="/dashboard"
+          path="/dashboard/user"
           needLogin={needLogin}
           component={UserDetailContainer}
-        />
+        /> */}
         
-        <Redirect to="/" />
+        {/* <Redirect to="/" /> */}
       </Switch>
     </BrowserRouter>
   );

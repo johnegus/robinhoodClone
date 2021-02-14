@@ -206,9 +206,9 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
            render={(props) => <StockDetail {...props} />}  
          />
           
-           <Route exact={true} path="/dashboard" component={UserDetail} />
+           <Route exact={true} path="/dashboard/user" component={UserDetail} />
            <Route component={PositionSidebar} />
-           <Route component={NotFound} />
+           {/* <Route component={NotFound} /> */}
         </Switch>
       
     </main>

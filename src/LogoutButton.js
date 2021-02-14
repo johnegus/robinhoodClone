@@ -15,7 +15,7 @@ const LogoutButton = () => {
     <>
     
     <div className="logout-button-holder2">
-    <Link to="/dashboard">
+    <Link to="/dashboard/user">
           <button type="button">
           Dashboard
           </button>

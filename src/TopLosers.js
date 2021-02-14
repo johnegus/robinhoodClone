@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
+import { NavLink } from "react-router-dom";
 
 const TopLosers = () => {
     const [stories, setStories] = useState([]);
@@ -23,9 +24,9 @@ const TopLosers = () => {
       )
       .then(
           function(data){
-            setIsLoading(false)
+            setTimeout(function(){ setIsLoading(false); }, 250);
+
             setStories(data)
-          
           }
       )
     }
@@ -59,9 +60,9 @@ const TopLosers = () => {
                   <div>
                   {story.companyName}
                   </div>
-                  <Link href={`/dashboard/stock/${story.ticker}`} color='secondary'>
+                  <NavLink to={`/dashboard/stock/${story.ticker}`} >
                   {story.ticker}
-                   </Link>
+                   </NavLink>
                   </div>
                   <div className='newsSummary'>
                   

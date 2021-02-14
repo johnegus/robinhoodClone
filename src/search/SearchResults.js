@@ -10,6 +10,7 @@ import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -235,16 +236,16 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> <Link underline='always' color="inherit" href={`/dashboard/stock/${stockSymbol}`}>
+              <b>Symbol</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockSymbol}
-                </Link>
+                </NavLink>
             </li>
             <li>
-              <b>Stock Name</b> <Link underline='always' color="inherit" href={`/dashboard/stock/${stockSymbol}`}>
+              <b>Stock Name</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockName}
-                  </Link>
+                  </NavLink>
             </li>
             <li>
               <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
@@ -252,11 +253,6 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <li>
               <b>Exchange</b> {liveexchange}
             </li>
-            {/* <li>
-              <b>Company Description</b> {livedescription}
-            </li> */}
-            
-            
           </ul>
           </div>
             <form onSubmit={handleSubmit}>

@@ -11,6 +11,7 @@ import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
 import '../index.css'
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -110,10 +111,10 @@ const [rows, setRows] = useState([]);
             <TableRow key={position.id}>
               <TableCell>{position.createdAt}</TableCell>
               <TableCell>
-              <Link underline='always' color="inherit" href={`/dashboard/position/${position.id}`}>
+              <NavLink to={`/dashboard/position/${position.id}`}>
                 
                 {position.stockSymbol.toUpperCase()}
-                </Link>
+                </NavLink>
                 </TableCell>
               <TableCell>{position.stockName}</TableCell>
               <TableCell>{position.shares}</TableCell>
