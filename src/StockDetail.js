@@ -155,15 +155,7 @@ const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
     )
   }
 
-  // const timeIndex = (screen) => {
-  //   if (screen === '1day'){
-  //     return 79
-  //   }
 
-  //   if (screen === '1week'){
-  //     return 399
-  //   }
-  // }
   const lineChartData = {
     
     labels: stockChartXValues.slice(0, timeIndex),

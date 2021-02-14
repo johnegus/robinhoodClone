@@ -9,7 +9,6 @@ import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
-import Link from '@material-ui/core/Link';
 import { NavLink } from 'react-router-dom';
 
 

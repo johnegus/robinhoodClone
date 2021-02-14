@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
-import Link from '@material-ui/core/Link';
 import leaf from "./leaf-clipart-12-transparent.png";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -50,7 +50,7 @@ const NewsFeed = props => {
     }
       return (
         <div>
-        <h2>News</h2>
+        <h2>Market News</h2>
         {loading()}
         
         <div> 
@@ -63,9 +63,9 @@ const NewsFeed = props => {
                     <a className='newsLink' href={story.url}>{story.title}</a>
                     
 
-                    <Link href={`/stock/${story.symbol}`}>
+                    <NavLink className='navlinks' to={`/dashboard/stock/${story.symbol}`}>
                     <div>{story.symbol}</div>
-                   </Link>
+                   </NavLink>
                     <div>{story.publishedDate}</div>
                   </div>
                   <div className='newsSummary'>

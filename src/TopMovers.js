@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Link from '@material-ui/core/Link';
 import { NavLink } from "react-router-dom";
 
 const TopMovers = props => {
@@ -62,7 +61,7 @@ const TopMovers = props => {
                   <div>
                   {story.companyName}
                   </div>
-                  <NavLink to={`/dashboard/stock/${story.ticker}`}>
+                  <NavLink className='navlinks' to={`/dashboard/stock/${story.ticker}`}>
                   {story.ticker}
                    </NavLink>
                   </div>

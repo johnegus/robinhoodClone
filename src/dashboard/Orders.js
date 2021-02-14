@@ -9,7 +9,6 @@ import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
 import {getHistoricalData} from '../store/actions/history';
 import { DataGrid } from '@material-ui/data-grid';
-import Link from '@material-ui/core/Link';
 import '../index.css'
 import { NavLink } from 'react-router-dom';
 

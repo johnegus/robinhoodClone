@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter, Redirect, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import { loadToken } from "./store/actions/authentication";
 import { ProtectedRoute, PrivateRoute } from "./util/route-util";
 import LoginPanel from "./LoginPanel";
 import PositionSidebar from "./PositionSidebar";
 import SignUpForm from './SignUpForm';
-import SearchDetailContainer from './search/SearchResults'
-import NotFound from "./NotFound";
+
 import HomePage from "./homepage/HomePage";
-import UserDetailContainer from "./UserDetail";
-import WatchedStockDetailContainer from "./StockDetail";
-import PositionDetailContainer from "./PositionDetail";
+
 
 const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);

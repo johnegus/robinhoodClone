@@ -9,14 +9,12 @@ import { getPositions, updatePositionAndGet } from "./store/actions/positions";
 import {getWatchedStocks, updateWatchedStockAndGet} from './store/actions/watched-stocks'
 import {getHistoricalData} from './store/actions/history'
 import UserDetail from './UserDetail';
-import WatchListDetail from './WatchListDetail';
 import StockDetail from './StockDetail';
 
 import { exitWatchedStock } from './store/actions/watched-stocks'
 
 
 import SearchContainer from "./search/SearchContainer";
-import NotFound from "./NotFound";
 
 const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePositionAndGet, updateWatchedStockAndGet }) => {
   const dispatch = useDispatch();
