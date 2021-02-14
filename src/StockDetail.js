@@ -17,7 +17,7 @@ import Alert from '@material-ui/lab/Alert';
 
 
 
-const StockDetail = ({createWatchedStock, createPosition}) => {
+const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [stockChartXValues, setstockChartXValues] = useState([]);
@@ -155,15 +155,7 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     )
   }
 
-  // const timeIndex = (screen) => {
-  //   if (screen === '1day'){
-  //     return 79
-  //   }
 
-  //   if (screen === '1week'){
-  //     return 399
-  //   }
-  // }
   const lineChartData = {
     
     labels: stockChartXValues.slice(0, timeIndex),
@@ -264,10 +256,12 @@ const StockDetail = ({createWatchedStock, createPosition}) => {
     )
   }
 }
-return (
-    <div className="pokemon-detail">
 
-    <div className={`pokemon-detail-image-${upOrDown}`}>
+// console.log(watchedStocks)
+return (
+    <div className="position-detail">
+
+    <div className={`position-detail-image-${upOrDown}`}>
         
         <div className='header-element'>
           <div className='company-logo'>
@@ -283,7 +277,7 @@ return (
         </div>
         </div>
       </div>
-      <div className="pokemon-detail-lists">
+      <div className="position-detail-lists">
       
         <div className='stock-chart'>
         <Line data={lineChartData} options={options} />
@@ -320,7 +314,9 @@ return (
         <Button variant="contained" color={upOrDown2}  type="submit">Buy Shares!</Button>}
 
         <div className='exit-position'>
-        <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Add to Watchlist</Button>
+        { isNaN(parseFloat(stockChartYValues[0]).toFixed(2)) ? <Alert severity="error">Failed to fetch current price. Try again later.</Alert> :
+        <Button variant="contained" color={upOrDown2}  onClick={handleClick} >Add to Watchlist</Button>}
+      
         </div>
 
         {success ?

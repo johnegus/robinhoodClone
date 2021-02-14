@@ -14,7 +14,7 @@ import dashboard from './user_dashboard.png'
 
 const HomePage = ({ authenticated, setAuthenticated }) => {
     if (authenticated) {
-        return <Redirect to="/" />;
+        return <Redirect to="/dashboard/user" />;
     }
     return(
         <div id='body'>
@@ -52,7 +52,7 @@ const HomePage = ({ authenticated, setAuthenticated }) => {
 const Header = () =>{
     return(
         <>
-        <div id="logout-button-holder">
+        <div className="logout-button-holder">
     <Link to="/login">
           <button type="button">
           Log In

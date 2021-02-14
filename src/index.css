@@ -74,13 +74,28 @@ td.centered {
   text-align: center;
 }
 
-#logout-button-holder {
-  /* background-color: green;
-  border: 1px solid green; */
+.logout-button-holder {
+  border-radius: 0 0 5px 5px;
+  opacity: 0.9;
   position: absolute;
   top: 0px;
   right: 20px;
   z-index: 5;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+  
+}
+
+.logout-button-holder2 {
+  background-color:white;
+  opacity: 0.9;
+  border-radius: 0 0 5px 5px;
+  /* border: 1px solid black; */
+  color: white;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  z-index: 5;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
 }
 
 #searchbar-holder {
@@ -165,23 +180,23 @@ td.centered {
   width: 100%;
 }
 
-.pokemon-image {
+.position-image {
   height: 50px;
   width: auto;
 }
 
-.pokemon-detail {
+.position-detail {
   flex: 1 0 0;
   overflow-y: auto;
 }
 
-.pokemon-detail h1 {
+.position-detail h1 {
   color: white;
   margin: 1em 0 0 0;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
 
-.pokemon-detail-image-background {
+.position-detail-image-background {
   background: linear-gradient(315deg, #16d416, rgb(15, 15, 15));
   background-size: cover;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -190,7 +205,7 @@ td.centered {
 	        animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
-.pokemon-detail-image-background2 {
+.position-detail-image-background2 {
   background: linear-gradient(315deg, red, rgb(15, 15, 15));
   background-size: cover;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -216,7 +231,7 @@ td.centered {
   }
 }
 
-.pokemon-detail-image {
+.position-detail-image {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: contain;
@@ -225,7 +240,7 @@ td.centered {
   background-color: rgb(14, 12, 12);
 }
 
-.pokemon-detail-lists {
+.position-detail-lists {
   padding: 25px;
   margin: 1em;
   z-index: 5;
@@ -268,24 +283,24 @@ td.centered {
 
 }
 @media screen and (min-width: 1000px) {
-  .pokemon-detail-lists {
+  .position-detail-lists {
     display: flex;
   }
 
-  .pokemon-detail-lists > * {
+  .position-detail-lists > * {
     flex: 1 0 0;
   }
 }
 
 @media screen and (max-height: 800px) {
-  .pokemon-detail-image {
+  .position-detail-image {
     height: 200px;
     flex: 0 0 200px;
   }
 
 
 
-  .pokemon-detail h1 {
+  .position-detail h1 {
     flex: 1 0 0;
     margin-top: 0.25em;
   }
@@ -455,6 +470,12 @@ text-transform: uppercase;
   font-weight: bold;
 }
 
+.purple {
+  color: darkslateblue;
+  margin: 20px;
+  font-weight: bold;
+}
+
 .newsFeed{
   margin: 3em;
 
@@ -601,4 +622,12 @@ box-shadow:         4px 4px 5px 0px rgba(50, 50, 50, 0.75);
 
 .userHeader{
   margin: 10px;
+}
+
+.navlinks {
+  color: green;
+}
+
+.navlinks-red {
+  color: red;
 }

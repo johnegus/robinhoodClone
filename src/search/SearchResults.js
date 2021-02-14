@@ -9,7 +9,7 @@ import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
-import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -156,17 +156,19 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
     if (!context.searchQuery) {
       return null;
     }
+    const loading = () => {
     if (isLoading) {
       return (
       <>
       
-      <main >
+      <main className="centered middled">
        
         <CircularProgress />
         </main>
       </>
       )
     }
+  }
   
     const lineChartData = {
       labels: stockChartXValues.slice(0, timeIndex),
@@ -208,8 +210,8 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
     const upOrDown2 = stockChartYValues[0] > stockChartYValues[timeIndex] ? "primary" : "secondary"
 
   return (
-      <div className="pokemon-detail">
-        
+      <div className="position-detail">
+        {loading()}
         
           <Line data={lineChartData} options={options} />
           <div className='button-container'> 
@@ -230,21 +232,21 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
                               }}>1 month</Button>
           </div>
           {stockSymbol !== 'INVALID SYMBOL' ? 
-        <div className="pokemon-detail-lists">
+        <div className="position-detail-lists">
           <div>
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+              <b>Symbol</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockSymbol}
-                </Link>
+                </NavLink>
             </li>
             <li>
-              <b>Stock Name</b> <Link underline='always' color="inherit" href={`/stock/${stockSymbol}`}>
+              <b>Stock Name</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
                 
               {stockName}
-                  </Link>
+                  </NavLink>
             </li>
             <li>
               <b>Current Price</b> ${parseFloat(stockChartYValues[0]).toFixed(2)}
@@ -252,11 +254,6 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <li>
               <b>Exchange</b> {liveexchange}
             </li>
-            {/* <li>
-              <b>Company Description</b> {livedescription}
-            </li> */}
-            
-            
           </ul>
           </div>
             <form onSubmit={handleSubmit}>

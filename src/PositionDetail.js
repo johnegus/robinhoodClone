@@ -282,8 +282,8 @@ fetch(API_CALL)
   }
 }
 return (
-    <div className="pokemon-detail">
-      <div className={`pokemon-detail-image-${upOrDown}`}>
+    <div className="position-detail">
+      <div className={`position-detail-image-${upOrDown}`}>
         
         <div className='header-element'>
           <div className='company-logo'>
@@ -298,7 +298,7 @@ return (
         </div>
         </div>
       </div>
-      <div className="pokemon-detail-lists">
+      <div className="position-detail-lists">
       
         <div>
         <Line data={lineChartData} options={options} />
