@@ -264,7 +264,7 @@ td.centered {
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1300px) {
   nav, .infogrid__movers, .infoGrid__userNews, .doughtnut {
     display: none;
   }
@@ -630,4 +630,8 @@ box-shadow:         4px 4px 5px 0px rgba(50, 50, 50, 0.75);
 
 .navlinks-red {
   color: red;
+}
+
+.table {
+  width: 105%;
 }

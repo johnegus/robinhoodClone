@@ -41,7 +41,7 @@ const [rows, setRows] = useState([]);
     const gridRows = history.slice(0).reverse().map((instance) => {
       return ({
         id: instance.id,
-        date: instance.createdAt, 
+        date: instance.createdAt.substring(0, 10), 
         transaction: instance.deposit > 0 ? 'DEPOSIT: $'+ instance.deposit : (instance.shares !== 0 ?
           'SELL' : 'WITHDRAWAL: $'+ instance.deposit),
         symbol: instance.stockSymbol ? instance.stockSymbol : '',
@@ -60,7 +60,7 @@ const [rows, setRows] = useState([]);
   }, [history]); 
 
   const columns = [
-    { field: 'date', headerName: 'Date', width: 90 },
+    { field: 'date', headerName: 'Date', width: 140 },
     { field: 'transaction', headerName: 'Transaction', width: 90 },
     { field: 'symbol', headerName: 'Symbol', width: 90 },
     { field: 'companyName', headerName: 'Company Name', width: 90 },
@@ -93,7 +93,7 @@ const [rows, setRows] = useState([]);
   return (
     <React.Fragment>
       <Title>Portfolio Assets</Title>
-      <Table size="small" >
+      <Table style={{width: "105%"}} size="small" >
         <TableHead>
           <TableRow>
             <TableCell>Purchase Date</TableCell>
@@ -108,7 +108,7 @@ const [rows, setRows] = useState([]);
         <TableBody>
           {positions.slice(0).reverse().map((position) => (
             <TableRow key={position.id}>
-              <TableCell>{position.createdAt}</TableCell>
+              <TableCell>{position.createdAt.substring(0, 10)}</TableCell>
               <TableCell>
               <NavLink to={`/dashboard/position/${position.id}`}>
                 
@@ -132,7 +132,7 @@ const [rows, setRows] = useState([]);
       </Table>
       <Title>Portfolio History</Title>
    
-      <div style={{ height: 1000, width: '100%' }}>
+      <div style={{ height: 1000, width: '105%' }}>
       <DataGrid rows={rows} columns={columns} pageSize={20} />
     </div>
   
