@@ -61,7 +61,7 @@ const TopMovers = () => {
                   <div>
                   {story.companyName}
                   </div>
-                  <NavLink className='navlinks' to={`/dashboard/stock/${story.ticker}`}>
+                  <NavLink className='navlinks' to={`/stock/${story.ticker}`}>
                   {story.ticker}
                    </NavLink>
                   </div>

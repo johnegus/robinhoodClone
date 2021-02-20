@@ -6,7 +6,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={(props) =>
       rest.needLogin === true ? (
-        <Redirect to="/login" />
+        <Redirect to="/homepage" />
       ) : (
         <Component {...props} />
       )
@@ -14,11 +14,13 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => (
+export const ProtectedRoute = ({ component: Component, ...rest }) => {
+  return (
   <Route
     {...rest}
     render={(props) =>
-      rest.needLogin !== true ? <Redirect to="/dashboard/user" /> : <Component {...props} />
+      rest.needLogin !== true ? <Redirect to="/" /> : <Component {...props} />
     }
   />
-);
+  )
+  };

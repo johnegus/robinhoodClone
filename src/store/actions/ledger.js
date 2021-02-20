@@ -7,7 +7,7 @@ export const createInstance = (data) => async (dispatch, getState) => {
     const {
       authentication: { token },
     } = getState();
-    const response = await fetch(`${baseUrl}/history`, {
+    const response = await fetch(`${baseUrl}/ledger`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +29,9 @@ export const createInstance = (data) => async (dispatch, getState) => {
     const {
       authentication: { token },
     } = getState();
-    const response = await fetch(`${baseUrl}/history`, {
+    console.log(baseUrl)
+    console.log(process.env.NODE_ENV === 'development')
+    const response = await fetch(`${baseUrl}/ledger`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

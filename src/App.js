@@ -15,18 +15,18 @@ const App = ({ needLogin, loadToken }) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setLoaded(true);
+
     loadToken();
+    setLoaded(true);
   }, [loadToken]);
 
-  if (!loaded) {
-    return null;
-  }
+  
   return (
+    <>
+    {!loaded && 'loading'}
+    {loaded && (
     <BrowserRouter>
-      <Switch>
-        
-        
+      <Switch>  
         
         <ProtectedRoute
           path="/login"
@@ -41,43 +41,21 @@ const App = ({ needLogin, loadToken }) => {
           component={SignUpForm}
         />
         <ProtectedRoute
-          path="/"
+          path="/homepage"
           exact={true}
           needLogin={needLogin}
           component={HomePage}
         />
         <PrivateRoute
-          path="/dashboard"
+          path="/"
           needLogin={needLogin}
           component={PositionSidebar}
         />
         
-        {/* <PrivateRoute
-          path="/dashboard/search"
-          needLogin={needLogin}
-          component={SearchDetailContainer}
-        />
-        <PrivateRoute
-           
-           path="/dashboard/position/:id"
-           needLogin={needLogin}
-           component={PositionDetailContainer}  
-         />
-         <PrivateRoute
-          
-          path="/dashboard/stock/:stockSymbol"
-          needLogin={needLogin}
-          component={WatchedStockDetailContainer}   
-        />
-        <PrivateRoute
-          path="/dashboard/user"
-          needLogin={needLogin}
-          component={UserDetailContainer}
-        /> */}
-        
-        {/* <Redirect to="/" /> */}
       </Switch>
     </BrowserRouter>
+    )}
+    </>
   );
 };
 

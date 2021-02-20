@@ -237,13 +237,13 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
+              <b>Symbol</b> <NavLink to={`/stock/${stockSymbol}`}>
                 
               {stockSymbol}
                 </NavLink>
             </li>
             <li>
-              <b>Stock Name</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
+              <b>Stock Name</b> <NavLink to={`/stock/${stockSymbol}`}>
                 
               {stockName}
                   </NavLink>

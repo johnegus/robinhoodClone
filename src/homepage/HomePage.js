@@ -14,7 +14,7 @@ import dashboard from './user_dashboard.png'
 
 const HomePage = ({ authenticated, setAuthenticated }) => {
     if (authenticated) {
-        return <Redirect to="/dashboard/user" />;
+        return <Redirect to="/" />;
     }
     return(
         <div id='body'>
@@ -32,7 +32,7 @@ const HomePage = ({ authenticated, setAuthenticated }) => {
                 className='section'
                 img={detail}
                 title='About Algo' 
-                description='Algo includes secure user accounts with an informative stock dashboard that features portfolio health charts and graphs, transaction history
+                description='Algo includes secure user accounts with an informative stock dashboard that features portfolio health charts and graphs, transaction ledger
                 top movers. Stock details include historical graphs, news, and company information updated in real time.'
             />
             

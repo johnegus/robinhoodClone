@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
-import { createInstance } from "./store/actions/history";
+import { createInstance } from "./store/actions/ledger";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
@@ -255,7 +255,6 @@ fetch(API_CALL)
             setSuccess('')
            },8000);
     dispatch(exitPosition(positions.id));
-    // history.push('/');
     
     
   }
@@ -425,18 +424,18 @@ return (
 
 const PositionDetailContainer = () => {
   const positions = useSelector((state) => state.positions[state.currentPosition]);
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
 
   return (
 
     <PositionDetail
     positions={positions}
-    history = {history}
+    ledger = {ledger}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
-      createInstance={(history) => dispatch(createInstance(history))}
+      createInstance={(ledger) => dispatch(createInstance(ledger))}
     />
   
   );

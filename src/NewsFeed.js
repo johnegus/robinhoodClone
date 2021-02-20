@@ -48,7 +48,7 @@ const NewsFeed = () => {
                     <a className='newsLink' href={story.url}>{story.title}</a>
                     
 
-                    <NavLink className='navlinks' to={`/dashboard/stock/${story.symbol}`}>
+                    <NavLink className='navlinks' to={`/stock/${story.symbol}`}>
                     <div>{story.symbol}</div>
                    </NavLink>
                     <div>{story.publishedDate}</div>

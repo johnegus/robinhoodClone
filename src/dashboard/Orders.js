@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
-import {getHistoricalData} from '../store/actions/history';
+import {getHistoricalData} from '../store/actions/ledger';
 import { DataGrid } from '@material-ui/data-grid';
 import '../index.css'
 import { NavLink } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-const Orders = ({positions, history, getPositions, getHistoricalData}) => {
+const Orders = ({positions, ledger, getPositions, getHistoricalData}) => {
 const [rows, setRows] = useState([]);
 
   // useEffect(() => {
@@ -33,12 +33,12 @@ const [rows, setRows] = useState([]);
   
 
   useEffect(() => {
-    if (!history) {
+    if (!ledger) {
       return;
     }
 
  const  mapHistoryToRows = () => {
-    const gridRows = history.slice(0).reverse().map((instance) => {
+    const gridRows = ledger.slice(0).reverse().map((instance) => {
       return ({
         id: instance.id,
         date: instance.createdAt.substring(0, 10), 
@@ -57,7 +57,7 @@ const [rows, setRows] = useState([]);
   }
   mapHistoryToRows();
 
-  }, [history]); 
+  }, [ledger]); 
 
   const columns = [
     { field: 'date', headerName: 'Date', width: 140 },
@@ -110,7 +110,7 @@ const [rows, setRows] = useState([]);
             <TableRow key={position.id}>
               <TableCell>{position.createdAt.substring(0, 10)}</TableCell>
               <TableCell>
-              <NavLink to={`/dashboard/position/${position.id}`}>
+              <NavLink to={`/position/${position.id}`}>
                 
                 {position.stockSymbol.toUpperCase()}
                 </NavLink>
@@ -143,12 +143,12 @@ const [rows, setRows] = useState([]);
 
 const OrdersContainer = () => {
   const positions = useSelector((state) => Object.values(state.positions));
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
   return (
     <Orders
       positions={positions}
-      history={history}
+      ledger={ledger}
       getPositions={() => dispatch(getPositions())}
       getHistoricalData={() => dispatch(getHistoricalData())}
       

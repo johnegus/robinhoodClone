@@ -7,7 +7,7 @@ import PositionDetail from "./PositionDetail";
 
 import { getPositions, updatePositionAndGet } from "./store/actions/positions";
 import {getWatchedStocks, updateWatchedStockAndGet} from './store/actions/watched-stocks'
-import {getHistoricalData} from './store/actions/history'
+import {getHistoricalData} from './store/actions/ledger'
 import UserDetail from './UserDetail';
 import StockDetail from './StockDetail';
 
@@ -137,7 +137,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
         <div className='sidebar-label'>Stocks</div>
         {positions.slice(0).reverse().map((position) => {
           return (
-            <NavLink key={position.id} to={`/dashboard/position/${position.id}`}>
+            <NavLink key={position.id} to={`/position/${position.id}`}>
               <div
                 className={
                   positionId === position.id
@@ -166,7 +166,7 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
         <div className='sidebar-label'>Watchlist</div>
         {watchedStocks.slice(0).reverse().map((watchedStock) => {
           return (
-            <NavLink key={watchedStock.id} to={`/dashboard/stock/${watchedStock.stockSymbol}`}>
+            <NavLink key={watchedStock.id} to={`/stock/${watchedStock.stockSymbol}`}>
               <div
                 className={
                   positionId === watchedStock.id
@@ -194,16 +194,16 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
          
           <Route
            
-            path="/dashboard/position/:id"
+            path="/position/:id"
             render={(props) => <PositionDetail {...props} />}  
           />
           <Route
            
-           path="/dashboard/stock/:stockSymbol"
+           path="/stock/:stockSymbol"
            render={(props) => <StockDetail {...props} />}  
          />
           
-           <Route exact={true} path="/dashboard/user" component={UserDetail} />
+           <Route exact={true} path="/" component={UserDetail} />
            {/* <Route component={PositionSidebar} />
            <Route component={NotFound} /> */}
         </Switch>
@@ -215,13 +215,13 @@ const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePosition
 const PositionSidebarContainer = () => {
   const positions = useSelector((state) => Object.values(state.positions));
   const watchedStocks = useSelector((state) => Object.values(state.watchedStocks));
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
   return (
     <PositionSidebar
       positions={positions}
       watchedStocks={watchedStocks}
-      history={history}
+      ledger={ledger}
       updatePositionAndGet={(data)=>{
         dispatch(updatePositionAndGet(data))
       }}

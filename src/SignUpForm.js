@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from './store/actions/authentication';
-import { createInstance } from './store/actions/history';
+import { createInstance } from './store/actions/ledger';
 import {Link} from 'react-router-dom'; 
 import leaf from './leaf-clipart-12-transparent.png';
 
