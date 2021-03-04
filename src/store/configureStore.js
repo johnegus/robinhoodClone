@@ -21,10 +21,10 @@ const reducer = combineReducers({
   ledger
 });
 
-const configureStore = (initialState) => {
+const configureStore = () => {
   return createStore(
     reducer,
-    initialState,
+    
     composeEnhancers(applyMiddleware(thunk))
   );
 };

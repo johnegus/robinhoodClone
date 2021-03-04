@@ -28,6 +28,7 @@ export const login = (email, password) => async (dispatch) => {
     window.localStorage.setItem(TOKEN_KEY, token);
     dispatch(setToken(token));
     dispatch(setCurrentUser(id));
+    window.location.replace('/')
   }
 };
 

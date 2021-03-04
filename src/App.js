@@ -19,12 +19,13 @@ const App = ({ needLogin, loadToken }) => {
     loadToken();
     setLoaded(true);
   }, [loadToken]);
-
+  
+  if (!loaded) {
+    return null;
+  }
   
   return (
     <>
-    {!loaded && 'loading'}
-    {loaded && (
     <BrowserRouter>
       <Switch>  
         
@@ -48,13 +49,13 @@ const App = ({ needLogin, loadToken }) => {
         />
         <PrivateRoute
           path="/"
-          needLogin={needLogin}
           component={PositionSidebar}
+          needLogin={needLogin}
         />
         
       </Switch>
     </BrowserRouter>
-    )}
+    
     </>
   );
 };
