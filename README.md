@@ -4,8 +4,8 @@ This is a stock trading application similiar to Robinhood that I built using Rea
 
 ## Gifs
 
-![ERD](./userdash.png)
-![ERD](./stockpurchase.png)
+![ERD](./userdash.gif)
+![ERD](./stockpurchase.gif)
 
 ## Pictures
 
