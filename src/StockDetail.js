@@ -105,7 +105,8 @@ const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
     return;
   }
   const fetchLivePositions = async () =>{
-    
+    setIsLoading(true); 
+
     const API_Key = process.env.REACT_APP_FMP_API_KEY;
       
       let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/30min/${stockSymbol}?apikey=${API_Key}`;
@@ -137,7 +138,7 @@ const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
     fetchLivePositions();
   
 
-}, [stockSymbol, stockChartYValues]);
+}, [stockSymbol]);
 
   if (!stockSymbol) {
     return null;
@@ -146,10 +147,9 @@ const StockDetail = ({createWatchedStock, createPosition, watchedStocks}) => {
   if (isLoading) {
     return (
     <>
-    
-    <main className="centered middled">
-      <b>Fetching market data...</b>
-      <CircularProgress />
+      <main className="centered middled">
+        <b>Fetching market data...</b>
+        <img className='icon-progress' height='200px' width='200px' src={leaf} alt='leaf' />
       </main>
     </>
     )

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Line } from 'react-chartjs-2';
 import { exitPosition } from "./store/actions/positions";
 import { createPosition } from "./store/actions/positions";
-import { createInstance } from "./store/actions/history";
+import { createInstance } from "./store/actions/ledger";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CountUp from 'react-countup';
 import Button from '@material-ui/core/Button';
@@ -115,7 +115,8 @@ fetch(API_CALL)
     return;
   }
   const fetchLivePositions = async () =>{
-    
+    setIsLoading(true); 
+
     const API_Key = process.env.REACT_APP_FMP_API_KEY;
     let stockSymbol = positions.stockSymbol
     let API_CALL = `https://financialmodelingprep.com/api/v3/historical-chart/30min/${stockSymbol}?apikey=${API_Key}`;
@@ -142,8 +143,9 @@ fetch(API_CALL)
               
               setstockChartXValues(stockChartXValuesFunction)
               setstockChartYValues(stockChartYValuesFunction)
+              console.log(stockChartYValuesFunction)
               setSoldPrice(positions.currentPrice)
-              setIsLoading(false);
+              setIsLoading(false); 
               
           }
       )
@@ -163,10 +165,9 @@ fetch(API_CALL)
   if (isLoading) {
     return (
     <>
-    
-    <main className="centered middled">
-      <b>Fetching market data...</b>
-      <CircularProgress />
+      <main className="centered middled">
+        <b>Fetching market data...</b>
+        <img className='icon-progress' height='200px' width='200px' src={leaf} alt='leaf' />
       </main>
     </>
     )
@@ -255,7 +256,6 @@ fetch(API_CALL)
             setSuccess('')
            },8000);
     dispatch(exitPosition(positions.id));
-    // history.push('/');
     
     
   }
@@ -425,18 +425,18 @@ return (
 
 const PositionDetailContainer = () => {
   const positions = useSelector((state) => state.positions[state.currentPosition]);
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
 
   return (
 
     <PositionDetail
     positions={positions}
-    history = {history}
+    ledger = {ledger}
       getOnePosition={(id) => dispatch(getOnePosition(id))}
       exitPosition={(id) => dispatch(exitPosition(id))}
       createPosition={(positions) => dispatch(createPosition(positions))}
-      createInstance={(history) => dispatch(createInstance(history))}
+      createInstance={(ledger) => dispatch(createInstance(ledger))}
     />
   
   );

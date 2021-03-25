@@ -11,22 +11,25 @@ import SignUpForm from './SignUpForm';
 import HomePage from "./homepage/HomePage";
 
 
-const App = ({ needLogin, loadToken }) => {
+const App = ({ loadToken }) => {
+  const token = useSelector(state => state.authentication.token);
   const [loaded, setLoaded] = useState(false);
+  const needLogin = !token;
 
   useEffect(() => {
     setLoaded(true);
     loadToken();
+    
   }, [loadToken]);
-
+  
   if (!loaded) {
     return null;
   }
+  
   return (
+    <>
     <BrowserRouter>
-      <Switch>
-        
-        
+      <Switch>  
         
         <ProtectedRoute
           path="/login"
@@ -41,43 +44,21 @@ const App = ({ needLogin, loadToken }) => {
           component={SignUpForm}
         />
         <ProtectedRoute
-          path="/"
+          path="/homepage"
           exact={true}
           needLogin={needLogin}
           component={HomePage}
         />
         <PrivateRoute
-          path="/dashboard"
-          needLogin={needLogin}
+          path="/"
           component={PositionSidebar}
+          needLogin={needLogin}
         />
         
-        {/* <PrivateRoute
-          path="/dashboard/search"
-          needLogin={needLogin}
-          component={SearchDetailContainer}
-        />
-        <PrivateRoute
-           
-           path="/dashboard/position/:id"
-           needLogin={needLogin}
-           component={PositionDetailContainer}  
-         />
-         <PrivateRoute
-          
-          path="/dashboard/stock/:stockSymbol"
-          needLogin={needLogin}
-          component={WatchedStockDetailContainer}   
-        />
-        <PrivateRoute
-          path="/dashboard/user"
-          needLogin={needLogin}
-          component={UserDetailContainer}
-        /> */}
-        
-        {/* <Redirect to="/" /> */}
       </Switch>
     </BrowserRouter>
+    
+    </>
   );
 };
 

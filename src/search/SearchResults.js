@@ -7,9 +7,10 @@ import { Line } from 'react-chartjs-2';
 import { createPosition } from "../store/actions/positions";
 import { createWatchedStock } from "../store/actions/watched-stocks";
 import { hideForm } from "../store/actions/ui";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { NavLink } from 'react-router-dom';
+import leaf from "../leaf-clipart-12-transparent.png";
+
 
 
 
@@ -140,6 +141,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
                
                 
                 setTimeout(function(){ setIsLoading(false); }, 250);
+
                 setstockChartXValues(stockChartXValuesFunction)
                 setstockChartYValues(stockChartYValuesFunction)
                
@@ -162,9 +164,9 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
       <>
       
       <main className="centered middled">
-       
-        <CircularProgress />
-        </main>
+        <b>Fetching market data...</b>
+        <img className='icon-progress' height='200px' width='200px' src={leaf} alt='leaf' />
+      </main>
       </>
       )
     }
@@ -211,7 +213,7 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
 
   return (
       <div className="position-detail">
-        {loading()}
+  
         
           <Line data={lineChartData} options={options} />
           <div className='button-container'> 
@@ -237,13 +239,13 @@ const SearchDetail = ({createPosition, createWatchedStock}) => {
             <h4>Stock Information</h4>
             <ul>
             <li>
-              <b>Symbol</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
+              <b>Symbol</b> <NavLink to={`/stock/${stockSymbol}`}>
                 
               {stockSymbol}
                 </NavLink>
             </li>
             <li>
-              <b>Stock Name</b> <NavLink to={`/dashboard/stock/${stockSymbol}`}>
+              <b>Stock Name</b> <NavLink to={`/stock/${stockSymbol}`}>
                 
               {stockName}
                   </NavLink>

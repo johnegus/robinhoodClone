@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { NavLink } from "react-router-dom";
 
-const TopMovers = props => {
+const TopMovers = () => {
     const [stories, setStories] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
     
@@ -61,7 +61,7 @@ const TopMovers = props => {
                   <div>
                   {story.companyName}
                   </div>
-                  <NavLink className='navlinks' to={`/dashboard/stock/${story.ticker}`}>
+                  <NavLink className='navlinks' to={`/stock/${story.ticker}`}>
                   {story.ticker}
                    </NavLink>
                   </div>

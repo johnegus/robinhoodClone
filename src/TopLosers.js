@@ -59,7 +59,7 @@ const TopLosers = () => {
                   <div>
                   {story.companyName}
                   </div>
-                  <NavLink className='navlinks-red' to={`/dashboard/stock/${story.ticker}`} >
+                  <NavLink className='navlinks-red' to={`/stock/${story.ticker}`} >
                   {story.ticker}
                    </NavLink>
                   </div>

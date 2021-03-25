@@ -1,5 +1,5 @@
 import merge from "lodash/merge";
-import { LOAD_HISTORY } from "../actions/history";
+import { LOAD_HISTORY } from "../actions/ledger";
 
 
 export default function reducer(state = {}, action) {
@@ -7,8 +7,8 @@ export default function reducer(state = {}, action) {
 
   switch (action.type) {
     case LOAD_HISTORY: {
-      const history = action.historyList.map((instance) => ({ [instance.id]: instance }));
-      return merge({}, state, ...history);
+      const ledger = action.historyList.map((instance) => ({ [instance.id]: instance }));
+      return merge({}, state, ...ledger);
     }
     default:
       return state;

@@ -4,7 +4,7 @@ import { Line, Doughnut } from 'react-chartjs-2';
 import Orders from './dashboard/Orders'
 import Deposits from './dashboard/Deposits'
 import { useSelector, useDispatch } from "react-redux";
-import {getHistoricalData} from './store/actions/history';
+import {getHistoricalData} from './store/actions/ledger';
 import { getPositions } from "./store/actions/positions";
 import NewsFeed from './NewsFeed';
 import TopMovers from './TopMovers';
@@ -12,7 +12,7 @@ import TopLosers from './TopLosers';
 
 
 
-const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
+const UserDetail = ({getHistoricalData, ledger, positions, getPositions}) => {
   const [stockChartXValues, setstockChartXValues] = useState([]);
   const [stockChartYValues, setstockChartYValues] = useState([]);
   
@@ -22,13 +22,13 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
   });
 
   useEffect(() => {
-    if(!history)
+    if(!ledger)
       getHistoricalData();
   });
 
  
   useEffect(() => {
-    if (!history) {
+    if (!ledger) {
       return;
     }
     let stockChartXValuesFunction = [];
@@ -37,7 +37,7 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
     const fetchLivePositions = async () =>{
       
         
-        history.map((instance) => {
+        ledger.map((instance) => {
           
           stockChartYValuesFunction.push(sum+= parseInt(instance.deposit) + (parseInt(instance.soldPrice)*parseInt(instance.shares))-(parseInt(instance.boughtPrice)*parseInt(instance.shares)))
           stockChartXValuesFunction.push(instance.createdAt)
@@ -56,12 +56,12 @@ const UserDetail = ({getHistoricalData, history, positions, getPositions}) => {
       fetchLivePositions();
     
   
-  }, [history]);
-  const deposits = (history.reduce(function (accumulator, instance){
+  }, [ledger]);
+  const deposits = (ledger.reduce(function (accumulator, instance){
     return accumulator +  parseFloat(instance.deposit);
   }, 0)).toFixed(2);
 
-  const totalCash = (history.reduce(function (accumulator, instance){
+  const totalCash = (ledger.reduce(function (accumulator, instance){
     return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
   }, parseFloat(deposits))).toFixed(2);
 
@@ -180,11 +180,11 @@ return (
 
   const UserDetailContainer = () => {
     const positions = useSelector((state) => Object.values(state.positions));
-    const history = useSelector((state) => Object.values(state.history));
+    const ledger = useSelector((state) => Object.values(state.ledger));
     const dispatch = useDispatch();
     return (
       <UserDetail
-        history={history}
+        ledger={ledger}
         positions={positions}
         getPositions={() => dispatch(getPositions())}
         getHistoricalData={() => dispatch(getHistoricalData())}

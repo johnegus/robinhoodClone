@@ -2,6 +2,11 @@
 
 This is a stock trading application similiar to Robinhood that I built using React and Express.  Users can securely create accounts, log in and paper trade stocks using real time data.  
 
+## Gifs
+
+![ERD](./userdash.png)
+![ERD](./stockpurchase.png)
+
 ## Pictures
 
 ### Login

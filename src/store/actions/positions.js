@@ -13,7 +13,7 @@ export const createPosition = (data) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
-  const response = await fetch(`${baseUrl}/positions`, {
+  const response = await fetch(`${baseUrl}/positions/new`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const exitPosition = (id) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
-  const response = await fetch(`${baseUrl}/positions/${id}`, {
+  const response = await fetch(`${baseUrl}/positions/delete/${id}`, {
     method: "delete",
     headers: {
       Authorization: `Bearer ${token}`,

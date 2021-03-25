@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CountUp from 'react-countup';
 import Title from './Title';
-import {getHistoricalData} from '../store/actions/history';
+import {getHistoricalData} from '../store/actions/ledger';
 import { useSelector, useDispatch } from "react-redux";
-import { createInstance } from "../store/actions/history";
+import { createInstance } from "../store/actions/ledger";
 
 
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function Deposits({getHistoricalData, history}) {
+export function Deposits({getHistoricalData, ledger}) {
   const classes = useStyles();
   const year = new Date().getFullYear();
   const month =new Date().getMonth()+1;
@@ -25,23 +25,23 @@ export function Deposits({getHistoricalData, history}) {
   const [accumulation, setAccumulation] = useState(0)
 
   useEffect(() => {
-    if(!history)
+    if(!ledger)
       getHistoricalData();
   });
 
   useEffect(() => {
-    if(history){
-      const deposits = (history.reduce(function (accumulator, instance){
+    if(ledger){
+      const deposits = (ledger.reduce(function (accumulator, instance){
         return accumulator +  parseFloat(instance.deposit);
       }, 0)).toFixed(2);
     
-      const cumulative = history.reduce(function (accumulator, instance){
+      const cumulative = ledger.reduce(function (accumulator, instance){
         return accumulator + (instance.soldPrice*instance.shares)-(instance.boughtPrice*instance.shares);
       }, parseFloat(deposits)).toFixed(2);
 
       setAccumulation(parseInt(cumulative))
     }
-  }, [history]);
+  }, [ledger]);
 
   const handleClick = async (e) => {
     const deposit = 10000;
@@ -84,11 +84,11 @@ export function Deposits({getHistoricalData, history}) {
 }
 
 const DepositsContainer = () => {
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
   return (
     <Deposits
-      history={history}
+      ledger={ledger}
       getHistoricalData={() => dispatch(getHistoricalData())}
       
     />

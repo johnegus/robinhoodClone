@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { getPositions } from "../store/actions/positions";
 import { useSelector, useDispatch } from "react-redux";
-import {getHistoricalData} from '../store/actions/history';
+import {getHistoricalData} from '../store/actions/ledger';
 import { DataGrid } from '@material-ui/data-grid';
 import '../index.css'
 import { NavLink } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-const Orders = ({positions, history, getPositions, getHistoricalData}) => {
+const Orders = ({positions, ledger, getPositions, getHistoricalData}) => {
 const [rows, setRows] = useState([]);
 
   // useEffect(() => {
@@ -33,15 +33,15 @@ const [rows, setRows] = useState([]);
   
 
   useEffect(() => {
-    if (!history) {
+    if (!ledger) {
       return;
     }
 
  const  mapHistoryToRows = () => {
-    const gridRows = history.slice(0).reverse().map((instance) => {
+    const gridRows = ledger.slice(0).reverse().map((instance) => {
       return ({
         id: instance.id,
-        date: instance.createdAt, 
+        date: instance.createdAt.substring(0, 10), 
         transaction: instance.deposit > 0 ? 'DEPOSIT: $'+ instance.deposit : (instance.shares !== 0 ?
           'SELL' : 'WITHDRAWAL: $'+ instance.deposit),
         symbol: instance.stockSymbol ? instance.stockSymbol : '',
@@ -57,10 +57,10 @@ const [rows, setRows] = useState([]);
   }
   mapHistoryToRows();
 
-  }, [history]); 
+  }, [ledger]); 
 
   const columns = [
-    { field: 'date', headerName: 'Date', width: 90 },
+    { field: 'date', headerName: 'Date', width: 140 },
     { field: 'transaction', headerName: 'Transaction', width: 90 },
     { field: 'symbol', headerName: 'Symbol', width: 90 },
     { field: 'companyName', headerName: 'Company Name', width: 90 },
@@ -93,7 +93,7 @@ const [rows, setRows] = useState([]);
   return (
     <React.Fragment>
       <Title>Portfolio Assets</Title>
-      <Table size="small" >
+      <Table style={{width: "105%"}} size="small" >
         <TableHead>
           <TableRow>
             <TableCell>Purchase Date</TableCell>
@@ -108,9 +108,9 @@ const [rows, setRows] = useState([]);
         <TableBody>
           {positions.slice(0).reverse().map((position) => (
             <TableRow key={position.id}>
-              <TableCell>{position.createdAt}</TableCell>
+              <TableCell>{position.createdAt.substring(0, 10)}</TableCell>
               <TableCell>
-              <NavLink to={`/dashboard/position/${position.id}`}>
+              <NavLink to={`/position/${position.id}`}>
                 
                 {position.stockSymbol.toUpperCase()}
                 </NavLink>
@@ -132,7 +132,7 @@ const [rows, setRows] = useState([]);
       </Table>
       <Title>Portfolio History</Title>
    
-      <div style={{ height: 1000, width: '100%' }}>
+      <div style={{ height: 1000, width: '105%' }}>
       <DataGrid rows={rows} columns={columns} pageSize={20} />
     </div>
   
@@ -143,12 +143,12 @@ const [rows, setRows] = useState([]);
 
 const OrdersContainer = () => {
   const positions = useSelector((state) => Object.values(state.positions));
-  const history = useSelector((state) => Object.values(state.history));
+  const ledger = useSelector((state) => Object.values(state.ledger));
   const dispatch = useDispatch();
   return (
     <Orders
       positions={positions}
-      history={history}
+      ledger={ledger}
       getPositions={() => dispatch(getPositions())}
       getHistoricalData={() => dispatch(getHistoricalData())}
       
