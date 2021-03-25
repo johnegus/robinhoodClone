@@ -11,13 +11,15 @@ import SignUpForm from './SignUpForm';
 import HomePage from "./homepage/HomePage";
 
 
-const App = ({ needLogin, loadToken }) => {
+const App = ({ loadToken }) => {
+  const token = useSelector(state => state.authentication.token);
   const [loaded, setLoaded] = useState(false);
+  const needLogin = !token;
 
   useEffect(() => {
-
-    loadToken();
     setLoaded(true);
+    loadToken();
+    
   }, [loadToken]);
   
   if (!loaded) {

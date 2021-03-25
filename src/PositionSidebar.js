@@ -18,7 +18,7 @@ import SearchContainer from "./search/SearchContainer";
 
 const PositionSidebar = ({ positions, formVisible, watchedStocks, updatePositionAndGet, updateWatchedStockAndGet }) => {
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(getPositions())
   }, [dispatch]);

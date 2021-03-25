@@ -389,8 +389,8 @@ td.centered {
 
 .sidebar-label{
   font-weight: 700;
-padding: .5em 1em;
-text-transform: uppercase;
+  padding: .5em 1em;
+  text-transform: uppercase;
 }
 
 .header-element{
@@ -678,11 +678,3 @@ box-shadow:         4px 4px 5px 0px rgba(50, 50, 50, 0.75);
             transform: rotate(360deg);
   }
 }
-
-  .doughnut {
-    height: 20px;
-    width: 100%;
-    /* position: relative; */
-    
-    border: #31c6e8 solid 2px;
-  }

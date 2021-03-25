@@ -11,7 +11,7 @@ export const createWatchedStock = (data) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
-  const response = await fetch(`${baseUrl}/watchlist`, {
+  const response = await fetch(`${baseUrl}/watchlist/new`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const exitWatchedStock = (id) => async (dispatch, getState) => {
   const {
     authentication: { token },
   } = getState();
-  const response = await fetch(`${baseUrl}/watchlist/${id}`, {
+  const response = await fetch(`${baseUrl}/watchlist/delete/${id}`, {
     method: "delete",
     headers: {
       Authorization: `Bearer ${token}`,
